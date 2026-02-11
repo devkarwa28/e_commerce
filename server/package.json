@@ -1,0 +1,16 @@
+{
+  "name": "e_commerce_server",
+  "version": "1.0.0",
+  "description": "My E-Commerce Server Backend Folder",
+  "repository": {
+    "type": "git",
+    "url": "e_commerce"
+  },
+  "license": "ISC",
+  "author": "Dev Karwa",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  }
+}
