@@ -1,7 +1,7 @@
 let mongoose = require('mongoose');
 
 const weightOptionSchema = new mongoose.Schema({
-    lable:{
+    label:{
         type: String,
         required: true,
     },
@@ -40,7 +40,7 @@ const productSchema = new mongoose.Schema({
     pname:{
         type: String,
         required: true,
-        trime: true,
+        trim: true,
         index: true,
     },
     slug:{
