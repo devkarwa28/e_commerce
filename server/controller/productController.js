@@ -145,3 +145,67 @@ exports.getProducts = async (req,res) =>{
         res.status(500).json({message: "Server Error"});
     }
 }
+exports.getProductBySlug = async (req,res) =>{
+    try{
+        const product = await Product.findOne({slug: req.params.slug,isActive: true}).populate("category","cname");
+        
+        if(!product)
+        {
+            return res.status(404).json({message: "Product Not Found"});
+        }
+        res.json(product);
+    }
+    catch(err){
+        res.status(500).json({message: "Server Error"})
+    }
+}
+exports.updateProduct = async (req,res) =>{
+    try{
+        const {id} = req.params;
+
+        const product = await Product.findById(id);
+
+        if(!product)
+        {
+            return res.status(404).json({message: "Product Not Found"});
+        }
+
+        const {pname,description,category,benifits,weightOptions,specifications,nutritionInfo,isFeatured,isActive} = req.body;
+
+        if(pname)
+        {
+            product.pname = pname;
+            product.slug = slugify(pname,{lower: true});
+        }
+
+        if(description)
+        {
+            product.description = description;
+        }
+
+        if(category)
+        {
+            const categoryExist = await Category.findById(category)
+            if(!category)
+            {
+                return res.status(400).json({message: "No Category Found"})
+            }
+            product.category = category;
+        }
+
+        if(typeof isFeatured !== "undefined")
+        {
+            product.isFeatured = isFeatured === "true";
+        }
+
+        if(typeof isActive !== "undefined")
+        {
+            product.isActive = isActive === "true"
+        }
+
+        
+    }
+    catch(err){
+        res.status(500).json({message: "Server Error"})
+    }
+}

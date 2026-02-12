@@ -1,7 +1,7 @@
 const express = require('express');
 const { authMiddleware, AdminOnly } = require('../middleware/authMiddleware');
 const upload = require('../middleware/uploadMiddleware');
-const { createProduct, getProducts } = require('../controller/productController');
+const { createProduct, getProducts, getProductBySlug } = require('../controller/productController');
 
 const productRouter = express.Router();
 
@@ -11,4 +11,5 @@ productRouter.post('/',authMiddleware,AdminOnly,upload.fields([
     {name: "images",maxCount: 5}
 ]),createProduct);
 productRouter.get("/",getProducts);
+productRouter.get("/:slug",getProductBySlug);
 module.exports = productRouter;
