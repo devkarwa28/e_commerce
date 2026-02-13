@@ -203,7 +203,94 @@ exports.updateProduct = async (req,res) =>{
             product.isActive = isActive === "true"
         }
 
-        
+        if(benifits)
+        {
+            try{
+                product.benifits = JSON.parse(benifits)
+            }
+            catch(err){
+                return res.status(400).json({message: "Invalid benifits format"})
+            }
+        }
+        if(weightOptions)
+        {
+            try{
+                const parsedWeightOptions = JSON.parse(weightOptions);
+
+                if(!Array.isArray(parsedWeightOptions) || parsedWeightOptions.length === 0)
+                {
+                    return res.status(400).json({message: "Weight option must be valid"});
+                }
+                product.weightOptions = parsedWeightOptions;
+            }
+            catch(err){
+                return res.status(400).json({message: "Invalid Weight Options"})
+            }
+        }
+
+        if(specifications)
+        {
+            try{
+                product.specifications = JSON.parse(specifications)
+            }
+            catch(err){
+                return res.status(400).json({message: "Inavlid Specifications"})
+            }
+        }
+
+        if(nutritionInfo)
+        {
+            try{
+                product.nutritionInfo = JSON.parse(nutritionInfo);
+            }
+            catch(err){
+                return res.status(400).json({message: "invalid nutrition info"})
+            }
+        }
+
+
+        if(req.files && req.files.mainImage)
+        {
+            const mainImageUrl = `${req.protocol}://${req.get("host")}/uploads/${req.files.mainImage[0].filename}`;
+            product.mainImage = mainImageUrl;
+        }
+
+        if(req.files && req.files.images && req.files.images.length > 0)
+        {
+            const galleryImages = req.files.images.map(file => 
+                `${req.protocol}://${req.get("host")}/uploads/${file.filename}`
+            );
+            product.images = galleryImages;
+        }
+        await product.save();
+
+        res.json({
+            success: true,
+            message: "Product Updated Successfully",
+            product
+        });
+    }
+    catch(err){
+        res.status(500).json({message: "Server Error"})
+    }
+}
+
+exports.disableProduct = async (req,res) =>{
+    try{
+        const {id} = req.params;
+        const product = await Product.findById(id);
+
+        if(!product)
+        {
+            return res.status(404).json({message: "No Product Found"});
+        }
+        product.isActive = false;
+
+        await product.save();
+        res.json({
+            success: true,
+            message: "Product Deactivated",
+        })
     }
     catch(err){
         res.status(500).json({message: "Server Error"})
