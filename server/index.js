@@ -7,6 +7,7 @@ const categoryRouter = require('./routes/categoryRoutes');
 const productRouter = require('./routes/productRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
 const cartRouter = require('./routes/cartRouter');
+const orderRouter = require('./routes/orderRoutes');
 require('./db/dbconfig');
 const app = express()
 
@@ -22,7 +23,8 @@ app.use('/uploads', express.static(path.join(__dirname,"uploads")));
 app.use('/api/category',categoryRouter);
 app.use('/api/products',productRouter);
 app.use('/api/reviews',reviewRouter);
-app.use('/api/cart',cartRouter)
+app.use('/api/cart',cartRouter);
+app.use('/api/order',orderRouter);
 
 app.listen(5000,()=>{
     console.log("Server Started on PORT 5000")
