@@ -8,6 +8,7 @@ const cartRouter = express.Router();
 cartRouter.post("/",authMiddleware,addToCart);
 cartRouter.get("/",authMiddleware,getMyCart);
 
+
 cartRouter.put("/",authMiddleware,updateCartItem);
 cartRouter.delete("/",authMiddleware,removeCartItem);
 cartRouter.delete("/clear",authMiddleware,clearCart);   

@@ -146,7 +146,7 @@ exports.updateCartItem = async (req,res) =>{
 
 exports.removeCartItem = async (req,res) =>{
     try{
-        const {productId,weightLable} = req.body;
+        const {productId,weightLabel} = req.body;
 
         const cart = await Cart.findOne({user: req.user._id});
 
@@ -155,7 +155,7 @@ exports.removeCartItem = async (req,res) =>{
             return res.status(404).json({message: "cart Not found"})
         }
         cart.items = cart.items.filter(
-            item => !(item.product.toString() === productId && item.weightLabel === weightLable)
+            item => !(item.product.toString() === productId && item.weightLabel === weightLabel)
         );
 
         cart.totalAmount = cart.items.reduce((acc,item)=> acc + item.price * item.quantity,0);
