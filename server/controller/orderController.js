@@ -81,3 +81,72 @@ exports.getMyOrder = async (req,res) =>{
         res.status(500).json({message: "Server Error"})
     }
 }
+
+exports.getAllOrders = async (req,res) =>{
+    try{
+        const page = Number(req.query.page) || 1;
+        const limit = Number(req.query.limit) || 10;
+        const skip = (page - 1) * limit;
+
+        const totalOrders = await Order.countDocuments();
+
+        const orders = await Order.find().populate("user","uname email").sort({createdAt: -1}).skip(skip).limit(limit);
+
+        res.json({
+            orders,
+            page,
+            totalPages: Math.ceil(totalOrders/limit),
+            totalOrders
+        });
+    }
+    catch(err){
+        console.log(err)
+        res.status(500).json({message: "Server Error"})
+    }
+}
+
+exports.updateOrderStatus = async (req,res) =>{
+    try{
+        const {orderStatus, paymentStatus} = req.body;
+
+        const order = await Order.findById(req.params.id)
+
+        if(!order)
+        {
+            return res.status(400).json({message: "no order finded"})
+        }
+
+        if(orderStatus)
+        {
+            order.orderStatus = orderStatus;
+            if(orderStatus === "Delivered")
+            {
+                order.deliveredAt = new Date();
+            }
+        }
+
+        if(paymentStatus)
+        {
+            order.paymentStatus = paymentStatus
+
+            if(paymentStatus === "Paid")
+            {
+                order.isPaid = true;
+                order.paitAt = new Date();
+            }
+        }
+
+        await order.save();
+
+        res.json({
+            success: true,
+            message: "Order Updated Successfully",
+            order
+        })
+
+    }
+    catch(err){
+        console.log(err)
+        res.status(500).json({message: "Server Error"})
+    }
+}
