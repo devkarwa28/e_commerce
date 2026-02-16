@@ -70,7 +70,19 @@ const orderSchema = new mongoose.Schema({
     paitAt:{
         type: Date,
         deliveredAt:Date,
-    }
+    },
+    couponCode:{
+        type: String,
+    },
+    discountAmount:{
+        type: Number,
+        default: 0,
+    },
+    finalAmount:{
+        type: Number,
+        required: true,
+    },
+
 },{timestamps: true})
 
 module.exports = mongoose.model("Order",orderSchema);

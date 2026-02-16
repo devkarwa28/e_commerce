@@ -9,6 +9,7 @@ const reviewRouter = require('./routes/reviewRoutes');
 const cartRouter = require('./routes/cartRouter');
 const orderRouter = require('./routes/orderRoutes');
 const adminRouter = require('./routes/adminRoutes');
+const couponRouter = require('./routes/couponRoutes');
 require('./db/dbconfig');
 const app = express()
 
@@ -26,7 +27,8 @@ app.use('/api/products',productRouter);
 app.use('/api/reviews',reviewRouter);
 app.use('/api/cart',cartRouter);
 app.use('/api/order',orderRouter);
-app.use('/api/admin',adminRouter)
+app.use('/api/admin',adminRouter);
+app.use('/api/coupons',couponRouter);
 
 app.listen(5000,()=>{
     console.log("Server Started on PORT 5000")
