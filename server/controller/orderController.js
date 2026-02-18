@@ -1,6 +1,7 @@
 const Order = require('../models/orderModel');
 const Product = require('../models/productModel');
 const Cart = require('../models/cartModel');
+const Coupon = require('../models/couponModel')
 
 exports.placeOrder = async (req,res) =>{
     try{
@@ -39,13 +40,58 @@ exports.placeOrder = async (req,res) =>{
             quantity: item.quantity,
 
         }))
+        let discount = 0;
+        let finalAmount = cart.totalAmount;
 
+        if(couponCode)
+        {
+            const coupon = await Coupon.findOne({code: couponCode.toUpperCase()});
+
+            if(!coupon || !coupon.isActive)
+            {
+                return res.status(400).json({message: "Invalid Coupon"})
+            }
+            if(coupon.expiresAt && coupon.expiresAt < new Date())
+            {
+                return res.status(400).json({message: "Coupon Expired"})
+            }
+            if(coupon.usageLimit > 0 && coupon.usedCount >= coupon.usageLimit)
+            {
+                return res.status(400).json({message: "Coupon usage limit used"})
+            }
+            if(coupon.usedBy.includes(req.user._id))
+            {
+                return res.status(400).json({message: "coupon in use"})
+            }
+            if(cart.totalAmount < coupon.minOrderAmount)
+            {
+                return  res.status(400).json({message: "minimum order amout required"})
+            }
+            if(coupon.discountType === "percentage")
+            {
+                discount = (cart.totalAmount * coupon.discountValue) / 100;
+                if(coupon.maxDiscount)
+                {
+                    discount = Math.min(discount, coupon.maxDiscount);
+                }
+            }
+            else{
+                discount = coupon.discountValue;
+            }
+            finalAmount = cart.totalAmount - discount;
+            coupon.usedCount += 1;
+            coupon.usedBy.push(req.user._id);
+            await coupon.save();
+        } 
         const order = await Order.create({
             user: req.user._id,
             items: orderItems,
             shippingAddress,
             paymentMethod,
             totalAmount: cart.totalAmount,
+            discountAmount: discount,
+            finalAmount,
+            couponCode: couponCode || null
         });
 
         for(const item of cart.items)
