@@ -1,3 +1,19 @@
 .topBar{
 background-color: var(--color-primary);
+font-size: 13px;
+color: #ffffff;
+}
+.mainHeader{
+    background-color: var(--color-bg-light);
+
+}
+.mainHeader h1{
+    color: var(--color-primary);
+    font-size: 22px;
+    font-weight: 700;
+}
+.navBar a{
+    color: var(--color-text-primary);
+    font-size: 14px;
+    text-decoration: none;
 }

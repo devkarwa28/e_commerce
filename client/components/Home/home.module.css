@@ -1,0 +1,17 @@
+.heroBanner{
+    padding: 16px 0px;
+}
+.heroContent{
+    padding: 60px 0px;
+}
+.heroContent h5{
+    background-color: var(--color-gold);
+    color: white;
+    border-radius: 12px;
+    font-size: 14px;
+}
+.heroContent h1{
+    font-size: 44px;
+    color: var(--color-text-primary);
+    font-weight: 700;
+}
