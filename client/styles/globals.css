@@ -43,3 +43,24 @@ body {
   height: 100px;
   background: #6C6C6C
 }
+.slick-dots li button:before {
+  content: "";
+}
+.slick-dots{
+  bottom: -45px !important;
+}
+.slick-dots li button {
+  width: 12px !important;
+  height: 12px !important;
+  border-radius: 50% !important;
+  background-color: #C89B3C !important;
+  opacity: 0.4 !important;
+  transition: all 0.3s ease;
+}
+.slick-dots li button::before{
+  content: "" !important;
+}
+
+.slick-dots li.slick-active button {
+  opacity: 1 !important;
+}
