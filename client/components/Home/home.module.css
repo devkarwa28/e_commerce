@@ -30,3 +30,19 @@
 .heroContent button:hover{
     background-color: var(--color-btn-hover);
 }
+.categories{
+    padding: 60px 0px;
+}
+.categories h1{
+    font-family: 'Playfair Display, serif';
+    font-weight: 700;
+    color: var(--color-text-primary);
+}
+.CatCard{
+    cursor: pointer;
+    border-radius: 18px;
+}
+.CatCard img{
+    object-fit: cover;
+    transition: transform 0.4 ease;
+}

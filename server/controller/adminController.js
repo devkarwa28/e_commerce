@@ -20,12 +20,7 @@ exports.getDashboardStats = async (req,res) =>{
         const totalUsers = await User.countDocuments();
         const totalProducts = await Product.countDocuments();
 
-        res.json({
-            totalRevenue,
-            totalOrders,
-            totalUsers,
-            totalProducts,
-        });
+        res.json({totalRevenue,totalOrders,totalUsers,totalProducts});
     }
     catch(err){
         console.log(err)
@@ -58,15 +53,9 @@ exports.getTopSellingProduct = async (req,res) =>{
     try{
         const topProducts = await Order.aggregate([
             {$unwind: "$items"},
-            {
-                $group:{
-                    _id:"$items.product",
-                    totalSold: {$sum: "$items.quantity"},
-                    pname: {$first: "$items.pname"}
-                }
+            {$group:{_id:"$items.product",totalSold: {$sum: "$items.quantity"},pname: {$first: "$items.pname"}}
             },
-            {$sort: {totalSold: -1}},
-            {$limit: 5}
+            {$sort: {totalSold: -1}},{$limit: 5}
         ])
         res.json(topProducts)
     }

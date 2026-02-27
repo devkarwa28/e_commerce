@@ -11,21 +11,21 @@ body {
 
 :root {
   /* Primary Brand */
-  --color-primary: #5C4033;          /* Deep Walnut Brown */
+  --color-primary: #5C4033;          
 
   /* Premium Accent */
-  --color-gold: #C89B3C;              /* Royal Gold */
+  --color-gold: #C89B3C;              
 
   /* Natural Accent */
-  --color-olive: #6B8E23;             /* Muted Olive */
+  --color-olive: #6B8E23;             
 
   /* Light Mode */
-  --color-bg-light: #F8F5F1;          /* Warm Cream */
+  --color-bg-light: #F8F5F1;          
   --color-text-primary: #1A1A1A;
   --color-text-secondary: #6C6C6C;
 
   /* Dark Mode */
-  --color-bg-dark: #1E1B18;           /* Deep Earth Dark */
+  --color-bg-dark: #1E1B18;           
   --color-text-dark-primary: #FFFFFF;
   --color-text-dark-secondary: #B5B5B5;
 

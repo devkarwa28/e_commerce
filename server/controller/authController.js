@@ -14,14 +14,9 @@ exports.registerUser = async (req,res) =>{
         const salt = await bcrypt.genSalt(10);
         const passwordHased = await bcrypt.hash(password, salt);
 
-        const user = await User.create({
-            uname,
-            email,
-            password: passwordHased,
-        });
+        const user = await User.create({uname,email,password: passwordHased,});
         tokenGenarator(res, user._id);
-        res.status(200).json({
-            _id: user._id,
+        res.status(200).json({_id: user._id,
             uname: user.uname,
             email: user.email,
             role: user.role,
@@ -65,11 +60,8 @@ exports.loginUser = async (req,res) =>{
 };
 
 exports.userLogout = async (res,req) =>{
-    res.cookie("token","",{
-        httpOnly : true,
-        expires: new Date(0)
-    });
-
+    res.cookie("token","",{httpOnly : true,expires: new Date(0)});
+    
     res.status(200).json({message: "User Logout Successfully"});
 };
 
