@@ -80,7 +80,7 @@ const BestSeller = () => {
 function ProductCard({product}){
     return(
         <div className={`${bestStyles.productCard} card border-0 shadow-sm`}>
-            <img src={product.image} alt={product.name} className='card-img-top' />
+            <img src={product.image} alt={product.name} className={`${bestStyles.product_img} card-img-top`} />
             <div className='card-body text-center'>
                 <h5 className='fw-bold mb-3'>{product.name}</h5>
                 <Rating value={product.rating} precision={0.5} readOnly size='small' />
