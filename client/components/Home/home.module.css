@@ -44,5 +44,30 @@
 }
 .CatCard img{
     object-fit: cover;
-    transition: transform 0.4 ease;
+    transition: 400ms ease;
+}
+.bestSeller{
+    background-color: white;
+}
+.productCard{
+    border-radius: 18px;
+    overflow: hidden;
+    transition: all 300ms ease;
+    margin-bottom: 18px;
+}
+.productCard img{
+    height: 220px;
+    object-fit: cover;
+}
+.productCard p{
+    color: var(--color-primary);
+}
+.productCard button{
+    background-color: var(--color-primary);
+    border-radius: 8px;
+    text-transform: none;
+    transition: all 300ms ease;
+}
+.productCard button:hover{
+    background-color: var(--color-btn-hover);
 }
