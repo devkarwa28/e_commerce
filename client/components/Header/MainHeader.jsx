@@ -11,7 +11,7 @@ const MainHeader = () => {
                 <div className="container">
                     <div className="row align-items-center">
                         <div className="col-lg-3">
-                            <h1>Nutrivia</h1>
+                            <h1>MyCompany</h1>
                         </div>
                         <div className="col-lg-6">
                             <TextField
