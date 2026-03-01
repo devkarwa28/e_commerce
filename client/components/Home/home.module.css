@@ -151,3 +151,51 @@
     background-color: var(--color-gold) !important;
     color: var(--color-bg-dark) !important;
 }
+.purposeCard{
+    border-radius: 25px;
+    position: relative;
+    min-height: "220px";
+    transition: 400ms ease;
+}
+.purposeIcon{
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: white;
+    color: var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: -35px;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+.purposeCard p{
+    font-size: 14px;
+}
+.purposeCard:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+.dry{
+    background-color: white;
+}
+.dryCard{
+    color: white;
+    text-align: center;
+    border-radius: 25px;
+    padding: 40px 20px;
+    height: 240px;
+    position: relative;
+    transition: all 300ms ease;
+}
+.dryCard img{
+    width: 100%;
+    height: 100%;
+}
+.dryCard:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 30px rgba(0,0,0,0.15);
+}
