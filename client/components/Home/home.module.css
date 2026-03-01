@@ -102,3 +102,52 @@
 .testi h5{
     color: var(--color-primary);
 }
+.newsletter{
+    background-color: var(--color-olive);
+}
+.newsletter button{
+    background-color: var(--color-primary);
+    padding: 0px 16px;
+    border-radius: 10px;
+    text-transform: none;
+}
+.newsletter button:hover{
+    background-color: var(--color-btn-hover);
+}
+.paraSection{
+    height: 500px;
+    background-image: url("/parallax.png");
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
+.paraSection::before{
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(30,27,24,0.7);
+}
+.paraSection h1{
+    font-size: 42px;
+}
+.line{
+    width:80px;
+    height:3px;
+    background-color: var(--color-gold);
+    margin:20px auto 40px;
+}
+.paraBtn{
+    border: 2px solid var(--color-gold) !important;
+  color: var(--color-gold) !important;
+  border-radius: 50px !important;
+  padding: 10px 28px !important;
+  text-transform: none !important;
+  font-weight: 600 !important;
+  transition: 0.3s ease !important;
+}
+.paraBtn:hover{
+    background-color: var(--color-gold) !important;
+    color: var(--color-bg-dark) !important;
+}

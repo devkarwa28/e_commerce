@@ -5,7 +5,6 @@ import Slider from 'react-slick'
 
 const Testimonials = () => {
     const settings = {
-    dots: true,
     infinite: true,
     speed: 600,
     autoplay: true,
@@ -24,6 +23,11 @@ const Testimonials = () => {
       name: "Ananya Verma",
       text: "The packaging feels luxury and delivery was super quick. Loved the dry fruit combo box.",
       rating: 4.5,
+    },
+    {
+      name: "Vikram Singh",
+      text: "Best dry fruits brand I've tried. Quality and taste both are excellent.",
+      rating: 5,
     },
     {
       name: "Vikram Singh",
