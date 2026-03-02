@@ -1,5 +1,6 @@
 "use client";
 import FilterSidebar from "@/components/products/FilterSidebar";
+import ProductCard from "@/components/products/ProductCard";
 import { Button } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -40,8 +41,38 @@ const ProductsPage = () => {
         </div>
         <div className="col-lg-9">
             <div className="row">
-
+                {
+                    products.length > 0 ? (
+                        products.map(product=>(
+                            <div key={product._id} className="col-md-4 col-sm-6 mb-4">
+                                <ProductCard product={product}/>
+                            </div>
+                        )) 
+                    )
+                    : <p>No Product Found</p>
+                }
             </div>
+            {
+                totalPages > 1 && (
+                    <div className="text-center mt-4">
+                        {
+                            Array.from({length: totalPages}).map((_,index)=>(
+                                <Button key={index} onClick={()=>setPage(index + 1)}
+                                variant={page === index + 1 ? "contained":"outlined"}
+                                sx={{
+                                    mx:0.5,
+                                    backgroundColor: page === index + 1 ? '#5c4033' : "transparent",
+                                    color: page === index + 1 ? "#fff" : "#5c4033",
+                                    borderColor: "#5c4033"
+                                }}
+                                >
+                                    {index + 1}
+                                </Button>
+                            ))
+                        }
+                    </div>
+                )
+            }
         </div>
     </div>
     </>
