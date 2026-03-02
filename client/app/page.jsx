@@ -1,4 +1,3 @@
-import Header from "@/components/Header/Header";
 import BestSeller from "@/components/Home/BestSeller";
 import CategoriesShowcase from "@/components/Home/CategoriesShowcase";
 import DryFruitSlider from "@/components/Home/DryFruitSlider";

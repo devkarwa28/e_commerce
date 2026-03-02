@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Link from 'next/link'
 import footerStyles from './footer.module.css'
 import { Facebook, Instagram, Twitter } from '@mui/icons-material'

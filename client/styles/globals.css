@@ -64,3 +64,12 @@ body {
 .slick-dots li.slick-active button {
   opacity: 1 !important;
 }
+.productsPage{
+  background-color:#f8f5f1;
+  min-height:100vh;
+  padding:30px 0px;
+}
+.productsPage h2{
+  color: var(--color-primary);
+  font-weight: 600;
+}
