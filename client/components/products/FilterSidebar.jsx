@@ -44,8 +44,6 @@ const FilterSidebar = ({filters,setFilters}) => {
             <Slider value={[filters.minPrice || 0, filters.maxPrice || 2000]} min={0} max={5000} onChange={priceHandler} valueLabelDisplay="auto" sx={{color:"#c89b3c"}} />
         </div>
 
-    
-
         <TextField label="Min Price" type="number" fullWidth size="small" className="mb-3" value={filters.minPrice} onChange={(e)=> setFilters({...filters,minPrice: e.target.value})}/>
 
         <TextField label="Max Price" type="number" fullWidth size="small" className="mb-3" value={filters.maxPrice} onChange={(e)=>setFilters({...filters,maxPrice: e.target.value})} />
