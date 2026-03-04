@@ -1,3 +1,9 @@
+@font-face{
+  font-family: "MyFont";
+  src: url(../fonts/MiranoExtendedFreebie-Light.ttf) format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
 *{
   box-sizing: border-box;
   margin: 0px;
@@ -6,7 +12,7 @@
 body {
   background-color: var(--color-bg-light);
   color: var(--color-text-primary);
-  font-family: 'Poppins', sans-serif;
+  font-family: "MyFont";
 }
 
 :root {

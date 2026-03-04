@@ -2,6 +2,7 @@
 import { Button, Card, CardContent, IconButton, Rating } from "@mui/material";
 import productcardStyles from "./products.module.css";
 import { FavoriteBorderOutlined, ShoppingCart, Visibility } from "@mui/icons-material";
+import Link from "next/link";
 
 
 const ProductCard = ({ product }) => {
@@ -31,9 +32,12 @@ const ProductCard = ({ product }) => {
 
         <div className="d-flex gap-2">
           <Button fullWidth variant="contained" className={productcardStyles.addtocart} startIcon={<ShoppingCart />}>Add To Cart</Button>
+
+          <Link href={`/products/${product.slug}`} style={{textDecoration:"none", color:"white"}}>
           <IconButton className={productcardStyles.visibilityIcon}>
             <Visibility />
           </IconButton>
+          </Link>
         </div>
       </CardContent>
     </Card>

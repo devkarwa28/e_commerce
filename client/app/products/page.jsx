@@ -3,6 +3,7 @@ import FilterSidebar from "@/components/products/FilterSidebar";
 import ProductCard from "@/components/products/ProductCard";
 import { Button } from "@mui/material";
 import axios from "axios";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const ProductsPage = () => {
@@ -45,7 +46,7 @@ const ProductsPage = () => {
                     products.length > 0 ? (
                         products.map(product=>(
                             <div key={product._id} className="col-md-4 col-sm-6 mb-4">
-                                <ProductCard product={product}/>
+                                 <ProductCard product={product}/>
                             </div>
                         )) 
                     )
