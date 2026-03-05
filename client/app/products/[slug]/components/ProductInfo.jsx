@@ -1,5 +1,5 @@
 "use client";
-import { Button, Rating, TextField } from '@mui/material';
+import { Alert, Button, Rating, Snackbar } from '@mui/material';
 import productinfoStyles from './productDetail.module.css'
 import { useState } from 'react';
 import PinCodeChecker from './PinCodeChecker';
@@ -7,6 +7,10 @@ import PinCodeChecker from './PinCodeChecker';
 const ProductInfo = ({ product }) => {
     const [selectedOption, setSelectedOption] = useState(product.weightOptions[0]);
     const [qty, setQty] = useState(1);
+    const [openToast,setOpenToast] = useState(false)
+    const addToCart = async () =>{
+        setOpenToast(true);
+    }
     return (
         <div className={`${productinfoStyles.productInfo} ps-2`}>
             <h2 className='fw-bold'>{product.pname}</h2>
@@ -47,15 +51,30 @@ const ProductInfo = ({ product }) => {
             </div>
 
             <div className='mt-3 d-flex gap-3'>
-                <Button fullWidth variant='contained' >
+                <Button fullWidth variant='contained' onClick={addToCart} >
                     Add To Cart
                 </Button>
+                <Snackbar
+                    open={openToast}
+                    autoHideDuration={3000}
+                    onClose={() => setOpenToast(false)}
+                    anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+                >
+                    <Alert
+                        severity="success"
+                        variant="filled"
+                        onClose={() => setOpenToast(false)}
+                        sx={{ width: "100%" }}
+                    >
+                        Product added to cart
+                    </Alert>
+                </Snackbar>
 
                 <Button fullWidth variant='outlined' sx={{ borderColor: "#5c4033", color: "#5c4033" }}>
                     Buy Now
                 </Button>
             </div>
-           <PinCodeChecker/>
+            <PinCodeChecker />
         </div>
     )
 }

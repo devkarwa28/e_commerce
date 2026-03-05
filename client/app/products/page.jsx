@@ -1,6 +1,7 @@
 "use client";
 import FilterSidebar from "@/components/products/FilterSidebar";
 import ProductCard from "@/components/products/ProductCard";
+import ProductCardSkeleton from "@/components/products/ProductCardSkeleton";
 import { Button } from "@mui/material";
 import axios from "axios";
 import Link from "next/link";
@@ -10,10 +11,12 @@ const ProductsPage = () => {
     const [products,setProducts] = useState([]);
     const [page,setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
-    const [mobileOpen,setMobileOpen] = useState(false);
+    const [mobileOpen,setMobileOpen] = useState(true);
+    const [loading,setLoading] = useState(true);
     const [filters,setFilters] = useState({category:"",minPrice:"",maxPrice:"",featured:""});
     
     const fetchProducts = async () =>{
+        setLoading(true)
         try{
             const res = await axios.get("http://localhost:5000/api/products",{params:{...filters,page}});
             setProducts(res.data.products);
@@ -22,6 +25,7 @@ const ProductsPage = () => {
         catch(err){
             console.log(err);
         }
+        setLoading(false)
     };
 
     useEffect(()=>{
@@ -43,14 +47,21 @@ const ProductsPage = () => {
         <div className="col-lg-9">
             <div className="row">
                 {
-                    products.length > 0 ? (
+                    loading ? (
+                        Array.from({length: 6}).map((_,index)=>(
+                            <div key={index} className="col-md-4 col-sm-6 mb-4">
+                                <ProductCardSkeleton />
+                            </div>
+                        ))
+                    ) :  products.length > 0 ? (
                         products.map(product=>(
                             <div key={product._id} className="col-md-4 col-sm-6 mb-4">
-                                 <ProductCard product={product}/>
+                                <ProductCard product={product} />
                             </div>
-                        )) 
+                        ))
+                    ) : (
+                        <p>No Product Found</p>
                     )
-                    : <p>No Product Found</p>
                 }
             </div>
             {
