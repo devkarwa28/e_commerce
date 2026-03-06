@@ -13,10 +13,7 @@ const couponRouter = require('./routes/couponRoutes');
 require('./db/dbconfig');
 const app = express()
 
-app.use(cors({
-    origin: "http://localhost:3000",
-    credentials: true,
-}));
+app.use(cors({origin: "http://localhost:3000",credentials: true,}));
 app.use(cookieParser());
 app.use(express.json());
 
