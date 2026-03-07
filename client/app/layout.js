@@ -13,6 +13,7 @@ import Footer from "@/components/Footer/Footer";
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <title>Dry Frutis</title>
       <body>
         <ThemeProvider theme={theme}>
           <CssBaseline/>
