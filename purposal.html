@@ -1,0 +1,426 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>For My Love ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins;
+}
+
+body{
+background:#000;
+color:white;
+overflow-x:hidden;
+text-align:center;
+}
+
+/* 3D GALAXY BACKGROUND */
+
+canvas{
+position:fixed;
+top:0;
+left:0;
+z-index:-1;
+}
+
+/* HERO */
+
+.hero{
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+padding:20px;
+}
+
+.hero h1{
+font-family:'Great Vibes';
+font-size:70px;
+color:#ff6ec7;
+}
+
+.hero p{
+max-width:600px;
+margin-top:20px;
+font-size:20px;
+}
+
+.mainBtn{
+margin-top:40px;
+padding:15px 40px;
+border:none;
+border-radius:40px;
+background:linear-gradient(45deg,#ff4da6,#ff7db8);
+color:white;
+font-size:18px;
+cursor:pointer;
+transition:.3s;
+}
+
+.mainBtn:hover{
+transform:scale(1.1);
+}
+
+/* LETTER */
+
+.letter{
+max-width:700px;
+margin:auto;
+padding:80px 20px;
+font-size:22px;
+line-height:1.7;
+}
+
+/* RING BOX */
+
+.ring-box{
+width:150px;
+height:100px;
+margin:40px auto;
+position:relative;
+perspective:800px;
+}
+
+.lid{
+width:150px;
+height:50px;
+background:#ff4da6;
+position:absolute;
+top:0;
+transform-origin:bottom;
+transition:1s;
+border-radius:10px 10px 0 0;
+}
+
+.box{
+width:150px;
+height:80px;
+background:#ff2e8a;
+position:absolute;
+bottom:0;
+border-radius:0 0 10px 10px;
+}
+
+.ring{
+width:40px;
+height:40px;
+border:5px solid gold;
+border-radius:50%;
+position:absolute;
+top:30px;
+left:50%;
+transform:translateX(-50%);
+opacity:0;
+transition:1s;
+}
+
+/* HEART MERGE */
+
+.hearts{
+font-size:60px;
+margin:40px;
+}
+
+.heart{
+display:inline-block;
+transition:1s;
+}
+
+/* GALLERY */
+
+.gallery img{
+width:200px;
+height:200px;
+object-fit:cover;
+margin:10px;
+border-radius:15px;
+transition:.3s;
+}
+
+.gallery img:hover{
+transform:scale(1.1);
+}
+
+/* PROPOSAL */
+
+.proposal{
+padding:80px 20px;
+}
+
+.proposal h2{
+font-family:'Great Vibes';
+font-size:60px;
+color:#ff7db8;
+}
+
+/* BUTTONS */
+
+.buttons{
+margin-top:40px;
+position:relative;
+height:120px;
+}
+
+.yesBtn{
+padding:15px 35px;
+font-size:20px;
+border:none;
+border-radius:30px;
+background:#ff4da6;
+color:white;
+cursor:pointer;
+}
+
+.noBtn{
+padding:15px 35px;
+font-size:20px;
+border:none;
+border-radius:30px;
+background:#555;
+color:white;
+cursor:pointer;
+position:absolute;
+left:60%;
+transition:all .5s ease;
+}
+
+/* ROSE PETALS */
+
+.petal{
+position:fixed;
+top:-10px;
+font-size:20px;
+animation:fall linear infinite;
+}
+
+@keyframes fall{
+to{
+transform:translateY(110vh) rotate(360deg);
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<canvas id="galaxy"></canvas>
+
+<audio autoplay loop>
+<source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_4b55c42f4a.mp3">
+</audio>
+
+<section class="hero">
+
+<h1>I Have Something Special to Ask You ❤️</h1>
+
+<p>From the moment I met you, my life changed forever.</p>
+
+<button class="mainBtn" onclick="startLove()">Open My Heart</button>
+
+</section>
+
+<section class="letter" id="letter"></section>
+
+<div class="ring-box">
+
+<div class="lid" id="lid"></div>
+
+<div class="box"></div>
+
+<div class="ring" id="ring"></div>
+
+</div>
+
+<div class="hearts">
+
+<span class="heart" id="h1">❤️</span>
+
+<span class="heart" id="h2">❤️</span>
+
+</div>
+
+<section class="gallery">
+
+<img src="https://images.unsplash.com/photo-1492724441997-5dc865305da7">
+
+<img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2">
+
+<img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee">
+
+</section>
+
+<section class="proposal">
+
+<h2>Will You Be Mine Forever? 💍</h2>
+
+<div class="buttons">
+
+<button class="yesBtn" onclick="fireworks()">YES ❤️</button>
+
+<button class="noBtn" id="noBtn">NO 😢</button>
+
+</div>
+
+</section>
+
+<script>
+
+/* GALAXY BACKGROUND */
+
+const canvas=document.getElementById("galaxy")
+const ctx=canvas.getContext("2d")
+
+canvas.width=window.innerWidth
+canvas.height=window.innerHeight
+
+let stars=[]
+
+for(let i=0;i<300;i++){
+stars.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:Math.random()*1.5
+})
+}
+
+function drawStars(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height)
+
+ctx.fillStyle="white"
+
+stars.forEach(s=>{
+ctx.beginPath()
+ctx.arc(s.x,s.y,s.r,0,Math.PI*2)
+ctx.fill()
+})
+
+requestAnimationFrame(drawStars)
+
+}
+
+drawStars()
+
+/* TYPEWRITER */
+
+const msg=`My Love,
+
+Every moment with you feels magical.
+You make my life beautiful.
+
+Today I want to ask you something very special...`
+
+let i=0
+
+function startLove(){
+
+type()
+
+document.getElementById("lid").style.transform="rotateX(-120deg)"
+
+setTimeout(()=>{
+document.getElementById("ring").style.opacity=1
+},800)
+
+/* heart merge */
+
+setTimeout(()=>{
+document.getElementById("h1").style.transform="translateX(20px)"
+document.getElementById("h2").style.transform="translateX(-20px)"
+},1500)
+
+}
+
+function type(){
+
+const el=document.getElementById("letter")
+
+if(i<msg.length){
+el.innerHTML+=msg.charAt(i)
+i++
+setTimeout(type,40)
+}
+
+}
+
+/* ROSE PETALS */
+
+function petal(){
+
+const p=document.createElement("div")
+
+p.className="petal"
+
+p.innerHTML="🌹"
+
+p.style.left=Math.random()*100+"vw"
+
+p.style.animationDuration=(5+Math.random()*5)+"s"
+
+document.body.appendChild(p)
+
+setTimeout(()=>p.remove(),10000)
+
+}
+
+setInterval(petal,800)
+
+/* NO BUTTON SLIDE */
+
+const no=document.getElementById("noBtn")
+
+no.addEventListener("mouseover",()=>{
+
+const x=Math.random()*70
+const y=Math.random()*40
+
+no.style.left=x+"%"
+no.style.top=y+"px"
+
+})
+
+/* FIREWORKS */
+
+function fireworks(){
+
+alert("She said YES! ❤️")
+
+for(let i=0;i<50;i++){
+
+const f=document.createElement("div")
+
+f.innerHTML="🎆"
+
+f.style.position="fixed"
+
+f.style.left=Math.random()*100+"vw"
+
+f.style.top=Math.random()*100+"vh"
+
+f.style.fontSize="30px"
+
+document.body.appendChild(f)
+
+setTimeout(()=>f.remove(),2000)
+
+}
+
+}
+
+</script>
+
+</body>
+</html>

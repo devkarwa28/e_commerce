@@ -1,10 +1,28 @@
-import React from 'react'
+"use client";
 import headerStyles from './header.module.css'
-import { TextField, InputAdornment, Badge } from "@mui/material";
+import { TextField, InputAdornment, Badge, IconButton, Menu, MenuItem, Divider } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import { FavoriteBorderOutlined, Person2Outlined, ShoppingCart, ShoppingCartOutlined } from '@mui/icons-material';
+import { FavoriteBorderOutlined, Logout, Person2Outlined, Settings, ShoppingBag, ShoppingCart, ShoppingCartOutlined } from '@mui/icons-material';
+import { useAuth } from '@/context/AuthContext';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 const MainHeader = () => {
+    const { user, logout } = useAuth();
+    const router = useRouter();
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
+
+    const handleOpen = (event) => {
+        setAnchorEl(event.currentTarget);
+    }
+    const handleClose = () => {
+        setAnchorEl(null)
+    }
+    const handleLogout = async () => {
+        await logout();
+        router.push("/login");
+    }
     return (
         <section className={`${headerStyles.mainHeader} py-3 px-4`}>
             <div className="container-fluid">
@@ -30,18 +48,62 @@ const MainHeader = () => {
                         </div>
                         <div className="col-lg-3">
                             <div className='d-flex justify-content-end gap-3'>
-                                <Person2Outlined/>
-                                <Badge badgeContent={3} color='secondary'>
-                                    <FavoriteBorderOutlined/>
-                                </Badge>
-                                <Badge badgeContent={2} color='secondary'>
-                                    <ShoppingCartOutlined/>
-                                </Badge>
+                                <IconButton onClick={handleOpen}>
+                                    <Person2Outlined />
+                                </IconButton>
+                                <IconButton>
+                                    <Badge badgeContent={3} color='secondary'>
+                                        <FavoriteBorderOutlined />
+                                    </Badge>
+                                </IconButton>
+                                <IconButton>
+                                    <Badge badgeContent={2} color='secondary'>
+                                        <ShoppingCartOutlined />
+                                    </Badge>
+                                </IconButton>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <Menu anchorEl={anchorEl} open={open} onClose={handleClose} PaperProps={{
+                sx: { mt: 1, borderRadius: "10px", minWidth: 200, boxShadow: "0 10px 30px rgba(0,0,0,0.1)" }
+            }} >
+                {
+                    user ? (
+                        <>
+                            <MenuItem disabled>
+                                Hello {user.uname}
+                            </MenuItem>
+
+                            <Divider />
+
+                            <MenuItem onClick={() => router.push("/profile")}>
+                                <Settings sx={{ mr: 1 }} />
+                                Profile Setting
+                            </MenuItem>
+
+                            <MenuItem>
+                                <ShoppingBag sx={{ mr: 1 }} />
+                                My Orders
+                            </MenuItem>
+
+                            <Divider />
+
+                            <MenuItem onClick={handleLogout}>
+                                <Logout sx={{ mr: 1 }} />
+                                Logout
+                            </MenuItem>
+
+                        </>
+                    ) : (
+                        <MenuItem onClick={() => router.push("/login")}>
+                            Login
+                        </MenuItem>
+                    )
+                }
+            </Menu>
         </section>
     )
 }

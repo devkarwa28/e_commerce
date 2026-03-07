@@ -46,7 +46,7 @@ exports.loginUser = async (req,res) =>{
         if(!userMatch){
             return res.status(400).json({message: "Password is Not Valid"})
         }
-        tokenGenarator(res, user._id);
+        tokenGenarator(res,user._id);
 
         res.json({
             _id: user._id,

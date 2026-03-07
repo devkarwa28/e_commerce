@@ -1,4 +1,5 @@
 "use client";
+import { useAuth } from "@/context/AuthContext";
 import { Facebook, Google } from "@mui/icons-material";
 import { Button, Divider, TextField } from "@mui/material";
 import axios from "axios";
@@ -7,12 +8,14 @@ import { useState } from "react";
 
  
  const UserLogin = () => {
+  const {setUser} = useAuth();
     const [email,setEmail] = useState("");
     const [password,setPassword] = useState("");
     const router = useRouter()
     const loginHandler = async () =>{
       try{
-        await axios.post("http://localhost:5000/api/auth/login",{email,password},{withCredentials:true});
+        const res = await axios.post("http://localhost:5000/api/auth/login",{email,password});
+        setUser(res.data);
         router.push("/")
       }
       catch(err){
