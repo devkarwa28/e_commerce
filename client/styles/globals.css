@@ -1,14 +1,16 @@
-@font-face{
+@font-face {
   font-family: "MyFont";
   src: url(../fonts/MiranoExtendedFreebie-Light.ttf) format("truetype");
   font-weight: normal;
   font-style: normal;
 }
-*{
+
+* {
   box-sizing: border-box;
   margin: 0px;
   padding: 0px;
 }
+
 body {
   background-color: var(--color-bg-light);
   color: var(--color-text-primary);
@@ -17,21 +19,21 @@ body {
 
 :root {
   /* Primary Brand */
-  --color-primary: #5C4033;          
+  --color-primary: #5C4033;
 
   /* Premium Accent */
-  --color-gold: #C89B3C;              
+  --color-gold: #C89B3C;
 
   /* Natural Accent */
-  --color-olive: #6B8E23;             
+  --color-olive: #6B8E23;
 
   /* Light Mode */
-  --color-bg-light: #F8F5F1;          
+  --color-bg-light: #F8F5F1;
   --color-text-primary: #1A1A1A;
   --color-text-secondary: #6C6C6C;
 
   /* Dark Mode */
-  --color-bg-dark: #1E1B18;           
+  --color-bg-dark: #1E1B18;
   --color-text-dark-primary: #FFFFFF;
   --color-text-dark-secondary: #B5B5B5;
 
@@ -44,17 +46,20 @@ body {
   --color-btn-hover: #4A3328;
 }
 
-.color{
+.color {
   width: 100%;
   height: 100px;
   background: #6C6C6C
 }
+
 .slick-dots li button:before {
   content: "";
 }
-.slick-dots{
+
+.slick-dots {
   bottom: -45px !important;
 }
+
 .slick-dots li button {
   width: 12px !important;
   height: 12px !important;
@@ -63,59 +68,92 @@ body {
   opacity: 0.4 !important;
   transition: all 0.3s ease;
 }
-.slick-dots li button::before{
+
+.slick-dots li button::before {
   content: "" !important;
 }
 
 .slick-dots li.slick-active button {
   opacity: 1 !important;
 }
-.productsPage{
-  background-color:#f8f5f1;
-  min-height:100vh;
-  padding:30px 0px;
+
+.productsPage {
+  background-color: #f8f5f1;
+  min-height: 100vh;
+  padding: 30px 0px;
 }
-.productsPage h2{
+
+.productsPage h2 {
   color: var(--color-primary);
   font-weight: 600;
 }
-.login-wrapper{
+
+.login-wrapper {
   height: 100%;
   padding: 60px 0px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.login-card{
+
+.login-card {
   width: 520px;
   padding: 40px;
   background: white;
   border-radius: 14px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.08),0 4px 8px rgba(0,0,0,0.05);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08), 0 4px 8px rgba(0, 0, 0, 0.05);
   transition: all 400ms ease;
 }
-.login-card:hover{
-transform:translateY(-6px);
-box-shadow:0 18px 45px rgba(0,0,0,0.12),0 6px 12px rgba(0,0,0,0.08);
+
+.login-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.12), 0 6px 12px rgba(0, 0, 0, 0.08);
 }
-.login-title{
+
+.login-title {
   text-align: center;
-margin-bottom: 25px;
-font-weight: 600;
-color: var(--color-primary);
+  margin-bottom: 25px;
+  font-weight: 600;
+  color: var(--color-primary);
 }
-.login-btn{
-  background: linear-gradient(135deg,#5C4033,#8B5E3C);
-text-transform: none;
-font-weight: 500;
-padding: 10px;
-transition: all 300ms ease;
+
+.login-btn {
+  background: linear-gradient(135deg, #5C4033, #8B5E3C);
+  text-transform: none;
+  font-weight: 500;
+  padding: 10px;
+  transition: all 300ms ease;
 }
-.login-btn:hover{
-  background:#5C4033;
-transform:translateY(-2px);
+
+.login-btn:hover {
+  background: #5C4033;
+  transform: translateY(-2px);
 }
-.google-btn,.facebook-btn{
-flex:1;
-text-transform:none;
+
+.google-btn,
+.facebook-btn {
+  flex: 1;
+  text-transform: none;
+}
+
+.checkout-card {
+  background:white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05),0 8px 20px rgba(0, 0, 0, 0.04);
+  transition: 300ms;
+}
+
+.checkout-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08),0 12px 30px rgba(0, 0, 0, 0.06);
+}
+
+.summary-card {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  position: sticky;
+  top: 100px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
 }
