@@ -1,29 +1,39 @@
 "use client";
 
-import { Button } from "@mui/material";
+import { Button, Divider } from "@mui/material";
 import Link from "next/link";
+import { useState } from "react";
+import CouponBox from "./CouponBox";
 
 const CartSummary = ({cart}) => {
+    const [discount,setDiscount] = useState(0);
+    const finalTotal = cart.totalAmount - discount;
   return (
-    <div className="border-2 p-4 rounded-2">
-        <h5>Order Summary</h5>
-        <p>
-            Sub Total
-            <span className="float-end">{cart.totalAmount}</span>
-        </p>
+    <div className="summary-card">
+        <h5 className="mb-3">Cart Summary</h5>
 
-        <p>
-            Shipping
-            <span className="float-end">Free</span>
-        </p>
-        <h5>Total
-            <span className="float-end">{cart.totalAmount}</span>
-        </h5>
-        <Link href="/checkout">
-        <Button fullWidth sx={{mt:3,backgroundColor:"#5c4033",color:"white"}}>
-            Proceed To Checkout
-        </Button>
-        </Link>
+        <div className="d-flex justify-content-between mb-2">
+            <span>Subtotal</span>
+            <span>₹{cart.totalAmount}</span>
+        </div>
+        <CouponBox cartTotal={cart.totalAmount} setDiscount={setDiscount}/>
+        {
+            discount > 0 && (
+                <div className="d-flex justify-content-between text-success">
+                    <span>Discount</span>
+                    <span>-₹ {discount}</span>
+                </div>
+            )
+        }
+        <div className="d-flex justify-content-between mb-2">
+            <span>Shipping</span>
+            <span>Free</span>
+        </div>
+        <Divider className="my-2"/>
+        <div className="d-flex justify-content-between fw-bold mb-3">
+            <span>Total</span>
+            <span>₹{finalTotal}</span>
+        </div>
     </div>
   )
 }

@@ -2,6 +2,7 @@
 
 import CartItems from "@/components/cart/CartItems";
 import CartSummary from "@/components/cart/CartSummary";
+import CouponBox from "@/components/cart/CouponBox";
 import NoItemsInCart from "@/components/cart/NoItemsInCart";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -43,6 +44,7 @@ const Cart = () => {
         </div>
         <div className="col-lg-4">
           <CartSummary cart={cart}/>
+  
         </div>
       </div>
     </section>

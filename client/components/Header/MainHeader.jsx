@@ -7,6 +7,7 @@ import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useCart } from '@/context/CartContext';
+import Link from 'next/link';
 
 const MainHeader = () => {
     const { user, logOut, loading } = useAuth();
@@ -49,7 +50,7 @@ const MainHeader = () => {
                             />
                         </div>
                         <div className="col-lg-3">
-                            <div className='d-flex justify-content-end gap-3'>
+                            <div className='d-flex justify-content-end gap-1'>
                                 <IconButton onClick={handleOpen}>
                                     <Person2Outlined />
                                 </IconButton>
@@ -58,11 +59,13 @@ const MainHeader = () => {
                                         <FavoriteBorderOutlined />
                                     </Badge>
                                 </IconButton>
+                                <Link href="/cart">
                                 <IconButton>
-                                    <Badge badgeContent={cart?.items?.length} color='secondary'>
+                                    <Badge badgeContent={cart?.items?.length || 0} color='secondary'>
                                         <ShoppingCartOutlined />
                                     </Badge>
                                 </IconButton>
+                                </Link>
                             </div>
                         </div>
                     </div>

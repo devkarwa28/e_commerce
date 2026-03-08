@@ -7,16 +7,11 @@ import axios from "axios";
 
 const OrderSummary = () => {
     const {cart} = useCart();
+
     const placeOrder = async () =>{
-        await axios.post("http://localhost:5000/api/orders",
-            {
-                shippingAddress:{
-                    address:"Test Address",
-                    city:"Jodhpur",
-                    pincode:"342001"
-                },
-                paymentMethod:"COD"
-            },{withCredentials:true});
+        
+        await axios.post("http://localhost:5000/api/order",{shippingAddress:{address:"Test Address",city:"Jodhpur",pincode:"342001"},paymentMethod:"COD"},{withCredentials:true});
+
             alert("Order Placed")
     };
     if(!cart) return null;
