@@ -11,15 +11,17 @@ const Cart = () => {
   const fetchCart = async () =>{
     try{
       const res = await axios.get("http://localhost:5000/api/cart");
-      setCart(res.data.cart);
+      setCart(res.data);
     }
     catch(err){
       console.log("Cannot Fetch The Cart",err);
     }
   }
+  
   useEffect(()=>{
     fetchCart();
   },[]);
+
   if(!cart)
   {
     return <NoItemsInCart/>

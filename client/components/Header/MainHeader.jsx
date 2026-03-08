@@ -6,9 +6,11 @@ import { FavoriteBorderOutlined, Logout, Person2Outlined, Settings, ShoppingBag,
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { useCart } from '@/context/CartContext';
 
 const MainHeader = () => {
     const { user, logOut, loading } = useAuth();
+    const {cart} = useCart();
     const router = useRouter();
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
@@ -57,7 +59,7 @@ const MainHeader = () => {
                                     </Badge>
                                 </IconButton>
                                 <IconButton>
-                                    <Badge badgeContent={2} color='secondary'>
+                                    <Badge badgeContent={cart?.items?.length} color='secondary'>
                                         <ShoppingCartOutlined />
                                     </Badge>
                                 </IconButton>

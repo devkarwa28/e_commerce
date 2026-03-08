@@ -9,6 +9,7 @@ import "slick-carousel/slick/slick-theme.css";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
 import AuthProvider from "@/context/AuthContext";
+import CartProvider from "@/context/CartContext";
 
 
 export default function RootLayout({ children }) {
@@ -17,12 +18,14 @@ export default function RootLayout({ children }) {
       <title>Dry Frutis</title>
       <body>
         <AuthProvider>
+          <CartProvider>
           <ThemeProvider theme={theme}>
           <CssBaseline/>
           <Header/>
           {children}
           <Footer/>
         </ThemeProvider>
+        </CartProvider>
         </AuthProvider>
 
       </body>
