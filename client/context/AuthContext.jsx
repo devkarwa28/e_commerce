@@ -2,8 +2,8 @@
 import axios from 'axios';
 import React, { useContext, createContext ,useEffect, useState } from 'react';
 
-const AuthContext = createContext();
 axios.defaults.withCredentials = true;
+const AuthContext = createContext();
 
 const AuthProvider = ({children}) => {
     const [user,setUser] = useState(null);

@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 const MainHeader = () => {
-    const { user, logout } = useAuth();
+    const { user, logOut , loading } = useAuth();
     const router = useRouter();
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
@@ -20,7 +20,7 @@ const MainHeader = () => {
         setAnchorEl(null)
     }
     const handleLogout = async () => {
-        await logout();
+        await logOut();
         router.push("/login");
     }
     return (
