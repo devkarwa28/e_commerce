@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 const MainHeader = () => {
-    const { user, logOut , loading } = useAuth();
+    const { user, logOut, loading } = useAuth();
     const router = useRouter();
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
@@ -70,39 +70,43 @@ const MainHeader = () => {
             <Menu anchorEl={anchorEl} open={open} onClose={handleClose} PaperProps={{
                 sx: { mt: 1, borderRadius: "10px", minWidth: 200, boxShadow: "0 10px 30px rgba(0,0,0,0.1)" }
             }} >
-                {
-                    user ? (
-                        <>
-                            <MenuItem disabled>
-                                Hello {user.uname}
-                            </MenuItem>
+                
+                {user && (
+                    <MenuItem disabled>
+                        Hello {user.uname}
+                    </MenuItem>
+                )}
 
-                            <Divider />
+                {user && <Divider />}
 
-                            <MenuItem onClick={() => router.push("/profile")}>
-                                <Settings sx={{ mr: 1 }} />
-                                Profile Setting
-                            </MenuItem>
+                {user && (
+                    <MenuItem onClick={() => router.push("/profile")}>
+                        <Settings sx={{ mr: 1 }} />
+                        Profile Setting
+                    </MenuItem>
+                )}
 
-                            <MenuItem>
-                                <ShoppingBag sx={{ mr: 1 }} />
-                                My Orders
-                            </MenuItem>
+                {user && (
+                    <MenuItem>
+                        <ShoppingBag sx={{ mr: 1 }} />
+                        My Orders
+                    </MenuItem>
+                )}
 
-                            <Divider />
+                {user && <Divider />}
 
-                            <MenuItem onClick={handleLogout}>
-                                <Logout sx={{ mr: 1 }} />
-                                Logout
-                            </MenuItem>
+                {user && (
+                    <MenuItem onClick={handleLogout}>
+                        <Logout sx={{ mr: 1 }} />
+                        Logout
+                    </MenuItem>
+                )}
 
-                        </>
-                    ) : (
-                        <MenuItem onClick={() => router.push("/login")}>
-                            Login
-                        </MenuItem>
-                    )
-                }
+                {!user && (
+                    <MenuItem onClick={() => router.push("/login")}>
+                        Login
+                    </MenuItem>
+                )}
             </Menu>
         </section>
     )

@@ -8,13 +8,6 @@ const NavBar = () => {
     return (
         <nav className={`${headerStyles.navBar} navbar navbar-expand-lg border-bottom border-top`}>
             <div className="container">
-                {
-                    user ? (
-                        <p>hello {user.uname}</p>
-                    ): (
-                        <Link href="/login">Login</Link>
-                    )
-                }
                 <ul className='navbar-nav gap-4'>
                     {
                         categories.map((cat) => (
