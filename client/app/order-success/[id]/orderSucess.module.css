@@ -1,0 +1,52 @@
+.successWrapper {
+    text-align: center;
+    padding: 60px 40px;
+    background: white;
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08),0 6px 20px rgba(0, 0, 0, 0.05);
+    max-width: 650px;
+    margin: auto;
+    animation: fadeInUp 700ms ease;
+}
+@keyframes fadeInUp{
+from{
+opacity:0;
+transform:translateY(30px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+.orderID{
+
+background:#F8F5F1;
+padding:10px 18px;
+border-radius:8px;
+display:inline-block;
+
+margin-top:10px;
+
+}
+
+.successIcon{
+    animation: pop 600ms ease;
+}
+
+@keyframes pop{
+
+0%{
+transform:scale(.4);
+opacity:0;
+}
+
+70%{
+transform:scale(1.1);
+}
+
+100%{
+transform:scale(1);
+opacity:1;
+}
+}

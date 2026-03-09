@@ -4,10 +4,12 @@ import { Button, Divider } from "@mui/material";
 import Link from "next/link";
 import { useState } from "react";
 import CouponBox from "./CouponBox";
+import { useRouter } from "next/navigation";
 
 const CartSummary = ({cart}) => {
     const [discount,setDiscount] = useState(0);
     const finalTotal = cart.totalAmount - discount;
+    const router = useRouter();
   return (
     <div className="summary-card">
         <h5 className="mb-3">Cart Summary</h5>
@@ -34,6 +36,9 @@ const CartSummary = ({cart}) => {
             <span>Total</span>
             <span>₹{finalTotal}</span>
         </div>
+        <Button fullWidth variant="contained" onClick={()=>router.push('/checkout')}>
+            Proceed To Checkout
+        </Button>
     </div>
   )
 }

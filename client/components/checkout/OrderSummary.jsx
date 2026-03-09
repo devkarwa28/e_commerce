@@ -3,16 +3,19 @@
 import { useCart } from "@/context/CartContext";
 import { Button } from "@mui/material";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 
 const OrderSummary = () => {
     const {cart} = useCart();
+    const router = useRouter();
 
     const placeOrder = async () =>{
         
-        await axios.post("http://localhost:5000/api/order",{shippingAddress:{address:"Test Address",city:"Jodhpur",pincode:"342001"},paymentMethod:"COD"},{withCredentials:true});
+        const res = await axios.post("http://localhost:5000/api/order",{shippingAddress:{address:"Test Address",city:"Jodhpur",pincode:"342001"},paymentMethod:"COD"},{withCredentials:true});
 
-            alert("Order Placed")
+            const oderId = res.data.order._id
+            router.push(`/order-success/${oderId}`)
     };
     if(!cart) return null;
   return (
