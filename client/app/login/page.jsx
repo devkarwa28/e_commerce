@@ -3,6 +3,7 @@ import { useAuth } from "@/context/AuthContext";
 import { Facebook, Google } from "@mui/icons-material";
 import { Button, Divider, TextField } from "@mui/material";
 import axios from "axios";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -27,13 +28,15 @@ import { useState } from "react";
         <div className="login-card">
             <h3 className="login-title">Welcome Back</h3>
 
-            <TextField label="Email" fullWidth className="mb-3" value={email} onChange={(e)=>setEmail(e.target.value)} />
+            <TextField size="small" label="Email" fullWidth className="mb-3" value={email} onChange={(e)=>setEmail(e.target.value)} />
 
-            <TextField label="Password" type="password" fullWidth value={password} className="mb-3" onChange={(e)=>setPassword(e.target.value)} />
+            <TextField size="small" label="Password" type="password" fullWidth value={password} className="mb-3" onChange={(e)=>setPassword(e.target.value)} />
 
             <Button fullWidth variant="contained" onClick={loginHandler} className="login-btn mb-3" >
               Login 
             </Button>
+
+            <p className="text-muted mt-3 text-center">Don't Have An Account <Link href="/register">Register Now</Link></p>
             <Divider>
               OR
             </Divider>

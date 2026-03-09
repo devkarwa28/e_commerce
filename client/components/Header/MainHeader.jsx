@@ -92,7 +92,7 @@ const MainHeader = () => {
                 )}
 
                 {user && (
-                    <MenuItem>
+                    <MenuItem onClick={()=> router.push("/orders")}>
                         <ShoppingBag sx={{ mr: 1 }} />
                         My Orders
                     </MenuItem>

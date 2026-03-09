@@ -34,11 +34,11 @@ const RegisterUser = () => {
             <div className='login-card'>
                 <h3 className='login-title'>Create Account</h3>
 
-                <TextField label="Full Name" fullWidth className='mb-3' value={uname} onChange={(e) => setUname(e.target.value)} />
+                <TextField size='small' label="Full Name" fullWidth className='mb-3' value={uname} onChange={(e) => setUname(e.target.value)} />
 
-                <TextField label="Email" fullWidth className='mb-3' value={email} onChange={(e) => setEmail(e.target.value)} />
+                <TextField size='small' label="Email" fullWidth className='mb-3' value={email} onChange={(e) => setEmail(e.target.value)} />
 
-                <TextField label="Password" type={showPassword ? "text" : "password"} fullWidth className='mb-3' value={password} onChange={(e) => setPassword(e.target.value)} InputProps={{
+                <TextField size='small' label="Password" type={showPassword ? "text" : "password"} fullWidth className='mb-3' value={password} onChange={(e) => setPassword(e.target.value)} InputProps={{
                     endAdornment:
                         <InputAdornment posistion="end" >
                             <IconButton onClick={() => setShowPassword(!showPassword)}>
@@ -47,7 +47,7 @@ const RegisterUser = () => {
                         </InputAdornment>
                 }} />
 
-                <TextField label="Confirm Password" fullWidth type='password' value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+                <TextField size='small' label="Confirm Password" fullWidth type='password' value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
 
                 <Button fullWidth variant='contained' onClick={submitHandler} className='mt-3 login-btn'>
                     Register

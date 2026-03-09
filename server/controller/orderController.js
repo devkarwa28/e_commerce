@@ -120,14 +120,30 @@ exports.placeOrder = async (req,res) =>{
 exports.getMyOrder = async (req,res) =>{
     try{
         const orders = await Order.find({user: req.user._id}).sort({createdAt: -1});
-        res.json(orders);
+        res.json({orders});
     }
     catch(err){
         console.log(err);
         res.status(500).json({message: "Server Error"})
     }
 }
-
+exports.getOrderById = async (req,res) =>{
+    try{
+        const order = await Order.findById(req.params.id);
+        if(!order)
+        {
+            return res.status(404).json({message:"Order Not Found"})
+        }
+        if(order.user.toString() !== req.user._id.toString())
+        {
+            return res.status(403).json({message: "Not Authorized"});
+        }
+        res.json({order});
+    }
+    catch(err){
+        res.status(500).json({message:"Server Error"})
+    }
+}
 exports.getAllOrders = async (req,res) =>{
     try{
         const page = Number(req.query.page) || 1;
