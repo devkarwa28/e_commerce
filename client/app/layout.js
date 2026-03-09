@@ -10,6 +10,7 @@ import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
 import AuthProvider from "@/context/AuthContext";
 import CartProvider from "@/context/CartContext";
+import AppLayout from "@/components/layout/AppLayout";
 
 
 export default function RootLayout({ children }) {
@@ -21,9 +22,9 @@ export default function RootLayout({ children }) {
           <CartProvider>
           <ThemeProvider theme={theme}>
           <CssBaseline/>
-          <Header/>
-          {children}
-          <Footer/>
+          <AppLayout>
+            {children}
+          </AppLayout>
         </ThemeProvider>
         </CartProvider>
         </AuthProvider>

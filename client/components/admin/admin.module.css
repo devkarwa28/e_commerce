@@ -1,0 +1,36 @@
+.adminSidebar {
+    width: 250px;
+    background: #1E1B18;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+.adminSidebar h6{
+color:#C89B3C;
+margin-bottom:30px;
+}
+.sideLink {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 10px;
+    border-radius: 6px;
+    text-decoration: none;
+    color: white;
+    transition: 300ms;
+}
+.topbar {
+  height: 70px;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 25px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+}
+.user{
+display:flex;
+align-items:center;
+gap:10px;
+}
