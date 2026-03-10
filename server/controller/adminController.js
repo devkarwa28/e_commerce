@@ -64,3 +64,54 @@ exports.getTopSellingProduct = async (req,res) =>{
         res.status(500).json({message: "Server Error"})
     }
 }
+exports.getRecentOrders = async (req,res) =>{
+    try{
+        const orders = await Order.find().sort({createdAt:-1}).limit(5).populate("user", "uname email");
+        res.json(orders);
+    }
+    catch(err){
+        console.log(err);
+        res.status(500).json({message:"Server Error"})
+    }
+}
+
+exports.getOrderStatusStats = async (req,res) =>{
+    try{
+        const stats = await Order.aggregate([
+            {
+                $group:{
+                    _id:"$orderStatus",
+                    count:{$sum:1}
+                }
+            }
+        ]);
+        res.json(stats);
+
+    }
+    catch(err){
+        console.log(err)
+        res.status(500).json({message:"Server Error"})
+    }
+}
+
+exports.getDailySales = async (req,res) =>{
+    try{
+        const sales = await Order.aggregate([
+            {$match: {paymentStatus:"Paid"}},
+            {
+                $group:{
+                    _id:{
+                        $dateToString:{format:"%Y-%m-%d",date:"$createdAt"}
+                    },
+                    revenue:{$sum:"$totalAmount"}
+                }
+            },
+            {$sort: {_id:1}}
+        ]);
+        res.json(sales);
+    }
+    catch(err){
+        console.log(err);
+        res.status(500).json({message:"Server Error"})
+    }
+}
