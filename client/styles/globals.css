@@ -159,7 +159,16 @@ body {
 }
 
 /* Admin Global css */
-
+.admin-card{
+  background:white;
+padding:25px;
+border-radius:14px;
+box-shadow:0 8px 25px rgba(0,0,0,0.08);
+transition: 300ms;
+}
+.admin-card:hover{
+  box-shadow:0 12px 30px rgba(0,0,0,0.12);
+}
 .admin-layout {
   display: flex;
   height: 100vh;
@@ -178,3 +187,4 @@ body {
 .admin-content{
   overflow-y: scroll;
 }
+

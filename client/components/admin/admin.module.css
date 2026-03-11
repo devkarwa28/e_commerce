@@ -88,3 +88,29 @@ padding:25px;
 border-radius:12px;
 box-shadow: 0 10px 30px rgba(0,0,0,0.06);
 }
+
+.productTable{
+  border-radius:10px;
+overflow:hidden;
+}
+.productImg{
+width:55px;
+height:55px;
+object-fit:cover;
+border-radius:8px;
+transition:.3s;
+}
+
+.productImg:hover{
+transform:scale(1.2);
+}
+.productRow{
+transition: all .25s ease;
+border-radius:10px;
+}
+
+.productRow:hover{
+background:#fafafa;
+transform:translateY(-2px);
+box-shadow:0 6px 18px rgba(0,0,0,0.08);
+}

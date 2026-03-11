@@ -16,7 +16,7 @@ const Sidebar = () => {
         { label: "Coupons", href: "/admin/coupons", icon: <LocalOffer /> },
     ];
     return (
-        <div className={adminSideStyles.adminSidebar}>
+        <aside className={adminSideStyles.adminSidebar}>
             <h4>Admin Panel</h4>
             {
                 menu.map(item=>(
@@ -25,7 +25,7 @@ const Sidebar = () => {
                     </Link>
                 ))
             }
-        </div>
+        </aside>
     )
 }
 

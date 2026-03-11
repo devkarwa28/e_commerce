@@ -6,6 +6,7 @@ import axios from 'axios';
 import RevenueChart from '@/components/admin/RevenueChart';
 import TopProducts from '@/components/admin/TopProducts';
 import DailySalesChart from '@/components/admin/DailySalesChart';
+import OrderStatusChart from '@/components/admin/OrderStatusChart';
 const AdminPage = () => {
   const [stats, setStats] = useState({
     totalRevenue: 0,
@@ -16,18 +17,23 @@ const AdminPage = () => {
   const [sales,setSales] = useState([]);
   const [topProducts,setTopProducts] = useState([]);
   const [dailySales,setDailySales] = useState([]);
+  const [orderStatus,setOrderStatus] = useState([]);
   const [loading, setLoading] = useState(true);
   const fetchStats = async () => {
     try {
       const statsRes = await axios.get("http://localhost:5000/api/admin/dashboard", { withCredentials: true });
       const salesRes = await axios.get("http://localhost:5000/api/admin/monthly-sales",{withCredentials:true});
-      const topRes = await axios.get("http://localhost:5000/api/admin/top-products",{withCredentials: true})
-      const dailyRes = await axios.get("http://localhost:5000/api/admin/get-daily-sales",{withCredentials:true})
+      const topRes = await axios.get("http://localhost:5000/api/admin/top-products",{withCredentials: true});
+      const orderRes = await axios.get("http://localhost:5000/api/admin/order-status",{withCredentials:true});
+
+      const dailyRes = await axios.get("http://localhost:5000/api/admin/get-daily-sales",{withCredentials:true});
+
 
       setStats(statsRes.data);
       setSales(salesRes.data);
       setTopProducts(topRes.data);
       setDailySales(dailyRes.data);
+      setOrderStatus(orderRes.data)
     }
     catch (err) {
       console.log(err)
@@ -78,7 +84,9 @@ const AdminPage = () => {
         <div className="col-lg-8">
           <DailySalesChart data={dailySales} />
         </div>
-
+        <div className='col-lg-4'>
+          <OrderStatusChart data={orderStatus} />
+        </div>
       </div>
     </div>
   )
