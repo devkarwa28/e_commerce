@@ -4,6 +4,8 @@ import dashboardStyles from './adminPanel.module.css'
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import RevenueChart from '@/components/admin/RevenueChart';
+import TopProducts from '@/components/admin/TopProducts';
+import DailySalesChart from '@/components/admin/DailySalesChart';
 const AdminPage = () => {
   const [stats, setStats] = useState({
     totalRevenue: 0,
@@ -13,16 +15,19 @@ const AdminPage = () => {
   });
   const [sales,setSales] = useState([]);
   const [topProducts,setTopProducts] = useState([]);
+  const [dailySales,setDailySales] = useState([]);
   const [loading, setLoading] = useState(true);
   const fetchStats = async () => {
     try {
       const statsRes = await axios.get("http://localhost:5000/api/admin/dashboard", { withCredentials: true });
       const salesRes = await axios.get("http://localhost:5000/api/admin/monthly-sales",{withCredentials:true});
       const topRes = await axios.get("http://localhost:5000/api/admin/top-products",{withCredentials: true})
+      const dailyRes = await axios.get("http://localhost:5000/api/admin/get-daily-sales",{withCredentials:true})
 
       setStats(statsRes.data);
       setSales(salesRes.data);
       setTopProducts(topRes.data);
+      setDailySales(dailyRes.data);
     }
     catch (err) {
       console.log(err)
@@ -57,14 +62,21 @@ const AdminPage = () => {
 
       </div>
 
-      <div className="row">
+      <div className="row mb-4">
 
         <div className="col-lg-8">
           <RevenueChart data={sales} />
         </div>
 
         <div className="col-lg-4">
+          <TopProducts products={topProducts}/>
+        </div>
 
+      </div>
+      <div className="row">
+
+        <div className="col-lg-8">
+          <DailySalesChart data={dailySales} />
         </div>
 
       </div>

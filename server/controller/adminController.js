@@ -96,19 +96,34 @@ exports.getOrderStatusStats = async (req,res) =>{
 
 exports.getDailySales = async (req,res) =>{
     try{
-        const sales = await Order.aggregate([
-            {$match: {paymentStatus:"Paid"}},
-            {
-                $group:{
-                    _id:{
-                        $dateToString:{format:"%Y-%m-%d",date:"$createdAt"}
-                    },
-                    revenue:{$sum:"$totalAmount"}
+       const last30days = new Date();
+       last30days.setDate(last30days.getDate() - 30);
+
+       const sales = await Order.aggregate([
+        {
+            $match: {
+                paymentStatus:"Paid",
+                createdAt:{$gte:last30days}
+            }
+        },
+        {
+            $group:{
+                _id:{
+                    $dateToString:{
+                        format: "%Y-%m-%d",
+                        date:"$createdAt"
+                    }
+                },
+                revenue:{
+                    $sum: {$ifNull: ['$finalAmount','$totalAmount']}
                 }
-            },
-            {$sort: {_id:1}}
-        ]);
-        res.json(sales);
+            }
+        },
+        {
+            $sort: {_id:1}
+        }
+       ]);
+       res.json(sales);
     }
     catch(err){
         console.log(err);
