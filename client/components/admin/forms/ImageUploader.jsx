@@ -32,7 +32,7 @@ const ImageUploader = ({ setMainImage, setGalleryImage }) => {
 
 
     return (
-        <div className="row">
+        <div className="row mt-4">
 
             <div className="col-lg-12">
                 <h5 className="mb-3">Main Product Image</h5>

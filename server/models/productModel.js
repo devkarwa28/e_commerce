@@ -1,5 +1,39 @@
 let mongoose = require('mongoose');
 
+const seoSchema = new mongoose.Schema(
+{
+  metaTitle: {
+    type: String,
+    trim: true,
+    maxlength: 60
+  },
+
+  metaDescription: {
+    type: String,
+    trim: true,
+    maxlength: 200
+  },
+
+  metaKeywords: {
+    type: [String],
+    default: []
+  },
+
+  canonicalUrl: {
+    type: String,
+    trim: true
+  },
+
+  ogTitle: String,
+  ogDescription: String,
+  ogImage: String,
+
+  twitterTitle: String,
+  twitterDescription: String,
+  twitterImage: String
+
+},{ _id:false });
+
 const weightOptionSchema = new mongoose.Schema({
     label:{
         type: String,
@@ -106,7 +140,7 @@ const productSchema = new mongoose.Schema({
     dimensions: String,
     },
     nutritionInfo: nutritionSchema,
-
+    seo: seoSchema,
     sold:{
         type: Number,
         default: 0,
