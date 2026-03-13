@@ -5,10 +5,12 @@ import imgUploadStyle from './forms.module.css'
 import { Button, IconButton } from "@mui/material";
 import { CloudUpload, Delete } from "@mui/icons-material";
 
-const ImageUploader = ({ mainImage, galleryImage, setMainImage, setGalleryImage }) => {
+const ImageUploader = ({ mainImage, galleryImage, setMainImage, setGalleryImage, existingImages = [],
+    setRemovedImages }) => {
 
     const [mainImgpreview, setMainImgPreview] = useState(mainImage);
     const [galleryImgPreview, setGalleryImgPreview] = useState(galleryImage);
+    const [existingGallery, setExistingGallery] = useState(existingImages);
 
     useEffect(() => {
 
@@ -24,25 +26,47 @@ const ImageUploader = ({ mainImage, galleryImage, setMainImage, setGalleryImage 
         }
 
     }, [mainImage, galleryImage]);
+
+    useEffect(() => {
+        setExistingGallery(existingImages);
+    }, [existingImages]);
+
     const handleMainImage = (e) => {
         const file = e.target.files[0];
         setMainImage(file);
         setMainImgPreview(URL.createObjectURL(file));
     }
+
     const handleGalleryImage = (e) => {
         const files = Array.from(e.target.files);
-        setGalleryImage(files);
+
+        setGalleryImage(prev => [...prev, ...files]);
 
         const urls = files.map(file => URL.createObjectURL(file));
-        setGalleryImgPreview(urls);
+
+        setGalleryImgPreview(prev => [...prev, ...urls]);
+
 
     }
 
     const removeImage = (index) => {
-        const updatePreview = [...galleryImgPreview];
-        updatePreview.splice(index, 1);
-        setGalleryImgPreview(updatePreview);
+        setGalleryImgPreview(prev =>
+            prev.filter((_, i) => i !== index)
+        );
+
+        setGalleryImage(prev =>
+            prev.filter((_, i) => i !== index)
+        );
     }
+
+    const removeExistingImage = (img) => {
+
+        setRemovedImages(prev => [...prev, img]);
+        setExistingGallery(prev =>
+            prev.filter(i => i !== img)
+        );
+
+    };
 
 
     return (
@@ -93,6 +117,34 @@ const ImageUploader = ({ mainImage, galleryImage, setMainImage, setGalleryImage 
                             </div>
                         ))
                     }
+                </div>
+            </div>
+
+            <div className="col-lg-12 mt-4">
+                <h6>Existing Images</h6>
+
+                <div className="row">
+
+                    {existingGallery.map((img, index) => (
+                        <div className="col-lg-2 my-2" key={index}>
+
+                            <div className={imgUploadStyle.imgBox}>
+
+                                <img src={img} />
+
+                                <IconButton
+                                    size="small"
+                                    onClick={() => removeExistingImage(img)}
+                                    className={imgUploadStyle.iconBtn}
+                                >
+                                    <Delete fontSize="small" />
+                                </IconButton>
+
+                            </div>
+
+                        </div>
+                    ))}
+
                 </div>
             </div>
         </div>

@@ -1,21 +1,11 @@
 "use client";
 
 import { TextField } from "@mui/material";
-import { useState } from "react";
 
-const SeoForm = ({setSeo}) => {
-    const [seoData, setSeoData] = useState({
-        metaTitle: "",
-        metaDescription: "",
-        metaKeywords: "",
-        ogTitle: "",
-        ogDescription: "",
-        ogImage: ""
-    });
+const SeoForm = ({ seo, setSeo }) => {
+
     const handleChange = (e) => {
-        const update = { ...seoData, [e.target.name]: e.target.value };
-        setSeoData(update);
-        setSeo(update);
+        setSeo({...seo,[e.target.name]: e.target.value});
     };
     return (
         <div className="row mt-5">
@@ -33,7 +23,7 @@ const SeoForm = ({setSeo}) => {
                     name="metaTitle"
                     fullWidth
                     size="small"
-                    value={seoData.metaTitle}
+                    value={seo.metaTitle || ""}
                     onChange={handleChange}
                 />
             </div>
@@ -44,7 +34,7 @@ const SeoForm = ({setSeo}) => {
                     name="metaKeywords"
                     fullWidth
                     size="small"
-                    value={seoData.metaKeywords}
+                    value={seo.metaKeywords}
                     onChange={handleChange}
                 />
             </div>
@@ -57,7 +47,7 @@ const SeoForm = ({setSeo}) => {
                     multiline
                     rows={3}
                     size="small"
-                    value={seoData.metaDescription}
+                    value={seo.metaDescription}
                     onChange={handleChange}
                 />
             </div>
@@ -68,7 +58,7 @@ const SeoForm = ({setSeo}) => {
                     name="ogTitle"
                     fullWidth
                     size="small"
-                    value={seoData.ogTitle}
+                    value={seo.ogTitle}
                     onChange={handleChange}
                 />
             </div>
@@ -79,7 +69,7 @@ const SeoForm = ({setSeo}) => {
                     name="ogImage"
                     fullWidth
                     size="small"
-                    value={seoData.ogImage}
+                    value={seo.ogImage}
                     onChange={handleChange}
                 />
             </div>
@@ -92,7 +82,7 @@ const SeoForm = ({setSeo}) => {
                     multiline
                     rows={2}
                     size="small"
-                    value={seoData.ogDescription}
+                    value={seo.ogDescription}
                     onChange={handleChange}
                 />
             </div>

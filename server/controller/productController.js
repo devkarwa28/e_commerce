@@ -198,6 +198,7 @@ exports.updateProduct = async (req, res) => {
       isFeatured,
       isActive,
       seo,
+      removedImages,
     } = req.body;
 
     if (pname) {
@@ -296,6 +297,17 @@ exports.updateProduct = async (req, res) => {
       );
       product.images = galleryImages;
     }
+    if (removedImages) {
+      try {
+        const removed = JSON.parse(req.body.removedImages);
+
+        product.images = product.images.filter((img) => !removed.includes(img));
+      } catch (err) {
+        return res.status(400).json({
+          message: "Invalid removed images",
+        });
+      }
+    }
     await product.save();
 
     res.json({
@@ -332,20 +344,16 @@ exports.toggleProductStatus = async (req, res) => {
 
 exports.getProductById = async (req, res) => {
   try {
-
     const { id } = req.params;
 
-    const product = await Product.findById(id)
-      .populate("category", "cname");
+    const product = await Product.findById(id).populate("category", "cname");
 
     if (!product) {
-      return res.status(404).json({message: "Product not found"});
+      return res.status(404).json({ message: "Product not found" });
     }
-
     res.json(product);
-
   } catch (err) {
     console.log(err);
-    res.status(500).json({message: "Server Error"});
+    res.status(500).json({ message: "Server Error" });
   }
 };

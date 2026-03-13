@@ -23,6 +23,8 @@ const ProductForm = ({ editData }) => {
     const [specifications, setSpecifications] = useState({});
     const [nutrition, setNutrition] = useState({});
     const [seo, setSeo] = useState({});
+    const [removedImages, setRemovedImages] = useState([]);
+
     const router = useRouter();
 
 
@@ -83,7 +85,6 @@ const ProductForm = ({ editData }) => {
                 isFeatured: editData.isFeatured,
                 isActive: editData.isActive
             });
-
             setWeightOptions(editData.weightOptions || []);
             setSpecifications(editData.specifications || {});
             setNutrition(editData.nutritionInfo || {});
@@ -127,6 +128,7 @@ const ProductForm = ({ editData }) => {
             formData.append("specifications", JSON.stringify(specifications));
             formData.append("nutritionInfo", JSON.stringify(nutrition));
             formData.append("seo", JSON.stringify(seo));
+            formData.append("removedImages", JSON.stringify(removedImages));
 
             if (editData) {
                 await axios.put(
@@ -151,7 +153,7 @@ const ProductForm = ({ editData }) => {
                 alert("Product Created Successfully");
             }
 
-            
+
             router.push("/admin/products")
         } catch (err) {
             console.log(err);
@@ -163,7 +165,7 @@ const ProductForm = ({ editData }) => {
                 <div className="row">
 
                     <div className="col-lg-6">
-                        <TextField fullWidth label="Product Name" name="pname" className="mb-3" onChange={handleChange} error={!!errors.pname} helperText={errors.pname} />
+                        <TextField fullWidth label="Product Name" name="pname" className="mb-3" onChange={handleChange} value={form.pname} error={!!errors.pname} helperText={errors.pname} />
                     </div>
 
                     <div className="col-lg-6">
@@ -180,7 +182,7 @@ const ProductForm = ({ editData }) => {
                     </div>
 
                     <div className="col-lg-12">
-                        <TextField fullWidth label="Description" name="description" multiline rows={4} className="mb-3" onChange={handleChange} error={!!errors.description} helperText={errors.description} />
+                        <TextField fullWidth label="Description" value={form.description} name="description" multiline rows={4} className="mb-3" onChange={handleChange} error={!!errors.description} helperText={errors.description} />
                     </div>
 
                     <div className="col-lg-6 d-flex">
@@ -200,7 +202,10 @@ const ProductForm = ({ editData }) => {
             case 1: return <ImageUploader mainImage={mainImage}
                 galleryImage={galleryImage}
                 setMainImage={setMainImage}
-                setGalleryImage={setGalleryImage} />
+                setGalleryImage={setGalleryImage}
+                existingImages={editData?.images || []}
+                setRemovedImages={setRemovedImages}
+            />
 
 
             case 2: return <WeightsOption productName={form.pname} weightOptions={weightOptions} setWeightOptions={setWeightOptions} />
@@ -209,7 +214,7 @@ const ProductForm = ({ editData }) => {
 
             case 4: return <NutritentsInfo nutrition={nutrition} setNutrition={setNutrition} />
 
-            case 5: return <SeoForm setSeo={setSeo} />
+            case 5: return <SeoForm seo={seo} setSeo={setSeo} />
 
             case 6:
                 return (
@@ -252,10 +257,7 @@ const ProductForm = ({ editData }) => {
             </motion.div>
 
             <div className="d-flex justify-content-between mt-4">
-                <Button
-                    disabled={activeStep === 0}
-                    onClick={prevStep}
-                >
+                <Button type="button" disabled={activeStep === 0} onClick={prevStep}>
                     Back
                 </Button>
 
@@ -267,7 +269,7 @@ const ProductForm = ({ editData }) => {
 
                 ) : (
 
-                    <Button onClick={nextStep} variant="contained">
+                    <Button type="button" onClick={nextStep} variant="contained">
                         Next
                     </Button>
 

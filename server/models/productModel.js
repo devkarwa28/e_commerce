@@ -53,6 +53,8 @@ const weightOptionSchema = new mongoose.Schema({
     },
     sku:{
         type: String,
+        required: true,
+        unique: true,
     }
 },{_id: false});
 

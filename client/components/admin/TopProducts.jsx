@@ -8,7 +8,7 @@ const TopProducts = ({products}) => {
         <h5>Top Selling Products</h5>
         {
             products.map(product => (
-                <div className='d-flex justify-content-between py-2 border-bottom'>
+                <div key={product._id} className='d-flex justify-content-between py-2 border-bottom'>
                     <span>{product.pname}</span>
                     <span>{product.totalSold}</span>
                 </div>
