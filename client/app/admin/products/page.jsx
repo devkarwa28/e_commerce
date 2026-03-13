@@ -21,6 +21,23 @@ const ProductsPage = () => {
             console.log(err)
         }
     }
+    const toggleStatus = async (id) => {
+
+        try {
+
+            const res = await axios.patch(`http://localhost:5000/api/products/${id}`,{},{ withCredentials:true });
+
+            setProducts(prev =>
+                prev.map(p =>
+                    p._id === id ? { ...p, isActive: !p.isActive } : p
+                )
+            );
+
+        } catch (err) {
+            console.log(err);
+        }
+
+    };
     useEffect(() => {
         fetchProducts();
     }, []);
@@ -28,14 +45,14 @@ const ProductsPage = () => {
         <section className="container py-4">
             <div className="admin-card">
                 <div className="d-flex justify-content-between align-items-center mb-4">
-                <h2>Products</h2>
-                <Button variant="contained" onClick={() => router.push("/admin/products/create")}>
-                    Add Product
-                </Button>
-            </div>
-            <TextField fullWidth placeholder="Search Products" value={search} onChange={(e) => setSearch(e.target.value)} sx={{my: 3}}/>
+                    <h2>Products</h2>
+                    <Button variant="contained" onClick={() => router.push("/admin/products/create")}>
+                        Add Product
+                    </Button>
+                </div>
+                <TextField fullWidth placeholder="Search Products" value={search} onChange={(e) => setSearch(e.target.value)} sx={{ my: 3 }} />
 
-            <ProductTable products={products} />
+                <ProductTable products={products} onToggleStatus={toggleStatus} />
             </div>
         </section>
     )

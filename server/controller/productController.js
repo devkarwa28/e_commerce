@@ -86,8 +86,8 @@ exports.createProduct = async (req, res) => {
       parsedNutrition = JSON.parse(nutritionInfo);
     }
 
-    if(seo){
-        parsedSeo = JSON.parse(seo);
+    if (seo) {
+      parsedSeo = JSON.parse(seo);
     }
 
     const product = await Product.create({
@@ -104,13 +104,11 @@ exports.createProduct = async (req, res) => {
       seo: parsedSeo,
       isFeatured: isFeatured === "true",
     });
-    res
-      .status(201)
-      .json({
-        success: true,
-        message: "Product Created SuccessFully",
-        product,
-      });
+    res.status(201).json({
+      success: true,
+      message: "Product Created SuccessFully",
+      product,
+    });
   } catch (err) {
     res.status(500).json({ message: "Server Error" });
   }
@@ -199,9 +197,18 @@ exports.updateProduct = async (req, res) => {
       nutritionInfo,
       isFeatured,
       isActive,
+      seo,
     } = req.body;
 
     if (pname) {
+      const slug = slugify(pname, { lower: true });
+
+      const existingProduct = await Product.findOne({ slug, _id: { $ne: id } });
+
+      if (existingProduct) {
+        return res.status(400).json({ message: "Product name already exists" });
+      }
+
       product.pname = pname;
       product.slug = slugify(pname, { lower: true });
     }
@@ -212,7 +219,7 @@ exports.updateProduct = async (req, res) => {
 
     if (category) {
       const categoryExist = await Category.findById(category);
-      if (!category) {
+      if (!categoryExist) {
         return res.status(400).json({ message: "No Category Found" });
       }
       product.category = category;
@@ -233,6 +240,7 @@ exports.updateProduct = async (req, res) => {
         return res.status(400).json({ message: "Invalid benifits format" });
       }
     }
+
     if (weightOptions) {
       try {
         const parsedWeightOptions = JSON.parse(weightOptions);
@@ -266,6 +274,15 @@ exports.updateProduct = async (req, res) => {
         return res.status(400).json({ message: "invalid nutrition info" });
       }
     }
+    if (seo) {
+      try {
+        product.seo = JSON.parse(seo);
+      } catch (err) {
+        return res.status(400).json({
+          message: "Invalid SEO format",
+        });
+      }
+    }
 
     if (req.files && req.files.mainImage) {
       const mainImageUrl = `${req.protocol}://${req.get("host")}/uploads/${req.files.mainImage[0].filename}`;
@@ -291,7 +308,7 @@ exports.updateProduct = async (req, res) => {
   }
 };
 
-exports.disableProduct = async (req, res) => {
+exports.toggleProductStatus = async (req, res) => {
   try {
     const { id } = req.params;
     const product = await Product.findById(id);
@@ -299,14 +316,36 @@ exports.disableProduct = async (req, res) => {
     if (!product) {
       return res.status(404).json({ message: "No Product Found" });
     }
-    product.isActive = false;
+
+    product.isActive = !product.isActive;
 
     await product.save();
+
     res.json({
       success: true,
       message: "Product Deactivated",
     });
   } catch (err) {
     res.status(500).json({ message: "Server Error" });
+  }
+};
+
+exports.getProductById = async (req, res) => {
+  try {
+
+    const { id } = req.params;
+
+    const product = await Product.findById(id)
+      .populate("category", "cname");
+
+    if (!product) {
+      return res.status(404).json({message: "Product not found"});
+    }
+
+    res.json(product);
+
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({message: "Server Error"});
   }
 };

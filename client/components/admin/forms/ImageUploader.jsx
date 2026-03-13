@@ -1,15 +1,29 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import imgUploadStyle from './forms.module.css'
 import { Button, IconButton } from "@mui/material";
 import { CloudUpload, Delete } from "@mui/icons-material";
 
-const ImageUploader = ({ setMainImage, setGalleryImage }) => {
+const ImageUploader = ({ mainImage, galleryImage, setMainImage, setGalleryImage }) => {
 
-    const [mainImgpreview, setMainImgPreview] = useState();
-    const [galleryImgPreview, setGalleryImgPreview] = useState([]);
+    const [mainImgpreview, setMainImgPreview] = useState(mainImage);
+    const [galleryImgPreview, setGalleryImgPreview] = useState(galleryImage);
 
+    useEffect(() => {
+
+        if (mainImage) {
+            setMainImgPreview(URL.createObjectURL(mainImage));
+        }
+
+        if (galleryImage && galleryImage.length > 0) {
+            const urls = galleryImage.map((img) =>
+                typeof img === "string" ? img : URL.createObjectURL(img)
+            );
+            setGalleryImgPreview(urls);
+        }
+
+    }, [mainImage, galleryImage]);
     const handleMainImage = (e) => {
         const file = e.target.files[0];
         setMainImage(file);
@@ -37,9 +51,9 @@ const ImageUploader = ({ setMainImage, setGalleryImage }) => {
             <div className="col-lg-12">
                 <h5 className="mb-3">Main Product Image</h5>
                 <div className={imgUploadStyle.imgUpBox}>
-                    <Button variant="contained"  component="label" startIcon={<CloudUpload />}>
-                    Upload Main Image
-                    <input hidden accept="image/*" onChange={handleMainImage} type="file"/>
+                    <Button variant="contained" component="label" startIcon={<CloudUpload />}>
+                        Upload Main Image
+                        <input hidden accept="image/*" onChange={handleMainImage} type="file" />
                     </Button>
                 </div>
             </div>

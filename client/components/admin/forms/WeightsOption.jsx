@@ -4,9 +4,29 @@ import { Add, CurrencyRupee, Delete, Inventory, Label } from "@mui/icons-materia
 import { Button, IconButton, InputAdornment, TextField } from "@mui/material";
 import { useState } from "react";
 
-const WeightsOption = ({ setWeightOptions }) => {
-    const [options, setOptions] = useState([]);
+const WeightsOption = ({ productName, weightOptions, setWeightOptions }) => {
+    const [options, setOptions] = useState(weightOptions);
 
+    const generateSKU = (productName, label) => {
+
+        if (!productName || !label) return "";
+
+        const namePart = productName.replace(/\s+/g, "").substring(0, 6).toUpperCase();
+
+        const labelPart = label.replace(/\s+/g, "").toUpperCase();
+
+        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        let randomLetters = "";
+
+        for (let i = 0; i < 3; i++) {
+            randomLetters += letters[Math.floor(Math.random() * letters.length)];
+        }
+
+        const numbers = Math.floor(10 + Math.random() * 90);
+
+        return `${namePart}-${labelPart}-${randomLetters}${numbers}`;
+
+    }
     const addOptions = () => {
         const newOptions = [...options, { label: "", price: "", mrp: "", stock: "", sku: "" }];
         setOptions(newOptions);
@@ -23,6 +43,9 @@ const WeightsOption = ({ setWeightOptions }) => {
     const handleChange = (index, field, value) => {
         const updated = [...options];
         updated[index][field] = value;
+        if (field === "label") {
+            updated[index].sku = generateSKU(productName, value);
+        }
         setOptions(updated);
         setWeightOptions(updated);
     };
@@ -41,7 +64,7 @@ const WeightsOption = ({ setWeightOptions }) => {
                             <div className="col-lg-2 col-md-6">
                                 <TextField label="Label" fullWidth size="small" value={opt.label} onChange={(e) => handleChange(index, 'label', e.target.value)} slotProps={{
                                     input: {
-                                        startAdornment: <InputAdornment position="start"><Label fontSize="small"/></InputAdornment>,
+                                        startAdornment: <InputAdornment position="start"><Label fontSize="small" /></InputAdornment>,
                                     },
                                 }} />
                             </div>
@@ -65,7 +88,7 @@ const WeightsOption = ({ setWeightOptions }) => {
                             <div className="col-lg-2 col-md-6">
                                 <TextField label="Stock" type="number" fullWidth size="small" value={opt.stock} onChange={(e) => handleChange(index, 'stock', e.target.value)} slotProps={{
                                     input: {
-                                        startAdornment: <InputAdornment position="start"><Inventory fontSize="small"/></InputAdornment>,
+                                        startAdornment: <InputAdornment position="start"><Inventory fontSize="small" /></InputAdornment>,
                                     },
                                 }} />
                             </div>

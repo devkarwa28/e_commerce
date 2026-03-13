@@ -5,7 +5,7 @@ import { Button } from "@mui/material";
 import { useRouter } from "next/navigation";
 import productTableStyle from './admin.module.css';
 
-const ProductTable = ({ products }) => {
+const ProductTable = ({ products,onToggleStatus }) => {
     const router = useRouter()
     return (
         <table className={`${productTableStyle.ProductTable} table table-hover align-middle`}>
@@ -71,7 +71,7 @@ const ProductTable = ({ products }) => {
 
                             </td>
 
-                            <td className="text-center" style={{fontWeight:600,color: "#5c4033"}}>
+                            <td className="text-center" style={{ fontWeight: 600, color: "#5c4033" }}>
                                 ₹{minPrice} - ₹{maxPrice}
                             </td>
 
@@ -93,7 +93,7 @@ const ProductTable = ({ products }) => {
                             </td>
 
                             <td className="text-center">
-                                {<Star color="secondary"/>} {product.ratings}
+                                {<Star color="secondary" />} {product.ratings}
                             </td>
 
                             <td className="text-center">
@@ -111,13 +111,19 @@ const ProductTable = ({ products }) => {
 
                                 <div className="d-flex gap-2 justify-content-center">
 
-                                   <Button size="medium" startIcon={<Edit/>} variant="contained"    onClick={() => router.push(`/admin/products/edit/${product._id}`)}>
-                                   Edit
-                                   </Button>
+                                    <Button size="medium" startIcon={<Edit />} variant="contained" onClick={() => router.push(`/admin/products/edit/${product._id}`)}>
+                                        Edit
+                                    </Button>
 
-                                   <Button size="medium" startIcon={<Delete/>} variant="outlined" >
-                                    Delete
-                                   </Button>
+                                    <Button
+                                        size="medium"
+                                        startIcon={<Delete />}
+                                        variant="outlined"
+                                        color={product.isActive ? "error" : "success"}
+                                        onClick={() => onToggleStatus(product._id)}
+                                    >
+                                        {product.isActive ? "Disable" : "Enable"}
+                                    </Button>
                                 </div>
 
                             </td>
