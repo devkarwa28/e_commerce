@@ -59,10 +59,10 @@ const FilterSidebar = ({ filters, setFilters }) => {
         filters.inStock,
     ].filter(Boolean).length;
 
-    useEffect(() => {
-        axios
-            .get("http://localhost:5000/api/category")
+    useEffect(() => {axios.get("http://localhost:5000/api/category")
+        
             .then((res) => setCategories(res.data))
+
             .catch((err) => console.log(err));
     }, []);
 
@@ -132,9 +132,11 @@ const FilterSidebar = ({ filters, setFilters }) => {
 
 
             <Accordion defaultExpanded disableGutters sx={accordionSx}>
+
                 <AccordionSummary expandIcon={<ExpandMore sx={{ fontSize: 18, color: "#999" }} />} sx={accordionSummarySx}>
                     <Typography sx={sectionLabelSx}>Search</Typography>
                 </AccordionSummary>
+
                 <AccordionDetails sx={{ px: 2.5, pt: 0, pb: 2 }}>
                     <TextField
                         fullWidth
@@ -335,7 +337,7 @@ const FilterSidebar = ({ filters, setFilters }) => {
                 </AccordionSummary>
                 <AccordionDetails sx={{ px: 2.5, pt: 0, pb: 2, display: "flex", flexDirection: "column", gap: 0.5 }}>
 
-                    {/* Featured toggle */}
+                
                     <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", py: 0.5 }}>
                         <Typography sx={{ fontSize: "13px", fontWeight: 500, color: "#333" }}>
                             Featured Only
@@ -353,7 +355,7 @@ const FilterSidebar = ({ filters, setFilters }) => {
 
                     <Divider sx={{ borderColor: "#f5f0ea" }} />
 
-                    {/* In Stock toggle */}
+                    
                     <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", py: 0.5 }}>
                         <Typography sx={{ fontSize: "13px", fontWeight: 500, color: "#333" }}>
                             In Stock Only
@@ -371,7 +373,7 @@ const FilterSidebar = ({ filters, setFilters }) => {
                 </AccordionDetails>
             </Accordion>
 
-            {/* ── Apply Button ── */}
+            
             <Box sx={{ px: 2.5, py: 2.5 }}>
                 <Button
                     fullWidth
