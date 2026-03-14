@@ -20,7 +20,7 @@ productRouter.put("/:id",authMiddleware,AdminOnly,upload.fields([
     {name: "images",maxCount: 10}
 ]),updateProduct);
 
-productRouter.get("/:id",authMiddleware,AdminOnly,getProductById);
+productRouter.get("admin/:id",authMiddleware,AdminOnly,getProductById);
 
 //Disable Product
 productRouter.patch("/:id",authMiddleware,AdminOnly,toggleProductStatus);

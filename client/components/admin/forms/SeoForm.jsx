@@ -5,7 +5,7 @@ import { TextField } from "@mui/material";
 const SeoForm = ({ seo, setSeo }) => {
 
     const handleChange = (e) => {
-        setSeo({...seo,[e.target.name]: e.target.value});
+        setSeo({ ...seo, [e.target.name]: e.target.value });
     };
     return (
         <div className="row mt-5">

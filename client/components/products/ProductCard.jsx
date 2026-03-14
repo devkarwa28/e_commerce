@@ -6,9 +6,16 @@ import Link from "next/link";
 
 
 const ProductCard = ({ product }) => {
+
+
    const startingOption = product.weightOptions?.[0];
   const price = startingOption?.price || product.baseprice;
   const mrp = startingOption?.mrp || product.baseMRP;
+
+  const discount 
+
+
+
   return (
     <Card className={productcardStyles.productCard}>
       <div className={productcardStyles.imageSection}>

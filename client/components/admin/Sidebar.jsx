@@ -19,9 +19,9 @@ const Sidebar = () => {
         <aside className={adminSideStyles.adminSidebar}>
             <h4>Admin Panel</h4>
             {
-                menu.map(item=>(
+                menu.map(item => (
                     <Link key={item.label} href={item.href} className={`${adminSideStyles.sideLink} ${path === item.href ? "active" : ""}`}>
-                    {item.icon} <span>{item.label}</span>
+                        {item.icon} <span>{item.label}</span>
                     </Link>
                 ))
             }

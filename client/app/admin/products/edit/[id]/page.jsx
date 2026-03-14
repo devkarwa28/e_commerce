@@ -11,7 +11,7 @@ const ProductEditPage = () => {
 
     const fetchProduct = async () =>{
         try{
-            const res = await axios.get( `http://localhost:5000/api/products/${id}`);
+            const res = await axios.get( `http://localhost:5000/api/products/admin/${id}`);
 
             setProduct(res.data)
         }
