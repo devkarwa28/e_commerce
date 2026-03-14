@@ -1,66 +1,252 @@
-.productCard{
-    border-radius: 4;
+.productCard {
+    position: relative;
+    background: #ffffff;
+    border-radius: 20px;
     overflow: hidden;
-    transition: all 300ms ease;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    border: 1px solid #f0ebe4;
+    transition: transform 360ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 360ms ease;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
 }
-.productCard:hover{
-    box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+
+.productCard:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 4px 6px rgba(92, 64, 51, 0.04), 0 12px 28px rgba(92, 64, 51, 0.10), 0 24px 48px rgba(92, 64, 51, 0.08);
 }
-.imageSection{
+
+.imageSection {
     position: relative;
     height: 230px;
-    background-color:#F8F5F1;
+    background-color: #F8F5F1;
     overflow: hidden;
 }
-.imageSection img{
-    object-fit: cover;
-    transition: 400ms ease;
+
+.mainImg {
     width: 100%;
     height: 100%;
+    object-fit: cover;
+    transition: transform 500ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    display: block;
 }
-.imageSection img:hover{
+
+
+.productCard:hover .mainImg {
     transform: scale(1.08);
 }
-.whishlistIcon{
+
+.imgOverlay {
     position: absolute;
-    top: 10;
-    right: 10;
-    background-color: #ffffff;
+    inset: 0;
+    background: linear-gradient(to top,
+            rgba(30, 20, 12, 0.45) 0%,
+            rgba(30, 20, 12, 0) 55%);
+    opacity: 0;
+    transition: opacity 350ms ease;
 }
-.whishlistIcon:hover{
-    background-color: #C89B3C;
-    color:#fff;
+
+.productCard:hover .imgOverlay {
+    opacity: 1;
 }
-.CardContent{
-    padding: 15px;
+
+.offerBadge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
 }
-.CardContent h6{
-    font-weight: 600;
-    margin-bottom: 6px;
-    color: #1A1A1A
-}
-.addtocart{
-    background-color: var( --color-primary) !important;
-    border-radius: 12px !important;
-}
-.addtocart:hover{
-    background-color: var(--color-btn-hover) !important;
-}
-.priceSection{
-    margin: 10px 0px 15px 0px;
-}
-.priceSection span{
+
+.badgeDiscount {
+    background: #5c4033;
+    color: #fff;
+    font-size: 11px;
     font-weight: 700;
-    font-size: 18px;
-    color: var(--color-primary);
-    margin-right: 8px;
+    letter-spacing: 0.5px;
+    padding: 4px 10px;
+    border-radius: 50px;
+    display: inline-block;
 }
-.visibilityIcon{
-    border:1px solid var(--color-gold) !important;
-    color: var(--color-gold) !important;
+
+.badgeFeatured {
+    background: #C89B3C;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 4px 10px;
+    border-radius: 50px;
+    display: inline-block;
 }
-.visibilityIcon:hover{
-     background-color: var(--color-gold) !important;
-     color: #fff !important;
+
+.wishBtn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(4px);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #aaa;
+    transition: all 280ms ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
 }
+
+.wishBtn:hover {
+    background: #fff;
+    color: #e53935;
+    transform: scale(1.12);
+}
+
+.wishActive {
+    background: #fff0f0;
+    color: #e53935;
+}
+
+.quickVeiw {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 14px;
+    transform: translateY(100%);
+    transition: transform 320ms cubic-bezier(0.34, 1.2, 0.64, 1);
+}
+
+.productCard:hover .quickVeiw {
+    transform: translateY(0);
+}
+
+.quickViewBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 9px 0;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    border-radius: 12px;
+    color: #5c4033;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    text-decoration: none;
+    border: 1px solid rgba(92, 64, 51, 0.15);
+    transition: 200ms ease, color 200ms ease;
+}
+
+.quickViewBtn:hover {
+    background: #5c4033;
+    color: #fff;
+}
+
+
+.CardContent {
+    padding: 16px 18px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+}
+
+.categoryName {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: #C89B3C;
+    display: inline-block;
+}
+
+.productName {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0;
+    display: block;
+    line-height: 1.35;
+    overflow: hidden;
+}
+
+.ratingRow {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.ratingCount{
+    font-size: 12px;
+    color: #999;
+}
+.weightRow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+.weightPill {
+    font-size: 11px;
+    font-weight: 600;
+    color: #5c4033;
+    background: #f5ede7;
+    border: 1px solid #e8d5c9;
+    padding: 3px 9px;
+    border-radius: 50px;
+}
+.weightMore {
+    font-size: 11px;
+    color: #aaa;
+    padding: 3px 6px;
+    align-self: center;
+}
+
+.priceSection{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: auto;
+}
+.priceBlock{
+    display: flex;
+    align-items: baseline;
+    gap: 7px;
+}
+.price{
+    font-size: 20px;
+    font-weight: 800;
+    color: #5c4033;
+    letter-spacing: -0.5px;
+}
+.mrp{
+     font-size: 14px;
+    color: #bbb;
+    text-decoration: line-through;
+}
+.addToCart{
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #5c4033;
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 9px 16px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    cursor: pointer;
+    transition: 220ms ease, transform 180ms ease, box-shadow 220ms ease;
+    white-space: nowrap;
+}
+.addToCart:hover:not(:disabled) {
+    background: #4a3328;
+    transform: scale(1.04);
+    box-shadow: 0 4px 14px rgba(92, 64, 51, 0.35);
+}
+
