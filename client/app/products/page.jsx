@@ -13,7 +13,7 @@ const ProductsPage = () => {
     const [totalPages, setTotalPages] = useState(1);
     const [mobileOpen,setMobileOpen] = useState(true);
     const [loading,setLoading] = useState(true);
-    const [filters,setFilters] = useState({category:"",minPrice:"",maxPrice:"",featured:""});
+    const [filters,setFilters] = useState({category:"",minPrice:"",maxPrice:"",featured:"",inStock: ""});
     
     const fetchProducts = async () =>{
         setLoading(true)

@@ -1,6 +1,5 @@
 const Category = require('../models/CategoryModel');
 const slugify = require('slugify');
-const path = require('path');
 
 exports.createCategory = async (req,res) =>{
     try{
@@ -69,7 +68,7 @@ exports.updateCategory = async (req,res) =>{
         }
         if(typeof isActive !== "undefined")
         {
-            category.isActive = isActive;
+            category.isActive = isActive === "true";
         }
         if(req.file)
         {
@@ -98,6 +97,6 @@ exports.deleteCategory = async (req,res) =>{
         res.json({message: "Category Disabled"})
     }
     catch(err){
-
+        res.status(500).json({message:"Server Error"})
     }
 }
