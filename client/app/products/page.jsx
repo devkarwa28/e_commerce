@@ -4,6 +4,7 @@ import ProductCard from "@/components/products/ProductCard";
 import ProductCardSkeleton from "@/components/products/ProductCardSkeleton";
 import { Button } from "@mui/material";
 import axios from "axios";
+import { time } from "framer-motion";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -14,17 +15,42 @@ const ProductsPage = () => {
     const [mobileOpen,setMobileOpen] = useState(true);
     const [loading,setLoading] = useState(true);
     const [filters,setFilters] = useState({category:"",minPrice:"",maxPrice:"",featured:"",inStock: ""});
-    
+    const getCacheKey = () =>{
+        return `products_${page}_${JSON.stringify(filters)}`;
+    };
     const fetchProducts = async () =>{
         setLoading(true)
-        try{
-            const res = await axios.get("http://localhost:5000/api/products",{params:{...filters,page}});
-            setProducts(res.data.products);
-            setTotalPages(res.data.totalPages);
-        }
-        catch(err){
-            console.log(err);
-        }
+       const cacheKey = getCacheKey();
+       const cacheData = localStorage.getItem(cacheKey);
+
+       if(cacheData)
+       {
+        const parsedData = JSON.parse(cacheData);
+         if(Date.now() - parsedData.time < 5*60*1000)
+         {
+            setProducts(parsedData.products);
+            setTotalPages(parsedData.totalPages);
+            setLoading(false);
+            return;
+         }
+       }
+
+       try{
+        const res = await axios.get("http://localhost:5000/api/products",{params: {...filters,page}});
+        setProducts(res.data.products);
+        setTotalPages(res.data.totalPages);
+
+        const dataToCache = {
+            products : res.data.products,
+            totalPages: res.data.totalPages,
+            time: Date.now(),
+        };
+
+        localStorage.setItem(cacheKey,JSON.stringify(dataToCache));
+       }
+       catch(err){
+        console.log(err)
+       }
         setLoading(false)
     };
 

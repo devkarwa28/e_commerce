@@ -1,12 +1,13 @@
 "use client";
 import StatCard from '@/components/admin/StatCard';
-import dashboardStyles from './adminPanel.module.css'
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import RevenueChart from '@/components/admin/RevenueChart';
-import TopProducts from '@/components/admin/TopProducts';
-import DailySalesChart from '@/components/admin/DailySalesChart';
-import OrderStatusChart from '@/components/admin/OrderStatusChart';
+import dynamic from 'next/dynamic';
+
+const RevenueChart = dynamic(() => import('@/components/admin/RevenueChart'),{loading : () => <p>Loading.</p>});
+const TopProducts = dynamic(()=>import('@/components/admin/TopProducts'),{loading : ()=> <p>Loading</p>});
+const DailySalesChart = dynamic(()=>import('@/components/admin/DailySalesChart'),{loading : ()=> <p>Loading</p> });
+const OrderStatusChart = dynamic(()=>import('@/components/admin/OrderStatusChart'),{loading : ()=> <p>Loading</p> });
 const AdminPage = () => {
   const [stats, setStats] = useState({
     totalRevenue: 0,
@@ -20,15 +21,14 @@ const AdminPage = () => {
   const [orderStatus,setOrderStatus] = useState([]);
   const [loading, setLoading] = useState(true);
   const fetchStats = async () => {
-    try {
-      const statsRes = await axios.get("http://localhost:5000/api/admin/dashboard", { withCredentials: true });
-      const salesRes = await axios.get("http://localhost:5000/api/admin/monthly-sales",{withCredentials:true});
-      const topRes = await axios.get("http://localhost:5000/api/admin/top-products",{withCredentials: true});
-      const orderRes = await axios.get("http://localhost:5000/api/admin/order-status",{withCredentials:true});
-
-      const dailyRes = await axios.get("http://localhost:5000/api/admin/get-daily-sales",{withCredentials:true});
-
-
+    try { 
+      const [statsRes,salesRes,topRes,orderRes,dailyRes] = await Promise.all([
+        axios.get("http://localhost:5000/api/admin/dashboard", { withCredentials: true }),
+        axios.get("http://localhost:5000/api/admin/monthly-sales",{withCredentials:true}),
+        axios.get("http://localhost:5000/api/admin/top-products",{withCredentials: true}),
+        axios.get("http://localhost:5000/api/admin/order-status",{withCredentials:true}),
+        axios.get("http://localhost:5000/api/admin/get-daily-sales",{withCredentials:true}),
+      ]);
       setStats(statsRes.data);
       setSales(salesRes.data);
       setTopProducts(topRes.data);

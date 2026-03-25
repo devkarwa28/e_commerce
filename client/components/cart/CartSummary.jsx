@@ -43,4 +43,4 @@ const CartSummary = ({cart}) => {
   )
 }
 
-export default CartSummary
+export default CartSummary;

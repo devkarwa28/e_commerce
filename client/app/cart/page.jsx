@@ -44,7 +44,6 @@ const Cart = () => {
         </div>
         <div className="col-lg-4">
           <CartSummary cart={cart}/>
-  
         </div>
       </div>
     </section>
