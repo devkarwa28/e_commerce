@@ -11,7 +11,7 @@ const Sidebar = () => {
     const menu = [
         { label: "Dashboard", href: "/admin", icon: <Dashboard /> },
         { label: "Products", href: "/admin/products", icon: <Inventory /> },
-        { label: "Categories", href: "/admin/categories", icon: <Category /> },
+        { label: "Categories", href: "/admin/category", icon: <Category /> },
         { label: "Orders", href: "/admin/orders", icon: <ShoppingBag /> },
         { label: "Coupons", href: "/admin/coupons", icon: <LocalOffer /> },
     ];

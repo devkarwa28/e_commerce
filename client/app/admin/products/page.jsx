@@ -1,6 +1,7 @@
 "use client";
 
 import ProductTable from "@/components/admin/ProductTable";
+import { Add } from "@mui/icons-material";
 import { Button, TextField } from "@mui/material";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -46,7 +47,7 @@ const ProductsPage = () => {
             <div className="admin-card">
                 <div className="d-flex justify-content-between align-items-center mb-4">
                     <h2>Products</h2>
-                    <Button variant="contained" onClick={() => router.push("/admin/products/create")}>
+                    <Button variant="contained" onClick={() => router.push("/admin/products/create")} startIcon={<Add />}>
                         Add Product
                     </Button>
                 </div>

@@ -1,4 +1,5 @@
 const Category = require('../models/CategoryModel');
+const Product = require('../models/productModel');
 const slugify = require('slugify');
 
 exports.createCategory = async (req,res) =>{
@@ -28,8 +29,24 @@ exports.createCategory = async (req,res) =>{
 
 exports.getAllCategory = async (req,res) =>{
     try{
-        const categories = await Category.find({isActive: true}).sort({createdAt: -1});
-        res.json(categories); 
+        const categories = await Category.find({isActive: true}).sort({createdAt: -1}).lean();
+
+        const productCounts = await Product.aggregate([
+            { $match: { isActive: true } },
+            { $group: { _id: "$category", count: { $sum: 1 } } }
+        ]);
+
+        const countMap = {};
+        productCounts.forEach(pc => {
+            countMap[pc._id.toString()] = pc.count;
+        });
+
+        const result = categories.map(cat => ({
+            ...cat,
+            activeProducts: countMap[cat._id.toString()] || 0
+        }));
+
+        res.json(result); 
     }
     catch(err){
         res.status(500).json({message: "Server Error"})
