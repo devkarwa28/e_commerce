@@ -1,91 +1,132 @@
 "use client";
-import Link from 'next/link'
-import footerStyles from './footer.module.css'
-import { Facebook, Instagram, Twitter } from '@mui/icons-material'
+import Link from "next/link";
+import footerStyles from "./footer.module.css";
+import FacebookRoundedIcon from "@mui/icons-material/FacebookRounded";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import XIcon from "@mui/icons-material/X";
+import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
+import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
+import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";
+import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 
 const Footer = () => {
+  const linkColumns = [
+    {
+      title: "Company",
+      links: ["About Us", "Leadership", "Certifications", "Careers", "Awards"],
+    },
+    {
+      title: "Our Expertise",
+      links: [
+        "Private Label",
+        "Wholesale",
+        "Modern Trade",
+        "Export Import",
+        "Quality & Safety",
+      ],
+    },
+    {
+      title: "Quick Links",
+      links: ["Blog", "Gifting", "Bulk Order", "Franchise", "Coupons"],
+    },
+    {
+      title: "Information",
+      links: [
+        "Privacy Policy",
+        "Return Policy",
+        "Shipping Policy",
+        "Terms & Conditions",
+      ],
+    },
+    {
+      title: "Customer Service",
+      links: ["Contact Us", "Grievance", "Track Order", "FAQ"],
+    },
+  ];
+
+  const socials = [
+    { icon: <FacebookRoundedIcon sx={{ fontSize: 20 }} />, label: "Facebook" },
+    { icon: <InstagramIcon sx={{ fontSize: 20 }} />, label: "Instagram" },
+    { icon: <XIcon sx={{ fontSize: 18 }} />, label: "Twitter" },
+  ];
+
   return (
     <footer className={footerStyles.footer}>
-        <div className='container'>
-            <div className="row">
-                <div className=' col-lg-2 col-md-3 mb-4'>
-                    <h3>Nutrivia</h3>
-                    <p>Premium quality dry fruits sourced with care and delivered fresh to your home.</p>
-                </div>
+      <div className={footerStyles.footerGlow}></div>
+      <div className={footerStyles.footerTopLine}></div>
 
-                <div className='col-lg-2 col-md-3 mb-4'>
-                    <h6>Company</h6>
-                    <ul className='list-unstyled'>
-                        <li><Link href='#'>About Us</Link></li>
-                        <li><Link href='#'>Leadership</Link></li>
-                        <li><Link href='#'>Certifications</Link></li>
-                        <li><Link href='#'>Careers</Link></li>
-                        <li><Link href='#'>Awards</Link></li>
-                    </ul>
+      <div className="container position-relative" style={{ zIndex: 2 }}>
+        <div className="row">
+          <div className="col-lg-2 col-md-4 mb-5">
+            <div className={footerStyles.brandBlock}>
+              <h3 className={footerStyles.brandName}>Nutrivia</h3>
+              <p className={footerStyles.brandDesc}>
+                Premium quality dry fruits sourced with care and delivered fresh
+                to your home.
+              </p>
+              <div className={footerStyles.contactInfo}>
+                <div className={footerStyles.contactItem}>
+                  <LocationOnOutlinedIcon sx={{ fontSize: 16 }} />
+                  <span>Jodhpur, Rajasthan, India</span>
                 </div>
-                <div className='col-lg-2 col-md-3 mb-4'>
-                    <h6>Our Expertise</h6>
-                    <ul className='list-unstyled'>
-                        <li><Link href='#'>Private Lable</Link></li>
-                        <li><Link href='#'>Wholesale</Link></li>
-                        <li><Link href='#'>Modern Trade</Link></li>
-                        <li><Link href='#'>Export Import</Link></li>
-                        <li><Link href='#'>Quality & Safety</Link></li>
-                    </ul>
+                <div className={footerStyles.contactItem}>
+                  <EmailOutlinedIcon sx={{ fontSize: 16 }} />
+                  <span>devkarwa1973@outlook.com</span>
                 </div>
+                <div className={footerStyles.contactItem}>
+                  <PhoneOutlinedIcon sx={{ fontSize: 16 }} />
+                  <span>+91 7611077344</span>
+                </div>
+              </div>
+            </div>
+          </div>
 
-                <div className='col-lg-2 col-md-3 mb-4'>
-                    <h6>Quick Links</h6>
-                    <ul className='list-unstyled'>
-                        <li><Link href='#'>Blog</Link></li>
-                        <li><Link href='#'>Gifiting</Link></li>
-                        <li><Link href='#'>Bulk Order</Link></li>
-                        <li><Link href='#'>Franchise</Link></li>
-                        <li><Link href='#'>Coupons</Link></li>
-                    </ul>
-                </div>
-                <div className='col-lg-2 col-md-3 mb-4'>
-                    <h6>Information</h6>
-                    <ul className='list-unstyled'>
-                        <li><Link href='#'>Privacy Policy</Link></li>
-                        <li><Link href='#'>Return Policy</Link></li>
-                        <li><Link href='#'>Shipping Policy</Link></li>
-                        <li><Link href='#'>Terms & Conditions</Link></li>
-                    </ul>
-                </div>
-                <div className='col-lg-2 col-md-3 mb-4'>
-                    <h6>Customer Service</h6>
-                    <ul className='list-unstyled'>
-                        <li><Link href='#'>Contact Us</Link></li>
-                        <li><Link href='#'>Grivence</Link></li>
-                        <li><Link href='#'>Track Order</Link></li>
-                        <li><Link href='#'>FAQ</Link></li>
-                    </ul>
-                </div>
-                {/* <div className='col-lg-2 col-md-3 mb-4'>
-                    <h6>Our Partners</h6>
-                    <ul className='list-unstyled'>
-                        <li><Link href='#'>Amazon</Link></li>
-                        <li><Link href='#'>Flipkart</Link></li>
-                        <li><Link href='#'>JioMart</Link></li>
-                        <li><Link href='#'>BlinkIt</Link></li>
-                    </ul>
-                </div> */}
+          {linkColumns.map((col, index) => (
+            <div key={index} className="col-lg-2 col-md-4 col-6 mb-4">
+              <h6 className={footerStyles.colTitle}>{col.title}</h6>
+              <ul className={footerStyles.linkList}>
+                {col.links.map((link, i) => (
+                  <li key={i} className={footerStyles.linkItem}>
+                    <ArrowForwardIosRoundedIcon
+                      className={footerStyles.linkArrow}
+                      sx={{ fontSize: 10 }}
+                    />
+                    <Link href="#">{link}</Link>
+                  </li>
+                ))}
+              </ul>
             </div>
-            <div className='d-flex justify-content-end'>
-                <div className='d-flex gap-3'>
-                    <Facebook/>
-                    <Instagram/>
-                    <Twitter/>
-                </div>
-            </div>
-            <hr style={{borderColor: "#333", margin: "40px 0"}} />
-            <div className='text-center' style={{fontSize:"14px",color:"#777"}}>
-                © {new Date().getFullYear()} MyCompany. All Rights Reserved.
-            </div>
+          ))}
         </div>
-    </footer>
-  )
-}
 
-export default Footer
+        <div className={footerStyles.footerDivider}></div>
+
+        <div className={footerStyles.footerBottom}>
+          <p className={footerStyles.copyright}>
+            © {new Date().getFullYear()} Nutrivia. All Rights Reserved.
+          </p>
+
+          <div className={footerStyles.socialIcons}>
+            {socials.map((social, index) => (
+              <Link
+                href="#"
+                key={index}
+                className={footerStyles.socialBtn}
+                aria-label={social.label}
+              >
+                {social.icon}
+              </Link>
+            ))}
+          </div>
+
+          <p className={footerStyles.credit}>
+            Designed & Developed By{" "}
+            <Link href="https://github.com/devkarwa28">{" Dev Karwa"}</Link>
+          </p>
+        </div>
+      </div>
+    </footer>
+  );
+};
+
+export default Footer;
