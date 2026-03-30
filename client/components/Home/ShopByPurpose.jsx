@@ -1,58 +1,78 @@
 "use client";
-import { CardGiftcard, FitnessCenter, Restaurant, Spa } from '@mui/icons-material';
-import shopbyStyles from './home.module.css';
+import shopByStyles from "./home.module.css";
+import { CardGiftcard, FitnessCenter, Restaurant, Spa } from "@mui/icons-material";
+import TrackChangesOutlinedIcon from "@mui/icons-material/TrackChangesOutlined";
+import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
+
 const ShopByPurpose = () => {
-     const items = [
+  const items = [
     {
-      title: "Gifting",
-      icon: <CardGiftcard fontSize="large" />,
-      desc: "Premium gift hampers curated for every celebration.",
-      gradient: "linear-gradient(135deg, #7A5142, #5C4033)"
+      title: "Luxury Gifting",
+      icon: <CardGiftcard sx={{ fontSize: 28 }} />,
+      desc: "Premium gift hampers curated and elegantly packed for every special celebration.",
+      tag: "Popular",
     },
     {
-      title: "Cooking",
-      icon: <Restaurant fontSize="large" />,
-      desc: "High-quality ingredients to enhance every recipe.",
-      gradient: "linear-gradient(135deg, #8B6A5C, #6D4C41)"
+      title: "Culinary Delights",
+      icon: <Restaurant sx={{ fontSize: 28 }} />,
+      desc: "High-quality raw ingredients to elevate your recipes and culinary creations.",
+      tag: "Cooking",
     },
     {
-      title: "Healthy Snacking",
-      icon: <Spa fontSize="large" />,
-      desc: "Snack smart with nutritious daily essentials.",
-      gradient: "linear-gradient(135deg, #7A8B55, #6B8E23)"
+      title: "Smart Snacking",
+      icon: <Spa sx={{ fontSize: 28 }} />,
+      desc: "Snack smarter with our nutritious, guilt-free daily essential mixes.",
+      tag: "Healthy",
     },
     {
       title: "Daily Nutrition",
-      icon: <FitnessCenter fontSize="large" />,
-      desc: "Boost your routine with powerful superfoods.",
-      gradient: "linear-gradient(135deg, #5C4033, #3E2A22)"
-    }
+      icon: <FitnessCenter sx={{ fontSize: 28 }} />,
+      desc: "Boost your daily routine and energy with our powerful superfood selection.",
+      tag: "Fitness",
+    },
   ];
 
   return (
-    <section className={`${shopbyStyles.shopby} py-5`}>
-        <div className="container">
-            <h1 className='mb-2 text-center'>Shop By Purpose</h1>
-            <p className='mb-5 text-center'>Discover products curated around your lifestyle and daily needs.</p>
-
-            <div className="row">
-                {
-                    items.map((item,index)=>(
-                        <div key={index} className='col-lg-3 col-md-6 mb-4'>
-                            <div className={`${shopbyStyles.purposeCard} p-4 text-white`} style={{background:item.gradient}} >
-                                <div className={shopbyStyles.purposeIcon}>{item.icon}</div>
-                                <div style={{marginTop:"50px"}}>
-                                    <h5 className='mb-3 fw-bolder'>{item.title}</h5>
-                                    <p>{item.desc}</p>
-                                </div>
-                            </div>
-                        </div>
-                    ))
-                }
-            </div>
+    <section className={shopByStyles.sbpSection}>
+      <div className="container position-relative" style={{ zIndex: 2 }}>
+        <div className={shopByStyles.sbpHeader}>
+          <div className={shopByStyles.sbpBadge}>
+            <TrackChangesOutlinedIcon sx={{ fontSize: 16 }} />
+            <span>Curated For You</span>
+          </div>
+          <h2 className={shopByStyles.sbpTitle}>
+            Shop By <span className={shopByStyles.sbpHighlight}>Purpose</span>
+          </h2>
+          <p className={shopByStyles.sbpSubtitle}>
+            Discover premium products thoughtfully curated around your lifestyle,
+            health goals, and daily needs.
+          </p>
         </div>
-    </section>
-  )
-}
 
-export default ShopByPurpose
+        <div className="row g-4">
+          {items.map((item, index) => (
+            <div key={index} className="col-lg-3 col-md-6">
+              <div className={shopByStyles.sbpCard}>
+                <div className={shopByStyles.sbpCardTop}>
+                  <div className={shopByStyles.sbpIconWrap}>{item.icon}</div>
+                  <div className={shopByStyles.sbpTag}>{item.tag}</div>
+                </div>
+                <h4 className={shopByStyles.sbpCardTitle}>{item.title}</h4>
+                <p className={shopByStyles.sbpCardDesc}>{item.desc}</p>
+                
+                <div className={shopByStyles.sbpCardFooter}>
+                  <span className={shopByStyles.sbpActionText}>Explore</span>
+                  <div className={shopByStyles.sbpActionIcon}>
+                    <ArrowForwardRoundedIcon sx={{ fontSize: 18 }} />
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default ShopByPurpose;

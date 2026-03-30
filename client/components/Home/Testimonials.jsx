@@ -13,39 +13,39 @@ const Testimonials = () => {
 
   const testimonials = [
     {
-      name: "Rohit Sharma",
+      name: "Keshav Karwa",
       location: "Mumbai",
       text: "Absolutely premium quality almonds and cashews. Freshness is unmatched. Highly recommended for anyone who values quality!",
       rating: 5,
-      initials: "RS",
+      initials: "KK",
     },
     {
-      name: "Ananya Verma",
+      name: "Dev Karwa",
       location: "Delhi",
       text: "The packaging feels luxury and delivery was super quick. Loved the dry fruit combo box — perfect for gifting.",
       rating: 4.5,
-      initials: "AV",
+      initials: "DK",
     },
     {
-      name: "Vikram Singh",
+      name: "Harshit Vijaywargiya",
       location: "Jaipur",
       text: "Best dry fruits brand I've ever tried. Quality and taste both are excellent. My family absolutely loves it.",
       rating: 5,
-      initials: "VS",
+      initials: "HV",
     },
     {
-      name: "Priya Patel",
+      name: "Ayushi Maheshwari",
       location: "Ahmedabad",
       text: "Ordered the premium mixed nuts box and was blown away by the freshness. Will definitely be a regular customer!",
       rating: 5,
-      initials: "PP",
+      initials: "AM",
     },
     {
-      name: "Karan Mehta",
+      name: "Radika Maheshwari",
       location: "Bangalore",
       text: "The festive gift box was a hit at our Diwali celebration. Beautifully packed and absolutely delicious!",
       rating: 4.5,
-      initials: "KM",
+      initials: "RM",
     },
   ];
 
