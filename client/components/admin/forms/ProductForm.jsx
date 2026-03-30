@@ -2,14 +2,15 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import formStyles from "./forms.module.css"
-import { Button, FormControl, Input, InputLabel, MenuItem, Select, Step, StepLabel, Stepper, Switch, TextField } from "@mui/material";
+import { Button, FormControl, InputLabel, MenuItem, Select, Step, StepLabel, Stepper, Switch, TextField } from "@mui/material";
 import ImageUploader from "./ImageUploader";
 import WeightsOption from "./WeightsOption";
 import SepcifiactionsForm from "./SepcifiactionsForm";
 import NutritentsInfo from "./NutritentsInfo";
 import SeoForm from "./SeoForm";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
+import { CheckCircleRounded, ArrowForwardRounded, ArrowBackRounded } from "@mui/icons-material";
 
 const steps = ["Basic Info", "Images", "Weight Options", "Specifications", "Nutrition", "SEO", "Review"];
 
@@ -24,10 +25,9 @@ const ProductForm = ({ editData }) => {
     const [nutrition, setNutrition] = useState({});
     const [seo, setSeo] = useState({});
     const [removedImages, setRemovedImages] = useState([]);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const router = useRouter();
-
-
 
     const [form, setForm] = useState({
         pname: "",
@@ -36,48 +36,36 @@ const ProductForm = ({ editData }) => {
         isFeatured: false,
         isActive: true,
     });
+
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
-
         setErrors({ ...errors, [e.target.name]: "" });
     }
+
     const validateStep1 = () => {
         const newErrors = {};
-
-        if (!form.pname.trim()) {
-            newErrors.pname = "Product name required";
-        }
-
-        if (!form.description.trim()) {
-            newErrors.description = "Description required";
-        }
-
-        if (!form.category) {
-            newErrors.category = "Select category";
-        }
-
+        if (!form.pname.trim()) newErrors.pname = "Product name required";
+        if (!form.description.trim()) newErrors.description = "Description required";
+        if (!form.category) newErrors.category = "Select category";
         setErrors(newErrors);
-
         return Object.keys(newErrors).length === 0;
     };
 
-
     const fetchCategories = async () => {
         try {
-            const res = await axios.get("http://localhost:5000/api/category");
+            const res = await axios.get("http://localhost:5000/api/category", { withCredentials: true });
             setCategories(res.data);
-        }
-        catch (err) {
+        } catch (err) {
             console.log(err)
         }
     }
+
     useEffect(() => {
         fetchCategories();
     }, []);
+
     useEffect(() => {
-
         if (editData) {
-
             setForm({
                 pname: editData.pname,
                 description: editData.description,
@@ -89,17 +77,11 @@ const ProductForm = ({ editData }) => {
             setSpecifications(editData.specifications || {});
             setNutrition(editData.nutritionInfo || {});
             setSeo(editData.seo || {});
-
         }
-
     }, [editData]);
 
     const nextStep = () => {
-
-        if (activeStep === 0) {
-            if (!validateStep1()) return;
-        }
-
+        if (activeStep === 0 && !validateStep1()) return;
         setActiveStep(prev => prev + 1);
     };
 
@@ -108,11 +90,18 @@ const ProductForm = ({ editData }) => {
     };
 
     const submitHandler = async (e) => {
-        e.preventDefault();
+        e?.preventDefault();
+        
+        // Anti-bug safeguard: Prevent form submission if we are not actively on the review step (fixes pressing Enter key to submit early)
+        if (activeStep !== steps.length - 1) {
+            if (activeStep === 0 && !validateStep1()) return;
+            setActiveStep(prev => prev + 1);
+            return;
+        }
+
+        setIsSubmitting(true);
         try {
-
             const formData = new FormData();
-
             formData.append("pname", form.pname);
             formData.append("description", form.description);
             formData.append("category", form.category);
@@ -134,109 +123,108 @@ const ProductForm = ({ editData }) => {
                 await axios.put(
                     `http://localhost:5000/api/products/${editData._id}`,
                     formData,
-                    {
-                        headers: { "Content-Type": "multipart/form-data" },
-                        withCredentials: true
-                    }
+                    { headers: { "Content-Type": "multipart/form-data" }, withCredentials: true }
                 );
-                alert("Product Edited Successfully");
-            }
-            else {
-                await axios.post("http://localhost:5000/api/products", formData,
-                    {
-                        headers: {
-                            "Content-Type": "multipart/form-data"
-                        },
-                        withCredentials: true
-                    }
+            } else {
+                await axios.post(
+                    "http://localhost:5000/api/products", 
+                    formData,
+                    { headers: { "Content-Type": "multipart/form-data" }, withCredentials: true }
                 );
-                alert("Product Created Successfully");
             }
-
-
-            router.push("/admin/products")
+            router.push("/admin/products");
         } catch (err) {
             console.log(err);
+            alert("An error occurred while saving the product.");
+        } finally {
+            setIsSubmitting(false);
         }
     }
+
     const renderStep = () => {
         switch (activeStep) {
             case 0: return (
-                <div className="row">
-
-                    <div className="col-lg-6">
-                        <TextField fullWidth label="Product Name" name="pname" className="mb-3" onChange={handleChange} value={form.pname} error={!!errors.pname} helperText={errors.pname} />
-                    </div>
-
-                    <div className="col-lg-6">
-                        <FormControl fullWidth size="medium" error={!!errors.category}>
+                <div style={{ display: "grid", gap: "24px", padding: "10px 0" }}>
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "24px" }}>
+                        <TextField 
+                            fullWidth 
+                            label="Product Name" 
+                            name="pname" 
+                            onChange={handleChange} 
+                            value={form.pname} 
+                            error={!!errors.pname} 
+                            helperText={errors.pname}
+                            variant="outlined"
+                        />
+                        <FormControl fullWidth error={!!errors.category}>
                             <InputLabel>Category</InputLabel>
                             <Select name="category" value={form.category} label="Category" onChange={handleChange}>
                                 {categories.map((cat) => (
-                                    <MenuItem key={cat._id} value={cat._id}>
-                                        {cat.cname}
-                                    </MenuItem>
+                                    <MenuItem key={cat._id} value={cat._id}>{cat.cname}</MenuItem>
                                 ))}
                             </Select>
                         </FormControl>
                     </div>
 
-                    <div className="col-lg-12">
-                        <TextField fullWidth label="Description" value={form.description} name="description" multiline rows={4} className="mb-3" onChange={handleChange} error={!!errors.description} helperText={errors.description} />
-                    </div>
+                    <TextField 
+                        fullWidth 
+                        label="Rich Description" 
+                        value={form.description} 
+                        name="description" 
+                        multiline 
+                        rows={5} 
+                        onChange={handleChange} 
+                        error={!!errors.description} 
+                        helperText={errors.description} 
+                    />
 
-                    <div className="col-lg-6 d-flex">
-                        <div>
-                            Featured
-                            <Switch onChange={(e) => setForm({ ...form, isFeatured: e.target.checked })} />
+                    <div style={{ display: "flex", gap: "40px", marginTop: "10px", padding: "20px", background: "#FAFAFA", borderRadius: "16px", border: "1px solid rgba(0,0,0,0.04)" }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                            <span style={{ fontWeight: 700, color: "#555" }}>Featured Product</span>
+                            <Switch checked={form.isFeatured} onChange={(e) => setForm({ ...form, isFeatured: e.target.checked })} color="warning" />
                         </div>
-
-                        <div>
-                            Active
-                            <Switch checked onChange={(e) => setForm({ ...form, isActive: e.target.checked })} />
+                        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                            <span style={{ fontWeight: 700, color: "#555" }}>Active/Visible</span>
+                            <Switch checked={form.isActive} onChange={(e) => setForm({ ...form, isActive: e.target.checked })} color="success" />
                         </div>
                     </div>
-
                 </div>
             );
-            case 1: return <ImageUploader mainImage={mainImage}
-                galleryImage={galleryImage}
-                setMainImage={setMainImage}
-                setGalleryImage={setGalleryImage}
-                existingImages={editData?.images || []}
-                setRemovedImages={setRemovedImages}
-            />
-
-
+            case 1: return <ImageUploader mainImage={mainImage} setMainImage={setMainImage} galleryImage={galleryImage} setGalleryImage={setGalleryImage} existingImages={editData?.images || []} setRemovedImages={setRemovedImages} />
             case 2: return <WeightsOption productName={form.pname} weightOptions={weightOptions} setWeightOptions={setWeightOptions} />
-
             case 3: return <SepcifiactionsForm specifications={specifications} setSepciciaction={setSpecifications} />
-
             case 4: return <NutritentsInfo nutrition={nutrition} setNutrition={setNutrition} />
-
             case 5: return <SeoForm seo={seo} setSeo={setSeo} />
-
             case 6:
                 return (
-                    <div className="p-3">
-
-                        <h4>Review Product</h4>
-
-                        <p><b>Name:</b> {form.pname}</p>
-                        <p><b>Description:</b> {form.description}</p>
-                        <p><b>Category:</b> {form.category.cname}</p>
-
-                        <p><b>Variants:</b> {weightOptions.length}</p>
-
-                        <p><b>Main Image:</b> {mainImage ? "Uploaded" : "Missing"}</p>
-
+                    <div style={{ padding: "30px", background: "#FAFAFA", borderRadius: "16px", border: "1px solid rgba(0,0,0,0.05)" }}>
+                        <h4 style={{ color: "var(--color-primary, #5c4033)", fontWeight: 800, marginBottom: "24px" }}>Review Product Details</h4>
+                        
+                        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px" }}>
+                            <div style={{ background: "#FFF", padding: "20px", borderRadius: "12px", boxShadow: "0 2px 10px rgba(0,0,0,0.02)" }}>
+                                <p style={{ fontSize: "12px", color: "#888", textTransform: "uppercase", fontWeight: 700, margin: "0 0 5px" }}>Identity</p>
+                                <p style={{ fontWeight: 700, color: "#333", margin: "0 0 8px" }}>Name: <span style={{ fontWeight: 500 }}>{form.pname || "N/A"}</span></p>
+                                <p style={{ fontWeight: 700, color: "#333", margin: "0 0 8px" }}>Category: <span style={{ fontWeight: 500 }}>{categories.find(c => c._id === form.category)?.cname || "N/A"}</span></p>
+                            </div>
+                            <div style={{ background: "#FFF", padding: "20px", borderRadius: "12px", boxShadow: "0 2px 10px rgba(0,0,0,0.02)" }}>
+                                <p style={{ fontSize: "12px", color: "#888", textTransform: "uppercase", fontWeight: 700, margin: "0 0 5px" }}>Assets</p>
+                                <p style={{ fontWeight: 700, color: "#333", margin: "0 0 8px" }}>Variants: <span style={{ fontWeight: 500 }}>{weightOptions.length}</span></p>
+                                <p style={{ fontWeight: 700, color: "#333", margin: "0 0 8px" }}>Main Image: <span style={{ fontWeight: 800, color: mainImage || (editData && editData.mainImage) ? "var(--color-olive, #6b8e23)" : "#D32F2F" }}>{mainImage || (editData && editData.mainImage) ? "Attached" : "Missing"}</span></p>
+                            </div>
+                        </div>
                     </div>
                 );
         }
     }
+
     return (
-        <form onSubmit={submitHandler} className={`${formStyles.adminCard} p-4`}>
-            <Stepper activeStep={activeStep} alternativeLabel className="mb-4">
+        <form onSubmit={submitHandler} style={{ background: "#FFFFFF", borderRadius: "24px", padding: "40px", boxShadow: "0 10px 40px rgba(92, 64, 51, 0.04)" }}>
+            <Stepper activeStep={activeStep} alternativeLabel sx={{
+                marginBottom: "40px",
+                "& .MuiStepIcon-root.Mui-active": { color: "var(--color-gold, #c89b3c)" },
+                "& .MuiStepIcon-root.Mui-completed": { color: "var(--color-olive, #6b8e23)" },
+                "& .MuiStepLabel-label.Mui-active": { fontWeight: 800, color: "var(--color-primary, #5c4033)" }
+            }}>
                 {steps.map(label => (
                     <Step key={label}>
                         <StepLabel>{label}</StepLabel>
@@ -244,40 +232,55 @@ const ProductForm = ({ editData }) => {
                 ))}
             </Stepper>
 
-            <motion.div
-                key={activeStep}
-                initial={{ opacity: 0, x: 40 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -40 }}
-                transition={{ duration: 0.35 }}
-            >
+            <AnimatePresence mode="wait">
+                <motion.div
+                    key={activeStep}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    transition={{ duration: 0.2 }}
+                    style={{ minHeight: "350px" }}
+                >
+                    {renderStep()}
+                </motion.div>
+            </AnimatePresence>
 
-                {renderStep()}
-
-            </motion.div>
-
-            <div className="d-flex justify-content-between mt-4">
-                <Button type="button" disabled={activeStep === 0} onClick={prevStep}>
+            <div style={{ display: "flex", justifyContent: "space-between", marginTop: "40px", paddingTop: "24px", borderTop: "1px solid rgba(0,0,0,0.05)" }}>
+                <Button 
+                    type="button" 
+                    disabled={activeStep === 0} 
+                    onClick={prevStep}
+                    startIcon={<ArrowBackRounded />}
+                    sx={{ color: "#666", fontWeight: 700, padding: "10px 24px", borderRadius: "12px", border: "1px solid rgba(0,0,0,0.1)", "&:hover": { background: "#F5F5F5" } }}
+                >
                     Back
                 </Button>
 
                 {activeStep === steps.length - 1 ? (
-
-                    <Button type="submit" variant="contained">
-                        Create Product
+                    <Button 
+                        type="button"
+                        onClick={submitHandler}
+                        disabled={isSubmitting}
+                        variant="contained"
+                        startIcon={<CheckCircleRounded />}
+                        sx={{ background: "var(--color-olive, #6b8e23)", color: "#FFF", fontWeight: 800, padding: "10px 32px", borderRadius: "12px", boxShadow: "0 8px 20px rgba(107, 142, 35, 0.3)", "&:hover": { background: "#557518", transform: "translateY(-2px)", boxShadow: "0 12px 25px rgba(107, 142, 35, 0.4)" }, transition: "all 300ms ease" }}
+                    >
+                        {isSubmitting ? "Processing..." : (editData ? "Update Product" : "Create Product")}
                     </Button>
-
                 ) : (
-
-                    <Button type="button" onClick={nextStep} variant="contained">
-                        Next
+                    <Button 
+                        type="button" 
+                        onClick={nextStep} 
+                        variant="contained"
+                        endIcon={<ArrowForwardRounded />}
+                        sx={{ background: "var(--color-primary, #5c4033)", color: "#FFF", fontWeight: 700, padding: "10px 32px", borderRadius: "12px", boxShadow: "0 6px 15px rgba(92, 64, 51, 0.2)", "&:hover": { background: "#4a332a", transform: "translateY(-2px)" }, transition: "all 200ms ease" }}
+                    >
+                        Next Step
                     </Button>
-
                 )}
-
             </div>
         </form>
     )
 }
 
-export default ProductForm
+export default ProductForm;

@@ -342,7 +342,7 @@
     background: rgba(200, 155, 60, 0.3);
     border-color: rgba(200, 155, 60, 0.4);
 }
-/* ─── Best Seller Section ─── */
+/* Best Seller Section  */
 .bsSection {
     padding: 80px 0;
     background: #FFFFFF;
@@ -513,7 +513,7 @@
     font-weight: 800;
     color: var(--color-primary);
 }
-/* ─── Why Choose Us Section ─── */
+/* Why Choose Us Section  */
 .whySection {
     padding: 80px 0;
     background: linear-gradient(180deg, #FFFFFF 0%, #F8F5F1 100%);
@@ -1626,4 +1626,4 @@
 
 .dfCard:hover .dfCardLine {
     width: 50px;
-}
+}

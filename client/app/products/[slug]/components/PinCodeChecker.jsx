@@ -1,42 +1,31 @@
 "use client";
-
-import { Button, InputAdornment, TextField } from "@mui/material";
 import { useState } from "react";
+import productStyles from './productDetail.module.css';
+import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
 
 const PinCodeChecker = () => {
-    const [pincode,setPincode] = useState()
-  return (
-    <div className="mt-3">
-        <TextField
-        fullWidth
-        placeholder="Enter Pincode to Check Service Availability"
-        value={pincode}
-        onChange={(e)=> setPincode(e.target.value)}
-        sx={{
-            "& .MuiOutlinedInput-root":{
-                borderRadius:"12px",
-                paddingRight:"12px"
-            }
-        }}
-        InputProps={{
-            endAdornment:(
-                <InputAdornment position="end">
-                    <Button sx={{
-                        backgroundColor: "#5c4033",
-                        color:"#fff",
-                        borderRadius:"10px",
-                        padding:"8px 18px",
-                        textTransform:"none",
-                        fontWeight:500,
-                    }}>
-                        Check Now
-                    </Button>
-                </InputAdornment>
-            )
-        }}
-        />
-    </div>
-  )
+    const [pincode, setPincode] = useState("");
+
+    return (
+        <div className={productStyles.pincodeBox}>
+            <div className={productStyles.pincodeHeader}>
+                <LocalShippingOutlinedIcon sx={{ color: "var(--color-gold)", fontSize: 22 }} />
+                <span>Check Delivery Availability</span>
+            </div>
+            
+            <div className={productStyles.pincodeInputWrap}>
+                <input 
+                    type="text" 
+                    className={productStyles.pincodeInput} 
+                    placeholder="Enter 6-digit Pincode" 
+                    value={pincode} 
+                    onChange={(e) => setPincode(e.target.value)}
+                    maxLength={6}
+                />
+                <button className={productStyles.pincodeBtn}>Verify</button>
+            </div>
+        </div>
+    )
 }
 
-export default PinCodeChecker
+export default PinCodeChecker;

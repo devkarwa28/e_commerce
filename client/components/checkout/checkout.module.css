@@ -1,0 +1,308 @@
+/* ─── Address Form Styles ─── */
+.formContainer {
+    background: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 20px;
+    padding: 32px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+}
+
+.sectionTitle {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    padding-bottom: 16px;
+}
+
+.sectionTitle svg {
+    color: var(--color-gold);
+}
+
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 16px;
+}
+
+.inputLabel {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+}
+
+.customInput {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    font-size: 15px;
+    color: var(--color-text-primary);
+    background: #FAFAFA;
+    transition: all 300ms ease;
+    outline: none;
+}
+
+.customInput:focus {
+    background: #FFFFFF;
+    border-color: var(--color-gold);
+    box-shadow: 0 0 0 3px rgba(200, 155, 60, 0.1);
+}
+
+.customInput::placeholder {
+    color: rgba(0, 0, 0, 0.3);
+}
+
+/* ─── Payment Method Styles ─── */
+.paymentContainer {
+    background: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 20px;
+    padding: 32px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+    margin-top: 24px;
+}
+
+.paymentOptions {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.paymentOption {
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+    transition: all 300ms ease;
+    background: #FAFAFA;
+}
+
+.paymentOption:hover {
+    background: #FFFFFF;
+    border-color: rgba(200, 155, 60, 0.4);
+    box-shadow: 0 4px 15px rgba(200, 155, 60, 0.05);
+}
+
+.paymentOption.active {
+    background: #FFFFFF;
+    border-color: var(--color-primary);
+    box-shadow: 0 4px 15px rgba(92, 64, 51, 0.08);
+}
+
+.paymentRadio {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 300ms ease;
+    flex-shrink: 0;
+}
+
+.paymentOption.active .paymentRadio {
+    border-color: var(--color-primary);
+}
+
+.paymentRadioDot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    transform: scale(0);
+    transition: transform 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.paymentOption.active .paymentRadioDot {
+    transform: scale(1);
+}
+
+.paymentDetails {
+    display: flex;
+    flex-direction: column;
+}
+
+.paymentTitle {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin: 0 0 4px 0;
+}
+
+.paymentDesc {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    margin: 0;
+}
+
+.disabledOption {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.disabledOption:hover {
+    background: #FAFAFA;
+    border-color: rgba(0, 0, 0, 0.08);
+    box-shadow: none;
+}
+
+.paymentTag {
+    background: rgba(200, 155, 60, 0.1);
+    color: var(--color-gold);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    margin-left: 8px;
+}
+
+/* ─── Order Summary Checkout Styles ─── */
+.summaryContainer {
+    background: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 20px;
+    padding: 32px 24px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+    position: sticky;
+    top: 24px;
+}
+
+.summaryBody {
+    display: flex;
+    flex-direction: column;
+}
+
+.summaryRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    font-size: 15px;
+}
+
+.summaryLabel {
+    color: var(--color-text-secondary);
+    font-weight: 500;
+}
+
+.summaryValue {
+    color: var(--color-text-primary);
+    font-weight: 600;
+}
+
+.discountRow {
+    background: rgba(107, 142, 35, 0.05);
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px dashed rgba(107, 142, 35, 0.3);
+    margin-top: -4px;
+    margin-bottom: 20px;
+}
+
+.discountRow .summaryLabel {
+    color: var(--color-olive);
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.discountValue {
+    color: var(--color-olive);
+    font-weight: 700;
+}
+
+.couponTag {
+    background: var(--color-olive);
+    color: #FFFFFF;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    display: inline-block;
+    align-self: flex-start;
+}
+
+.summaryValueFree {
+    color: var(--color-primary);
+    font-weight: 700;
+    background: rgba(200, 155, 60, 0.1);
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+}
+
+.summaryDivider {
+    margin: 16px 0 24px !important;
+    border-color: rgba(0, 0, 0, 0.06) !important;
+}
+
+.summaryRowTotal {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 20px;
+}
+
+.totalLabel {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--color-text-primary);
+}
+
+.totalValue {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--color-primary);
+    line-height: 1;
+}
+
+.secureCheckoutMsg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    color: var(--color-text-secondary);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 16px;
+    opacity: 0.8;
+}
+
+.placeOrderBtn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: var(--color-primary);
+    color: #FFFFFF;
+    border: none;
+    padding: 16px 24px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(92, 64, 51, 0.2);
+    transition: all 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.placeOrderBtn:hover {
+    background: var(--color-gold);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 25px rgba(200, 155, 60, 0.25);
+    gap: 14px;
+}

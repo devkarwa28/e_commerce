@@ -1,50 +1,99 @@
 "use client";
 
 import { useCart } from "@/context/CartContext";
-import { Button } from "@mui/material";
+import CheckoutStyles from "./checkout.module.css";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-
+import { useEffect, useState } from "react";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import ReceiptLongOutlinedIcon from "@mui/icons-material/ReceiptLongOutlined";
 
 const OrderSummary = () => {
     const {cart} = useCart();
     const router = useRouter();
+    const [discount, setDiscount] = useState(0);
+    const [couponCode, setCouponCode] = useState("");
 
-    const placeOrder = async () =>{
-        
-        const res = await axios.post("http://localhost:5000/api/order",{shippingAddress:{address:"Test Address",city:"Jodhpur",pincode:"342001"},paymentMethod:"COD"},{withCredentials:true});
+    useEffect(() => {
+        // Fetch dynamic data from cart summary saved in session storage
+        const appliedCouponInfo = sessionStorage.getItem('appliedCoupon');
+        if (appliedCouponInfo) {
+            try {
+                const parsed = JSON.parse(appliedCouponInfo);
+                setDiscount(parsed.discount || 0);
+                setCouponCode(parsed.code || "");
+            } catch (e) {}
+        }
+    }, []);
 
-            const oderId = res.data.order._id
-            router.push(`/order-success/${oderId}`)
+    const finalTotal = cart ? cart.totalAmount - discount : 0;
+
+    const placeOrder = async () => {
+        try {
+            const res = await axios.post("http://localhost:5000/api/order",{
+                shippingAddress: {address:"Test Address",city:"Jodhpur",pincode:"342001"},
+                paymentMethod: "COD"
+            },{withCredentials:true});
+
+            const orderId = res.data.order._id;
+            sessionStorage.removeItem('appliedCoupon'); // clear after order
+            router.push(`/order-success/${orderId}`);
+        } catch (error) {
+            console.error(error);
+        }
     };
+    
     if(!cart) return null;
-  return (
-    <div className="summary-card">
-        <h5 className="mb-3">Order Summary</h5>
 
-        <div className="d-flex justify-content-between mb-2">
-            <span>Subtotal</span>
-            <span>₹{cart.totalAmount}</span>
+    return (
+        <div className={CheckoutStyles.summaryContainer}>
+            <h3 className={CheckoutStyles.sectionTitle}>
+                <ReceiptLongOutlinedIcon sx={{ fontSize: 26 }} />
+                Order Summary
+            </h3>
+
+            <div className={CheckoutStyles.summaryBody}>
+                <div className={CheckoutStyles.summaryRow}>
+                    <span className={CheckoutStyles.summaryLabel}>Items Subtotal</span>
+                    <span className={CheckoutStyles.summaryValue}>₹{cart.totalAmount.toLocaleString()}</span>
+                </div>
+
+                {discount > 0 && (
+                    <div className={`${CheckoutStyles.summaryRow} ${CheckoutStyles.discountRow}`}>
+                        <div className="d-flex flex-column">
+                            <span className={CheckoutStyles.summaryLabel}>Discount Applied</span>
+                            {couponCode && <span className={CheckoutStyles.couponTag}>{couponCode}</span>}
+                        </div>
+                        <span className={CheckoutStyles.discountValue}>-₹{discount.toLocaleString()}</span>
+                    </div>
+                )}
+
+                <div className={CheckoutStyles.summaryRow}>
+                    <span className={CheckoutStyles.summaryLabel}>Shipping</span>
+                    <span className={CheckoutStyles.summaryValueFree}>Free</span>
+                </div>
+
+                <hr className={CheckoutStyles.summaryDivider} />
+
+                <div className={CheckoutStyles.summaryRowTotal}>
+                    <span className={CheckoutStyles.totalLabel}>Total to Pay</span>
+                    <span className={CheckoutStyles.totalValue}>₹{finalTotal.toLocaleString()}</span>
+                </div>
+
+                <div className={CheckoutStyles.secureCheckoutMsg}>
+                    <LockOutlinedIcon sx={{ fontSize: 14 }} />
+                    <span>Secure SSL Encrypted Checkout</span>
+                </div>
+
+                <button 
+                    className={CheckoutStyles.placeOrderBtn} 
+                    onClick={placeOrder}
+                >
+                    Place Order
+                </button>
+            </div>
         </div>
-
-        <div className="d-flex justify-content-between mb-2">
-            <span>Shipping</span>
-            <span>Free</span>
-        </div>
-
-        <div className="d-flex justify-content-between fw-bold mb-3">
-            <span>Total</span>
-            <span>₹{cart.totalAmount}</span>
-        </div>
-
-        <Button fullWidth variant="contained" onClick={placeOrder} style={{background:"#5c4033", "&:hover":{background:"#4a3328"}}} >
-            Place Order
-        </Button>
-
-
-
-    </div>
-  )
+    )
 }
 
-export default OrderSummary
+export default OrderSummary;

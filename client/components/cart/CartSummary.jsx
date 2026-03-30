@@ -1,46 +1,62 @@
 "use client";
 
-import { Button, Divider } from "@mui/material";
-import Link from "next/link";
+import { Divider } from "@mui/material";
 import { useState } from "react";
 import CouponBox from "./CouponBox";
 import { useRouter } from "next/navigation";
+import CartStyles from "./cart.module.css";
+import ShoppingCartCheckoutRoundedIcon from "@mui/icons-material/ShoppingCartCheckoutRounded";
+import PaymentsOutlinedIcon from "@mui/icons-material/PaymentsOutlined";
 
-const CartSummary = ({cart}) => {
-    const [discount,setDiscount] = useState(0);
+const CartSummary = ({ cart }) => {
+    const [discount, setDiscount] = useState(0);
     const finalTotal = cart.totalAmount - discount;
     const router = useRouter();
-  return (
-    <div className="summary-card">
-        <h5 className="mb-3">Cart Summary</h5>
 
-        <div className="d-flex justify-content-between mb-2">
-            <span>Subtotal</span>
-            <span>₹{cart.totalAmount}</span>
-        </div>
-        <CouponBox cartTotal={cart.totalAmount} setDiscount={setDiscount}/>
-        {
-            discount > 0 && (
-                <div className="d-flex justify-content-between text-success">
-                    <span>Discount</span>
-                    <span>-₹ {discount}</span>
+    return (
+        <div className={CartStyles.summaryCard}>
+            <div className={CartStyles.summaryHeader}>
+                <PaymentsOutlinedIcon sx={{ fontSize: 24, color: "var(--color-primary)" }} />
+                <h5 className={CartStyles.summaryTitle}>Order Summary</h5>
+            </div>
+
+            <div className={CartStyles.summaryBody}>
+                <div className={CartStyles.summaryRow}>
+                    <span className={CartStyles.summaryLabel}>Subtotal</span>
+                    <span className={CartStyles.summaryValue}>₹{cart.totalAmount.toLocaleString()}</span>
                 </div>
-            )
-        }
-        <div className="d-flex justify-content-between mb-2">
-            <span>Shipping</span>
-            <span>Free</span>
+
+                <CouponBox cartTotal={cart.totalAmount} setDiscount={setDiscount} />
+
+                {discount > 0 && (
+                    <div className={`${CartStyles.summaryRow} ${CartStyles.discountRow}`}>
+                        <span className={CartStyles.summaryLabel}>Discount Applied</span>
+                        <span className={CartStyles.discountValue}>-₹{discount.toLocaleString()}</span>
+                    </div>
+                )}
+
+                <div className={CartStyles.summaryRow}>
+                    <span className={CartStyles.summaryLabel}>Shipping Estimate</span>
+                    <span className={CartStyles.summaryValueFree}>Free</span>
+                </div>
+
+                <Divider className={CartStyles.summaryDivider} />
+
+                <div className={CartStyles.summaryRowTotal}>
+                    <span className={CartStyles.totalLabel}>Total</span>
+                    <span className={CartStyles.totalValue}>₹{finalTotal.toLocaleString()}</span>
+                </div>
+
+                <button 
+                    className={CartStyles.checkoutBtn} 
+                    onClick={() => router.push('/checkout')}
+                >
+                    <ShoppingCartCheckoutRoundedIcon sx={{ fontSize: 20 }} />
+                    <span>Proceed To Checkout</span>
+                </button>
+            </div>
         </div>
-        <Divider className="my-2"/>
-        <div className="d-flex justify-content-between fw-bold mb-3">
-            <span>Total</span>
-            <span>₹{finalTotal}</span>
-        </div>
-        <Button fullWidth variant="contained" onClick={()=>router.push('/checkout')}>
-            Proceed To Checkout
-        </Button>
-    </div>
-  )
+    )
 }
 
 export default CartSummary;

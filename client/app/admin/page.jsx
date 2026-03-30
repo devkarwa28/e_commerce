@@ -3,11 +3,16 @@ import StatCard from '@/components/admin/StatCard';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import dynamic from 'next/dynamic';
+import AccountBalanceWalletRoundedIcon from '@mui/icons-material/AccountBalanceWalletRounded';
+import LocalMallRoundedIcon from '@mui/icons-material/LocalMallRounded';
+import Inventory2RoundedIcon from '@mui/icons-material/Inventory2Rounded';
+import PeopleAltRoundedIcon from '@mui/icons-material/PeopleAltRounded';
 
 const RevenueChart = dynamic(() => import('@/components/admin/RevenueChart'),{loading : () => <p>Loading.</p>});
 const TopProducts = dynamic(()=>import('@/components/admin/TopProducts'),{loading : ()=> <p>Loading</p>});
 const DailySalesChart = dynamic(()=>import('@/components/admin/DailySalesChart'),{loading : ()=> <p>Loading</p> });
 const OrderStatusChart = dynamic(()=>import('@/components/admin/OrderStatusChart'),{loading : ()=> <p>Loading</p> });
+
 const AdminPage = () => {
   const [stats, setStats] = useState({
     totalRevenue: 0,
@@ -20,6 +25,7 @@ const AdminPage = () => {
   const [dailySales,setDailySales] = useState([]);
   const [orderStatus,setOrderStatus] = useState([]);
   const [loading, setLoading] = useState(true);
+  
   const fetchStats = async () => {
     try { 
       const [statsRes,salesRes,topRes,orderRes,dailyRes] = await Promise.all([
@@ -44,43 +50,65 @@ const AdminPage = () => {
   useEffect(() => {
     fetchStats();
   }, [])
+  
   return (
-    <div className="container">
-      <h2>Dashboard Overview</h2>
+    <div className="container" style={{ padding: "40px 20px" }}>
+      
+      <div style={{ marginBottom: "40px" }}>
+        <h2 style={{ fontSize: "32px", fontWeight: 800, color: "var(--color-primary, #5c4033)", margin: "0 0 8px 0", letterSpacing: "-1px" }}>Dashboard Overview</h2>
+        <p style={{ fontSize: "16px", color: "var(--color-text-secondary, #666)", margin: 0, fontWeight: 500 }}>Welcome back! Here's what's happening with your store today.</p>
+      </div>
 
-      <div className='row g-4 mb-4'>
+      <div className='row g-4 mb-5'>
 
         <div className="col-lg-3">
-          <StatCard title="Total Revenue" value={`₹${stats.totalRevenue}`} color="#5c4033" />
+          <StatCard 
+            title="Total Revenue" 
+            value={`₹${stats.totalRevenue?.toLocaleString() || 0}`} 
+            color="#5c4033" 
+            icon={<AccountBalanceWalletRoundedIcon sx={{ fontSize: 28 }} />}
+          />
         </div>
 
         <div className="col-lg-3">
-          <StatCard title="Orders" value={stats.totalOrders} color="#c89b3c" />
+          <StatCard 
+            title="Total Orders" 
+            value={stats.totalOrders?.toLocaleString() || 0} 
+            color="#c89b3c"
+            icon={<LocalMallRoundedIcon sx={{ fontSize: 28 }} />}
+          />
         </div>
 
         <div className="col-lg-3">
-          <StatCard title="Total Products" value={stats.totalProducts} color="#6b8e23" />
+          <StatCard 
+            title="Total Products" 
+            value={stats.totalProducts?.toLocaleString() || 0} 
+            color="#6b8e23"
+            icon={<Inventory2RoundedIcon sx={{ fontSize: 28 }} />}
+          />
         </div>
 
         <div className="col-lg-3">
-          <StatCard title="Total Users" value={stats.totalUsers} color="#8b5e3c" />
+          <StatCard 
+            title="Total Users" 
+            value={stats.totalUsers?.toLocaleString() || 0} 
+            color="#E45757"
+            icon={<PeopleAltRoundedIcon sx={{ fontSize: 28 }} />}
+          />
         </div>
 
       </div>
 
-      <div className="row mb-4">
-
+      <div className="row g-4 mb-4">
         <div className="col-lg-8">
           <RevenueChart data={sales} />
         </div>
-
         <div className="col-lg-4">
           <TopProducts products={topProducts}/>
         </div>
-
       </div>
-      <div className="row">
-
+      
+      <div className="row g-4 mb-4">
         <div className="col-lg-8">
           <DailySalesChart data={dailySales} />
         </div>

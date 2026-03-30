@@ -1,58 +1,121 @@
 "use client";
+
 import { useAuth } from "@/context/AuthContext";
 import { Facebook, Google } from "@mui/icons-material";
-import { Button, Divider, TextField } from "@mui/material";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import LoginStyles from "./login.module.css";
+import LoginRoundedIcon from '@mui/icons-material/LoginRounded';
 
- 
- const UserLogin = () => {
-  const {setUser} = useAuth();
-    const [email,setEmail] = useState("");
-    const [password,setPassword] = useState("");
-    const router = useRouter()
-    const loginHandler = async () =>{
-      try{
-        const res = await axios.post("http://localhost:5000/api/auth/login",{email,password});
-        setUser(res.data);
-        router.push("/")
-      }
-      catch(err){
-        console.log("Cannot Login")
-      }
+const UserLogin = () => {
+    const { setUser } = useAuth();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
+    const router = useRouter();
+
+    const loginHandler = async (e) => {
+        e.preventDefault();
+        setError("");
+        
+        if (!email || !password) {
+            setError("Please fill in all fields.");
+            return;
+        }
+
+        setLoading(true);
+        try {
+            const res = await axios.post("http://localhost:5000/api/auth/login", { email, password });
+            setUser(res.data);
+            router.push("/");
+        } catch (err) {
+            setError(err.response?.data?.message || "Invalid credentials. Please try again.");
+            console.log("Cannot Login", err);
+        }
+        setLoading(false);
     }
-   return (
-     <section className="login-wrapper">
-        <div className="login-card">
-            <h3 className="login-title">Welcome Back</h3>
 
-            <TextField size="small" label="Email" fullWidth className="mb-3" value={email} onChange={(e)=>setEmail(e.target.value)} />
+    return (
+        <section className={LoginStyles.pageWrapper}>
+            <div className={LoginStyles.loginCard}>
+                <div className={LoginStyles.loginHeader}>
+                    <h3 className={LoginStyles.loginTitle}>Welcome Back</h3>
+                    <p className={LoginStyles.loginSubtitle}>Sign in to access your Nutrivia account</p>
+                </div>
 
-            <TextField size="small" label="Password" type="password" fullWidth value={password} className="mb-3" onChange={(e)=>setPassword(e.target.value)} />
+                {error && <div className={LoginStyles.errorMsg}>{error}</div>}
 
-            <Button fullWidth variant="contained" onClick={loginHandler} className="login-btn mb-3" >
-              Login 
-            </Button>
+                <form className={LoginStyles.formArea} onSubmit={loginHandler}>
+                    <div className={LoginStyles.inputGroup}>
+                        <label className={LoginStyles.inputLabel}>Email Address</label>
+                        <input 
+                            type="email" 
+                            className={LoginStyles.customInput} 
+                            placeholder="Enter your email"
+                            value={email} 
+                            onChange={(e) => setEmail(e.target.value)} 
+                        />
+                    </div>
 
-            <p className="text-muted mt-3 text-center">Don't Have An Account <Link href="/register">Register Now</Link></p>
-            <Divider>
-              OR
-            </Divider>
+                    <div className={LoginStyles.inputGroup}>
+                        <label className={LoginStyles.inputLabel}>Password</label>
+                        <input 
+                            type="password" 
+                            className={LoginStyles.customInput} 
+                            placeholder="Enter your password"
+                            value={password} 
+                            onChange={(e) => setPassword(e.target.value)} 
+                        />
+                    </div>
 
-            <div className="d-flex gap-4 mt-4">
-              <Button variant="outlined" startIcon={<Google/>} className="google-btn">
-              Google
-              </Button>
+                    <Link href="#" className={LoginStyles.forgotPassword}>
+                        Forgot Password?
+                    </Link>
 
-              <Button startIcon={<Facebook/>} variant="outlined" className="facebook-btn">
-              Facebook
-              </Button>
+                    <button 
+                        type="submit" 
+                        className={LoginStyles.loginBtn}
+                        disabled={loading}
+                    >
+                        {loading ? "Signing In..." : (
+                            <>
+                                Sign In
+                                <LoginRoundedIcon sx={{ fontSize: 18 }} />
+                            </>
+                        )}
+                    </button>
+                </form>
+
+                <div className={LoginStyles.dividerWrap}>
+                    <div className={LoginStyles.dividerLine}></div>
+                    <span className={LoginStyles.dividerText}>or continue with</span>
+                    <div className={LoginStyles.dividerLine}></div>
+                </div>
+
+                <div className={LoginStyles.socialBtns}>
+                    <button className={`${LoginStyles.socialBtn} ${LoginStyles.googleBtn}`}>
+                        <Google />
+                        Google
+                    </button>
+
+                    <button className={`${LoginStyles.socialBtn} ${LoginStyles.facebookBtn}`}>
+                        <Facebook />
+                        Facebook
+                    </button>
+                </div>
+
+                <div className={LoginStyles.registerWrap}>
+                    New to Nutrivia? 
+                    <Link href="/register" className={LoginStyles.registerLink}>
+                        Create an account
+                    </Link>
+                </div>
             </div>
-        </div>
-     </section>
-   )
- }
- 
- export default UserLogin
+        </section>
+    )
+}
+
+export default UserLogin;

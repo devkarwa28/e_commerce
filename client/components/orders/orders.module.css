@@ -1,26 +1,168 @@
+/* ─── Premium Order Card Styles ─── */
 .orderCard {
-    background: white;
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
-    transition: 300ms;
+    background: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 20px;
+    padding: 0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+    transition: all 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    overflow: hidden;
+    margin-bottom: 24px;
 }
+
 .orderCard:hover {
     transform: translateY(-4px);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 12px 35px rgba(92, 64, 51, 0.08);
+    border-color: rgba(200, 155, 60, 0.2);
 }
+
+.orderHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px;
+    background: #FAFAFA;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.iconWrap {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: rgba(200, 155, 60, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.orderId {
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--color-text-primary);
+    margin: 0 0 4px 0;
+    letter-spacing: 0.5px;
+}
+
+.orderDate {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    margin: 0;
+}
+
+.statusWrap {
+    display: flex;
+    align-items: center;
+}
+
+.orderStatus {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.statusPending {
+    background: rgba(200, 155, 60, 0.1);
+    color: var(--color-gold);
+}
+
+.statusSuccess {
+    background: rgba(107, 142, 35, 0.1);
+    color: var(--color-olive);
+}
+
+.orderBody {
+    padding: 24px;
+}
+
+.itemCard {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    border-radius: 12px;
+    padding: 10px;
+    transition: all 300ms ease;
+}
+
+.itemCard:hover {
+    border-color: rgba(200, 155, 60, 0.2);
+    box-shadow: 0 4px 12px rgba(92, 64, 51, 0.04);
+}
+
 .orderPImg {
-    width: 100%;
-    height: 90px;
+    width: 60px;
+    height: 60px;
     object-fit: cover;
     border-radius: 8px;
-    margin-bottom: 8px;
+    background: #FDFBF7;
 }
-.orderStatus {
-    background: var(--color-bg-light);
-    padding: 6px 12px;
-    border-radius: 6px;
-    font-size: 13px;
-    color: var(--primary-color);
+
+.itemDetails {
+    flex-grow: 1;
+}
+
+.itemName {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin: 0 0 4px 0;
+}
+
+.itemMeta {
+    font-size: 12px;
+    color: var(--color-text-secondary);
+    margin: 0;
+    font-weight: 500;
+}
+
+.qtyMultiplier {
+    color: var(--color-gold);
+    margin: 0 2px;
+}
+
+.orderFooter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px;
+    border-top: 1px solid rgba(0, 0, 0, 0.04);
+    background: #FFFFFF;
+}
+
+.orderTotal {
+    font-size: 15px;
     font-weight: 600;
+    color: var(--color-text-secondary);
+    margin: 0;
+}
+
+.orderTotal span {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--color-primary);
+    margin-left: 8px;
+}
+
+.viewDetailsBtn {
+    background: transparent;
+    color: var(--color-primary);
+    border: 1px solid var(--color-primary);
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 300ms ease;
+}
+
+.viewDetailsBtn:hover {
+    background: var(--color-primary);
+    color: #FFFFFF;
 }
