@@ -63,44 +63,174 @@ A full-stack e-commerce web application for a premium dry fruits store, featurin
 ---
  
 ## 📁 Project Structure
- 
-```
-client/
-├── app/
-│   ├── page.jsx                  # Home page
-│   ├── layout.js                 # Root layout with providers
-│   ├── admin/                    # Admin panel pages
-│   │   ├── page.jsx              # Dashboard
-│   │   ├── products/             # Product CRUD
-│   │   ├── category/             # Category CRUD
-│   │   ├── orders/               # Order management
-│   │   └── coupons/              # Coupon management
-│   ├── products/                 # Storefront product pages
-│   │   └── [slug]/               # Product detail page
-│   ├── cart/                     # Cart page
-│   ├── checkout/                 # Checkout page
-│   ├── orders/                   # User order history
-│   ├── login/                    # Login page
-│   └── register/                 # Registration page
-│
-├── components/
-│   ├── admin/                    # Admin UI components
-│   │   └── forms/                # Multi-step product form
-│   ├── cart/                     # Cart components
-│   ├── checkout/                 # Checkout components
-│   ├── Header/                   # TopBar, MainHeader, NavBar
-│   ├── Footer/                   # Footer component
-│   └── Home/                     # Homepage sections
-│
-├── context/
-│   ├── AuthContext.js            # Authentication state
-│   └── CartContext.js            # Cart state
-│
-├── styles/
-│   └── globals.css               # Global CSS variables & styles
-│
-└── theme/
-    └── theme.js                  # MUI theme configuration
+ ```
+Directory structure:
+└── devkarwa28-e_commerce/
+    ├── client/
+    │   ├── README.md
+    │   ├── eslint.config.mjs
+    │   ├── jsconfig.json
+    │   ├── next.config.mjs
+    │   ├── package.json
+    │   ├── app/
+    │   │   ├── layout.js
+    │   │   ├── page.jsx
+    │   │   ├── page.module.css
+    │   │   ├── admin/
+    │   │   │   ├── adminPanel.module.css
+    │   │   │   ├── layout.js
+    │   │   │   ├── page.jsx
+    │   │   │   ├── category/
+    │   │   │   │   ├── page.jsx
+    │   │   │   │   ├── create/
+    │   │   │   │   │   └── page.jsx
+    │   │   │   │   └── edit/
+    │   │   │   │       └── [id]/
+    │   │   │   │           └── page.jsx
+    │   │   │   └── products/
+    │   │   │       ├── page.jsx
+    │   │   │       ├── create/
+    │   │   │       │   └── page.jsx
+    │   │   │       └── edit/
+    │   │   │           └── [id]/
+    │   │   │               └── page.jsx
+    │   │   ├── cart/
+    │   │   │   └── page.jsx
+    │   │   ├── checkout/
+    │   │   │   └── page.jsx
+    │   │   ├── login/
+    │   │   │   ├── login.module.css
+    │   │   │   └── page.jsx
+    │   │   ├── order-success/
+    │   │   │   └── [id]/
+    │   │   │       ├── orderSucess.module.css
+    │   │   │       └── page.jsx
+    │   │   ├── orders/
+    │   │   │   ├── page.jsx
+    │   │   │   └── [id]/
+    │   │   │       ├── orderDetail.module.css
+    │   │   │       └── page.jsx
+    │   │   ├── products/
+    │   │   │   ├── layout.js
+    │   │   │   ├── page.jsx
+    │   │   │   └── [slug]/
+    │   │   │       ├── page.jsx
+    │   │   │       └── components/
+    │   │   │           ├── BenifitsIcon.jsx
+    │   │   │           ├── PinCodeChecker.jsx
+    │   │   │           ├── productDetail.module.css
+    │   │   │           ├── ProductGallery.jsx
+    │   │   │           ├── ProductInfo.jsx
+    │   │   │           └── ProductTabs.jsx
+    │   │   └── register/
+    │   │       ├── page.jsx
+    │   │       └── register.module.css
+    │   ├── components/
+    │   │   ├── admin/
+    │   │   │   ├── admin.module.css
+    │   │   │   ├── CategoryTable.jsx
+    │   │   │   ├── DailySalesChart.jsx
+    │   │   │   ├── OrderStatusChart.jsx
+    │   │   │   ├── ProductTable.jsx
+    │   │   │   ├── RevenueChart.jsx
+    │   │   │   ├── Sidebar.jsx
+    │   │   │   ├── StatCard.jsx
+    │   │   │   ├── Topbar.jsx
+    │   │   │   ├── TopProducts.jsx
+    │   │   │   └── forms/
+    │   │   │       ├── forms.module.css
+    │   │   │       ├── ImageUploader.jsx
+    │   │   │       ├── NutritentsInfo.jsx
+    │   │   │       ├── ProductForm.jsx
+    │   │   │       ├── SeoForm.jsx
+    │   │   │       ├── SepcifiactionsForm.jsx
+    │   │   │       └── WeightsOption.jsx
+    │   │   ├── cart/
+    │   │   │   ├── cart.module.css
+    │   │   │   ├── CartItems.jsx
+    │   │   │   ├── CartSummary.jsx
+    │   │   │   ├── CouponBox.jsx
+    │   │   │   └── NoItemsInCart.jsx
+    │   │   ├── checkout/
+    │   │   │   ├── AddressForm.jsx
+    │   │   │   ├── checkout.module.css
+    │   │   │   ├── OrderSummary.jsx
+    │   │   │   └── PaymentMethod.jsx
+    │   │   ├── Footer/
+    │   │   │   ├── Footer.jsx
+    │   │   │   └── footer.module.css
+    │   │   ├── Header/
+    │   │   │   ├── Header.js
+    │   │   │   ├── header.module.css
+    │   │   │   ├── MainHeader.jsx
+    │   │   │   ├── NavBar.jsx
+    │   │   │   └── TopBar.jsx
+    │   │   ├── Home/
+    │   │   │   ├── BestSeller.jsx
+    │   │   │   ├── CategoriesShowcase.jsx
+    │   │   │   ├── DryFruitSlider.jsx
+    │   │   │   ├── HeroBanner.jsx
+    │   │   │   ├── home.module.css
+    │   │   │   ├── NewsLetter.jsx
+    │   │   │   ├── ParallaxCollection.jsx
+    │   │   │   ├── ShopByPurpose.jsx
+    │   │   │   ├── Testimonials.jsx
+    │   │   │   └── WhyChooseUs.jsx
+    │   │   ├── layout/
+    │   │   │   └── AppLayout.js
+    │   │   ├── orders/
+    │   │   │   ├── OrderCard.jsx
+    │   │   │   └── orders.module.css
+    │   │   └── products/
+    │   │       ├── FilterSidebar.jsx
+    │   │       ├── ProductCard.jsx
+    │   │       ├── ProductCardSkeleton.jsx
+    │   │       └── products.module.css
+    │   ├── context/
+    │   │   ├── AuthContext.jsx
+    │   │   └── CartContext.jsx
+    │   ├── fonts/
+    │   │   └── LatinaPopular-Regular.ttf
+    │   ├── styles/
+    │   │   └── globals.css
+    │   └── theme/
+    │       └── theme.js
+    └── server/
+        ├── index.js
+        ├── package.json
+        ├── controller/
+        │   ├── adminController.js
+        │   ├── authController.js
+        │   ├── cartController.js
+        │   ├── categoryController.js
+        │   ├── couponController.js
+        │   ├── orderController.js
+        │   ├── productController.js
+        │   └── reviewController.js
+        ├── db/
+        │   └── dbconfig.js
+        ├── middleware/
+        │   ├── authMiddleware.js
+        │   └── uploadMiddleware.js
+        ├── models/
+        │   ├── cartModel.js
+        │   ├── CategoryModel.js
+        │   ├── couponModel.js
+        │   ├── orderModel.js
+        │   ├── productModel.js
+        │   ├── reviewModel.js
+        │   └── UserModel.js
+        ├── routes/
+        │   ├── adminRoutes.js
+        │   ├── authRoutes.js
+        │   ├── cartRouter.js
+        │   ├── categoryRoutes.js
+        │   ├── couponRoutes.js
+        │   ├── orderRoutes.js
+        │   ├── productRoutes.js
+        │   └── reviewRoutes.js
+        └── utilites/
+            └── tokenGenarator.js
 ```
  
 ---
@@ -146,33 +276,58 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
  
 ---
  
-## 🔌 Backend API Endpoints
+## 🔌 API Reference
  
-The frontend expects a REST API server running at `http://localhost:5000`. Below are the key endpoints consumed by the client:
- 
+### Auth
 | Method | Endpoint | Description |
 |---|---|---|
-| POST | `/api/auth/login` | User login |
-| POST | `/api/auth/register` | User registration |
-| GET | `/api/products` | Get all products (with filters & pagination) |
+| POST | `/api/auth/register` | Register a new user |
+| POST | `/api/auth/login` | Login and receive auth cookie |
+ 
+### Products
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/api/products` | Get all products (filters, pagination) |
 | GET | `/api/products/:slug` | Get single product by slug |
+| GET | `/api/products/admin/:id` | Get product by ID (admin) |
 | POST | `/api/products` | Create product (admin) |
 | PUT | `/api/products/:id` | Update product (admin) |
-| PATCH | `/api/products/:id` | Toggle product status (admin) |
+| PATCH | `/api/products/:id` | Toggle active status (admin) |
+ 
+### Categories
+| Method | Endpoint | Description |
+|---|---|---|
 | GET | `/api/category` | Get all categories |
+| GET | `/api/category/:id` | Get category by ID |
 | POST | `/api/category` | Create category (admin) |
 | PUT | `/api/category/:id` | Update category (admin) |
 | DELETE | `/api/category/:id` | Delete category (admin) |
+ 
+### Cart
+| Method | Endpoint | Description |
+|---|---|---|
 | GET | `/api/cart` | Get user's cart |
-| PUT | `/api/cart` | Update cart item quantity |
-| DELETE | `/api/cart` | Remove cart item |
-| POST | `/api/order` | Place an order |
-| GET | `/api/order/myorders` | Get user's orders |
+| PUT | `/api/cart` | Update item quantity |
+| DELETE | `/api/cart` | Remove item from cart |
+ 
+### Orders
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | `/api/order` | Place a new order |
+| GET | `/api/order/myorders` | Get logged-in user's orders |
 | GET | `/api/order/:id` | Get order details |
+ 
+### Coupons
+| Method | Endpoint | Description |
+|---|---|---|
 | POST | `/api/coupons/apply` | Apply a coupon code |
-| GET | `/api/admin/dashboard` | Admin dashboard stats |
+ 
+### Admin Analytics
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/api/admin/dashboard` | Total revenue, orders, users, products |
 | GET | `/api/admin/monthly-sales` | Monthly revenue data |
-| GET | `/api/admin/top-products` | Top selling products |
+| GET | `/api/admin/top-products` | Top selling products by volume |
 | GET | `/api/admin/order-status` | Order status distribution |
 | GET | `/api/admin/get-daily-sales` | Daily sales for last 30 days |
  
@@ -207,14 +362,15 @@ npm run lint       # Run ESLint
 ## 🗺️ Roadmap
  
 - [ ] Online payment integration (Razorpay / Stripe)
-- [ ] User profile & address management
+- [ ] User profile & address book management
 - [ ] Wishlist functionality
-- [ ] Product reviews & ratings
+- [ ] Product reviews & ratings (UI)
 - [ ] Real-time order tracking
-- [ ] Email notifications
+- [ ] Email notifications on order confirmation
 - [ ] Google / Facebook OAuth login
-- [ ] Admin order management (status updates)
-- [ ] Coupon management UI in admin panel
+- [ ] Admin order status management
+- [ ] Admin coupon management UI
+- [ ] Search with autocomplete
  
 ---
  
