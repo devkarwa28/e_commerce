@@ -94,25 +94,449 @@
     font-size: 14px;
     color: var(--color-text-secondary);
 }
-.testi p{
-    color: var(--color-text-secondary);
-    font-size: 16px;
-    font-style: italic;
+
+
+
+/* Testimonials Section  */
+.testiSection {
+    padding: 80px 0 60px;
+    background: linear-gradient(180deg, #F8F5F1 0%, #F0EBE4 100%);
+    position: relative;
 }
-.testi h5{
+
+.testiHeader {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.testiBadge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(92, 64, 51, 0.08);
+    border: 1px solid rgba(92, 64, 51, 0.15);
+    color: var(--color-primary);
+    padding: 6px 18px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+.testiTitle {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: 14px;
+}
+
+.testiHighlight {
     color: var(--color-primary);
 }
-.newsletter{
-    background-color: var(--color-olive);
+
+.testiSubtitle {
+    font-size: 16px;
+    color: var(--color-text-secondary);
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.7;
 }
-.newsletter button{
-    background-color: var(--color-primary);
-    padding: 0px 16px;
+
+.testiSliderWrap {
+    margin: 0 -12px;
+}
+
+.testiCard {
+    background: #FFFFFF;
+    border-radius: 20px;
+    padding: 32px 28px 28px;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    transition: all 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+}
+
+.testiCard::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--color-gold), var(--color-primary));
+    opacity: 0;
+    transition: opacity 400ms ease;
+}
+
+.testiCard:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 16px 40px rgba(92, 64, 51, 0.1);
+    border-color: rgba(200, 155, 60, 0.15);
+}
+
+.testiCard:hover::before {
+    opacity: 1;
+}
+
+.testiQuoteIcon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(200, 155, 60, 0.12), rgba(92, 64, 51, 0.08));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-gold);
+    margin-bottom: 18px;
+}
+
+.testiText {
+    color: var(--color-text-secondary);
+    font-size: 15px;
+    line-height: 1.75;
+    font-style: italic;
+    flex: 1;
+    margin-bottom: 20px;
+}
+
+.testiDivider {
+    width: 50px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--color-gold), transparent);
+    margin-bottom: 20px;
+}
+
+.testiCustomer {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.testiAvatar {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--color-primary), #8B6B5A);
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    flex-shrink: 0;
+}
+
+.testiName {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: 2px;
+}
+
+.testiLocation {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+}
+
+.testiControls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.testiDots {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.testiDot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(92, 64, 51, 0.15);
+    cursor: pointer;
+    transition: all 300ms ease;
+    padding: 0;
+}
+
+.testiDot:hover {
+    background: rgba(200, 155, 60, 0.4);
+}
+
+.testiDotActive {
+    width: 28px;
+    border-radius: 20px;
+    background: var(--color-gold);
+}
+
+.testiArrows {
+    display: flex;
+    gap: 10px;
+}
+
+.testiArrowBtn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid var(--color-border);
+    background: #FFFFFF;
+    color: var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 300ms ease;
+}
+
+.testiArrowBtn:hover {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: #FFFFFF;
+    box-shadow: 0 6px 20px rgba(92, 64, 51, 0.2);
+    transform: translateY(-2px);
+}
+
+
+/* Newsletter Section */
+.newsletterSection {
+    position: relative;
+    padding: 80px 0;
+    background: linear-gradient(135deg, #1E1B18 0%, #2C241E 40%, #3A2E24 70%, #1E1B18 100%);
+    overflow: hidden;
+}
+
+.nlDecorCircle1 {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(200, 155, 60, 0.08) 0%, transparent 70%);
+    top: -120px;
+    left: -100px;
+    animation: nlFloat 8s ease-in-out infinite;
+}
+
+.nlDecorCircle2 {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(107, 142, 35, 0.06) 0%, transparent 70%);
+    bottom: -80px;
+    right: -60px;
+    animation: nlFloat 10s ease-in-out infinite reverse;
+}
+
+.nlDecorLine {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
+    opacity: 0.5;
+}
+
+@keyframes nlFloat {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-20px) scale(1.05); }
+}
+
+.nlContent {
+    color: #FFFFFF;
+}
+
+.nlBadge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(200, 155, 60, 0.15);
+    border: 1px solid rgba(200, 155, 60, 0.3);
+    color: var(--color-gold);
+    padding: 6px 18px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-bottom: 24px;
+    text-transform: uppercase;
+}
+
+.nlTitle {
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1.25;
+    margin-bottom: 18px;
+    color: #FFFFFF;
+}
+
+.nlHighlight {
+    background: linear-gradient(135deg, var(--color-gold), #E8C36A);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.nlSubtitle {
+    font-size: 16px;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.65);
+    margin-bottom: 30px;
+    max-width: 480px;
+}
+
+.nlPerks {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+.nlPerkItem {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.nlPerkIcon {
+    width: 38px;
+    height: 38px;
     border-radius: 10px;
-    text-transform: none;
+    background: rgba(200, 155, 60, 0.12);
+    border: 1px solid rgba(200, 155, 60, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-gold);
+    transition: all 300ms ease;
 }
-.newsletter button:hover{
-    background-color: var(--color-btn-hover);
+
+.nlPerkItem:hover .nlPerkIcon {
+    background: rgba(200, 155, 60, 0.25);
+    transform: translateY(-2px);
+}
+
+.nlFormCard {
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
+    padding: 6px;
+    transition: all 400ms ease;
+}
+
+.nlFormCard:hover {
+    border-color: rgba(200, 155, 60, 0.2);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 0 40px rgba(200, 155, 60, 0.05);
+}
+
+.nlFormInner {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 40px 36px;
+    text-align: center;
+}
+
+.nlFormIcon {
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    background: rgba(200, 155, 60, 0.1);
+    border: 1px solid rgba(200, 155, 60, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+}
+
+.nlFormTitle {
+    font-size: 22px;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin-bottom: 10px;
+}
+
+.nlFormDesc {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.55);
+    margin-bottom: 28px;
+    line-height: 1.6;
+}
+
+.nlInputWrapper {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 14px;
+    padding: 5px;
+    transition: all 350ms ease;
+}
+
+.nlInputFocused {
+    border-color: rgba(200, 155, 60, 0.4);
+    box-shadow: 0 0 0 4px rgba(200, 155, 60, 0.08);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.nlInput {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 12px 16px;
+    color: #FFFFFF;
+    font-size: 15px;
+    font-family: inherit;
+}
+
+.nlInput::placeholder {
+    color: rgba(255, 255, 255, 0.35);
+}
+
+.nlSubscribeBtn {
+    background: linear-gradient(135deg, var(--color-gold), #D4A843);
+    color: #1E1B18;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 300ms ease;
+    white-space: nowrap;
+    font-family: inherit;
+}
+
+.nlSubscribeBtn:hover {
+    background: linear-gradient(135deg, #D4A843, var(--color-gold));
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(200, 155, 60, 0.3);
+}
+
+.nlSubscribeBtn:active {
+    transform: translateY(0px);
+}
+
+.nlDisclaimer {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.35);
+    margin-top: 16px;
+    margin-bottom: 0;
 }
 .paraSection{
     height: 500px;
