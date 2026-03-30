@@ -11,7 +11,7 @@ const CartProvider = ({children}) => {
 
     const fetchCart = async () =>{
         try{
-            const res = await axios.get("http://localhost:5000/api/cart",{withCredentials:true});
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/cart`,{withCredentials:true});
             setCart(res.data);
         }
         catch(err){
@@ -25,11 +25,11 @@ const CartProvider = ({children}) => {
     },[])
 
     const addToCart = async (productId,weightLabel,quantity) =>{
-        await axios.post("http://localhost:5000/api/cart",{productId,weightLabel,quantity},{withCredentials:true});
+        await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/cart`,{productId,weightLabel,quantity},{withCredentials:true});
         fetchCart();
     }
     const removeFromCart = async (productId,weightLabel) =>{
-        await axios.delete("http://localhost:5000/api/cart",{data:{productId,weightLabel},withCredentials:true});
+        await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/cart`,{data:{productId,weightLabel},withCredentials:true});
         fetchCart();
     }
   return (
