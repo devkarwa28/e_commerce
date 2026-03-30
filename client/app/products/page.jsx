@@ -36,7 +36,7 @@ const ProductsPage = () => {
        }
 
        try{
-        const res = await axios.get("http://localhost:5000/api/products",{params: {...filters,page}});
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/products`,{params: {...filters,page}});
         setProducts(res.data.products);
         setTotalPages(res.data.totalPages);
 

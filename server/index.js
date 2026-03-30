@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const path = require('path')
+require('dotenv').config();
 const authRouter = require('./routes/authRoutes');
 const cookieParser = require('cookie-parser');
 const categoryRouter = require('./routes/categoryRoutes');
@@ -10,15 +10,16 @@ const cartRouter = require('./routes/cartRouter');
 const orderRouter = require('./routes/orderRoutes');
 const adminRouter = require('./routes/adminRoutes');
 const couponRouter = require('./routes/couponRoutes');
-require('./db/dbconfig');
+require('./config/dbconfig');
 const app = express()
 
 app.use(cors({origin: "http://localhost:3000",credentials: true,}));
 app.use(cookieParser());
 app.use(express.json());
+app.use(express.urlencoded({extended:true}));
 
 app.use('/api/auth',authRouter);
-app.use('/uploads', express.static(path.join(__dirname,"uploads")));
+
 app.use('/api/category',categoryRouter);
 app.use('/api/products',productRouter);
 app.use('/api/reviews',reviewRouter);

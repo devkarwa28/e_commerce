@@ -1,6 +1,7 @@
 const Category = require('../models/CategoryModel');
 const Product = require('../models/productModel');
 const slugify = require('slugify');
+const uploadToCloudinary = require('../utilites/cloudinaryUpload');
 
 exports.createCategory = async (req,res) =>{
     try{
@@ -17,7 +18,8 @@ exports.createCategory = async (req,res) =>{
         }
         let imageURL = "";
         if(req.file){
-            imageURL = `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`;
+            const result = await uploadToCloudinary(req.file.buffer, "categories");
+            imageURL = result.secure_url;
         }
         const category = await Category.create({cname,slug: slugify(cname,{lower: true}),image: imageURL})
         res.status(201).json(category);
@@ -89,7 +91,8 @@ exports.updateCategory = async (req,res) =>{
         }
         if(req.file)
         {
-            category.image = `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`;
+            const result = await uploadToCloudinary(req.file.buffer, "categories");
+            category.image = result.secure_url;
         }
         await category.save();
 

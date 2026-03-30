@@ -11,7 +11,7 @@ const AuthProvider = ({children}) => {
 
     const fetchUser = async () =>{
         try{
-            const res = await axios.get("http://localhost:5000/api/auth/me",{withCredentials: true});
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/me`,{withCredentials: true});
             setUser(res.data.user);
         }
         catch(err){
@@ -25,7 +25,7 @@ const AuthProvider = ({children}) => {
     },[])
 
     const logOut = async () =>{
-        await axios.post("http://localhost:5000/api/auth/logout",{},{withCredentials: true});
+        await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/logout`,{},{withCredentials: true});
         setUser(null)
     }
   return (

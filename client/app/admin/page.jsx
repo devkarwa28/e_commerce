@@ -29,11 +29,11 @@ const AdminPage = () => {
   const fetchStats = async () => {
     try { 
       const [statsRes,salesRes,topRes,orderRes,dailyRes] = await Promise.all([
-        axios.get("http://localhost:5000/api/admin/dashboard", { withCredentials: true }),
-        axios.get("http://localhost:5000/api/admin/monthly-sales",{withCredentials:true}),
-        axios.get("http://localhost:5000/api/admin/top-products",{withCredentials: true}),
-        axios.get("http://localhost:5000/api/admin/order-status",{withCredentials:true}),
-        axios.get("http://localhost:5000/api/admin/get-daily-sales",{withCredentials:true}),
+        axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/dashboard`, { withCredentials: true }),
+        axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/monthly-sales`,{withCredentials:true}),
+        axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/top-products`,{withCredentials: true}),
+        axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/order-status`,{withCredentials:true}),
+        axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/get-daily-sales`,{withCredentials:true}),
       ]);
       setStats(statsRes.data);
       setSales(salesRes.data);

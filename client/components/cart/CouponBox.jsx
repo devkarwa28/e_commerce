@@ -17,7 +17,7 @@ const CouponBox = ({ cartTotal, setDiscount }) => {
         setLoading(true);
         setStatus(null);
         try {
-            const res = await axios.post("http://localhost:5000/api/coupons/apply", { code }, { withCredentials: true });
+            const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/coupons/apply`, { code }, { withCredentials: true });
             setDiscount(res.data.discount);
             setStatus("success");
             setMessage("Coupon Applied Successfully!");

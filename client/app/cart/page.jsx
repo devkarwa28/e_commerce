@@ -11,7 +11,7 @@ const Cart = () => {
   const [cart,setCart] = useState(null);
   const fetchCart = async () =>{
     try{
-      const res = await axios.get("http://localhost:5000/api/cart");
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/cart`);
       setCart(res.data);
     }
     catch(err){

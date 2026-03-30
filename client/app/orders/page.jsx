@@ -12,7 +12,7 @@ const OrdersPage = () => {
 
   const fetchOrders = async () =>{
     try{
-      const res = await axios.get("http://localhost:5000/api/order/myorders",{withCredentials:true});
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/order/myorders`,{withCredentials:true});
       setOrders(res.data.orders)
     }
     catch(err){

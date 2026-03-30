@@ -32,7 +32,6 @@ const PaymentMethod = () => {
                     </div>
                 </div>
 
-                {/* Online Payment */}
                 <div className={`${CheckoutStyles.paymentOption} ${CheckoutStyles.disabledOption}`}>
                     <div className={CheckoutStyles.paymentRadio}>
                         <div className={CheckoutStyles.paymentRadioDot}></div>

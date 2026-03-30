@@ -60,7 +60,7 @@ const CreateCategoryPage = () => {
             formData.append("cname", cname.trim());
             if (image) formData.append("image", image);
 
-            await axios.post("http://localhost:5000/api/category", formData, {
+            await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/category`, formData, {
                 withCredentials: true,
                 headers: { "Content-Type": "multipart/form-data" },
             });

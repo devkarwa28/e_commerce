@@ -15,7 +15,7 @@ const AdminCategoriesPage = () => {
 
     const fetchCategories = async () => {
         try {
-            const res = await axios.get("http://localhost:5000/api/category", { withCredentials: true });
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/category`, { withCredentials: true });
             setCategories(res.data);
         } catch (err) {
             console.log(err);
@@ -26,7 +26,7 @@ const AdminCategoriesPage = () => {
     const handleDelete = async (id) => {
         if (!confirm("Are you sure you want to delete this category?")) return;
         try {
-            await axios.delete(`http://localhost:5000/api/category/${id}`, { withCredentials: true });
+            await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/category/${id}`, { withCredentials: true });
             setCategories(prev => prev.filter(c => c._id !== id));
         } catch (err) {
             console.log(err);
@@ -44,7 +44,6 @@ const AdminCategoriesPage = () => {
     return (
         <section className="container py-5" style={{ padding: "40px 20px" }}>
             
-            {/* Header Section */}
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "40px" }}>
                 <div>
                     <h2 style={{ fontSize: "32px", fontWeight: 800, color: "var(--color-primary, #5c4033)", margin: "0 0 8px 0", letterSpacing: "-1px" }}>Category Management</h2>
@@ -81,7 +80,6 @@ const AdminCategoriesPage = () => {
                 </button>
             </div>
 
-            {/* Main Card Wrapper */}
             <div style={{
                 background: "#FFFFFF",
                 borderRadius: "24px",
@@ -90,7 +88,6 @@ const AdminCategoriesPage = () => {
                 border: "1px solid rgba(0,0,0,0.03)",
                 minHeight: "400px"
             }}>
-                {/* Search Bar */}
                 <div style={{ marginBottom: "32px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                     <div style={{
                         display: "flex",

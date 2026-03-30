@@ -53,7 +53,7 @@ const ProductForm = ({ editData }) => {
 
     const fetchCategories = async () => {
         try {
-            const res = await axios.get("http://localhost:5000/api/category", { withCredentials: true });
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/category`, { withCredentials: true });
             setCategories(res.data);
         } catch (err) {
             console.log(err)
@@ -91,8 +91,7 @@ const ProductForm = ({ editData }) => {
 
     const submitHandler = async (e) => {
         e?.preventDefault();
-        
-        // Anti-bug safeguard: Prevent form submission if we are not actively on the review step (fixes pressing Enter key to submit early)
+
         if (activeStep !== steps.length - 1) {
             if (activeStep === 0 && !validateStep1()) return;
             setActiveStep(prev => prev + 1);
@@ -127,7 +126,7 @@ const ProductForm = ({ editData }) => {
                 );
             } else {
                 await axios.post(
-                    "http://localhost:5000/api/products", 
+                    `${process.env.NEXT_PUBLIC_API_URL}/api/products`, 
                     formData,
                     { headers: { "Content-Type": "multipart/form-data" }, withCredentials: true }
                 );

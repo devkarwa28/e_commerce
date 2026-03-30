@@ -18,7 +18,7 @@ const OrderDetailsPage = () => {
 
     const fetchOrder = async () => {
         try {
-            const res = await axios.get(`http://localhost:5000/api/order/${id}`, { withCredentials: true });
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/order/${id}`, { withCredentials: true });
             setOrder(res.data.order);
         }
         catch (err) {
@@ -53,7 +53,6 @@ const OrderDetailsPage = () => {
                     <h2 className={orderDetailStyles.pageTitle}>Order Documentation</h2>
                 </div>
 
-                {/* Top Status Card */}
                 <div className={orderDetailStyles.statusCard}>
                     <div className={orderDetailStyles.statusLeft}>
                         <div className={orderDetailStyles.statusIconWrap}>
@@ -71,7 +70,6 @@ const OrderDetailsPage = () => {
                 </div>
 
                 <div className="row g-4 mt-1">
-                    {/* Left Column - Items */}
                     <div className="col-lg-8">
                         <div className={orderDetailStyles.cardBlock}>
                             <h5 className={orderDetailStyles.cardTitle}>Items Ordered</h5>
@@ -94,7 +92,6 @@ const OrderDetailsPage = () => {
                         </div>
                     </div>
 
-                    {/* Right Column - Info & Summary */}
                     <div className="col-lg-4">
                         
                         <div className={orderDetailStyles.cardBlock}>

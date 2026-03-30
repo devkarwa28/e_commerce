@@ -34,7 +34,7 @@ const RegisterUser = () => {
 
         setLoading(true);
         try {
-            await axios.post("http://localhost:5000/api/auth/register", { uname, email, password }, { withCredentials: true });
+            await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/register`, { uname, email, password }, { withCredentials: true });
             router.push("/login")
         } catch (err) {
             setError(err.response?.data?.message || "Registration failed. Please try again.");

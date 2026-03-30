@@ -1,7 +1,8 @@
 const Product = require("../models/productModel");
 const Category = require("../models/CategoryModel");
 const slugify = require("slugify");
-const { options } = require("../routes/categoryRoutes");
+const uploadToCloudinary = require("../utilites/cloudinaryUpload");
+
 
 exports.createProduct = async (req, res) => {
   try {
@@ -38,15 +39,22 @@ exports.createProduct = async (req, res) => {
     if (!req.files || !req.files.mainImage) {
       return res.status(400).json({ message: "Main Image is Required" });
     }
-    const mainImageUrl = `${req.protocol}://${req.get("host")}/uploads/${req.files.mainImage[0].filename}`;
+    let mainImageUrl = "";
+
+    if(req.file && req.file.mainImage){
+        const result = await uploadToCloudinary(req.file.mainImage[0].buffer, "products/main");
+        mainImageUrl = result.secure_url;
+    }
 
     let galleryImages = [];
 
-    if (req.files.images && req.files.images.length > 0) {
-      galleryImages = req.files.images.map(
-        (file) =>
-          `${req.protocol}://${req.get("host")}/uploads/${file.filename}`,
-      );
+    if ( req.files && req.files.images && req.files.images.length > 0) {
+     galleryImages = await Promise.all(
+        req.files.images.map(async (file) => {
+            const result = await uploadToCloudinary(file.buffer, "products/gallery");
+            return result.secure_url;
+        })
+     )
     }
 
     let parsedWeightOptions = [];
@@ -286,22 +294,26 @@ exports.updateProduct = async (req, res) => {
     }
 
     if (req.files && req.files.mainImage) {
-      const mainImageUrl = `${req.protocol}://${req.get("host")}/uploads/${req.files.mainImage[0].filename}`;
-      product.mainImage = mainImageUrl;
+      const result = await uploadToCloudinary(req.file.mainImage[0].buffer, "products/main");
+      product.mainImage = result.secure_url;
     }
-
+    
     if (req.files && req.files.images && req.files.images.length > 0) {
-      const galleryImages = req.files.images.map(
-        (file) =>
-          `${req.protocol}://${req.get("host")}/uploads/${file.filename}`,
-      );
-      product.images = galleryImages;
+     let galleryImages = await Promise.all(
+        req.files.images.map(async (file) => {
+            const result = await uploadToCloudinary(file.buffer, "products/gallery");
+            return result.secure_url;
+        })
+     )
+     product.images = galleryImages;
     }
     if (removedImages) {
       try {
-        const removed = JSON.parse(req.body.removedImages);
+        const removed = JSON.parse(removedImages);
 
-        product.images = product.images.filter((img) => !removed.includes(img));
+        product.images = product.images.filter(
+          (img) => !removed.includes(img)
+        );
       } catch (err) {
         return res.status(400).json({
           message: "Invalid removed images",

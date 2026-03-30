@@ -15,7 +15,6 @@ const OrderSummary = () => {
     const [couponCode, setCouponCode] = useState("");
 
     useEffect(() => {
-        // Fetch dynamic data from cart summary saved in session storage
         const appliedCouponInfo = sessionStorage.getItem('appliedCoupon');
         if (appliedCouponInfo) {
             try {
@@ -30,7 +29,7 @@ const OrderSummary = () => {
 
     const placeOrder = async () => {
         try {
-            const res = await axios.post("http://localhost:5000/api/order",{
+            const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/order`,{
                 shippingAddress: {address:"Test Address",city:"Jodhpur",pincode:"342001"},
                 paymentMethod: "COD"
             },{withCredentials:true});

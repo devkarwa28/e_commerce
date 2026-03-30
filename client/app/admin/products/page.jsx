@@ -14,7 +14,7 @@ const ProductsPage = () => {
 
     const fetchProducts = async () => {
         try {
-            const res = await axios.get("http://localhost:5000/api/products", { withCredentials: true });
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/products`, { withCredentials: true });
             setProducts(res.data.products);
         }
         catch (err) {
@@ -24,7 +24,7 @@ const ProductsPage = () => {
     
     const toggleStatus = async (id) => {
         try {
-            await axios.patch(`http://localhost:5000/api/products/${id}`,{},{ withCredentials:true });
+            await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/products/${id}`,{},{ withCredentials:true });
             setProducts(prev =>
                 prev.map(p =>
                     p._id === id ? { ...p, isActive: !p.isActive } : p
@@ -46,7 +46,6 @@ const ProductsPage = () => {
     return (
         <section className="container py-5" style={{ padding: "40px 20px" }}>
             
-            {/* Header Section */}
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "40px" }}>
                 <div>
                     <h2 style={{ fontSize: "32px", fontWeight: 800, color: "var(--color-primary, #5c4033)", margin: "0 0 8px 0", letterSpacing: "-1px" }}>Product Management</h2>

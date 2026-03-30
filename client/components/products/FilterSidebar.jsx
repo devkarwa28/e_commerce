@@ -1,53 +1,63 @@
 "use client";
 import filterBarStyles from './products.module.css'
-import {Box, Typography, TextField, InputAdornment,Slider, Select, MenuItem, FormControl, Accordion,
-AccordionSummary, AccordionDetails, Switch,Button, Divider, IconButton, Paper} from "@mui/material";
-import {Search, ExpandMore, FilterList, Close,TuneRounded, RestartAlt} from "@mui/icons-material";
+import {
+    Box, Typography, TextField, InputAdornment, Slider, Select, MenuItem, FormControl, Accordion,
+    AccordionSummary, AccordionDetails, Switch, Button, Divider, IconButton, Paper, Badge
+} from "@mui/material";
+import { Search, ExpandMore, FilterList, Close, TuneRounded, RestartAlt, CategoryRounded, PaymentsRounded, ImportExportRounded, BoltRounded, InventoryRounded } from "@mui/icons-material";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const BROWN = "#5c4033";
 const GOLD = "#C89B3C";
-const BG = "#F8F5F1";
-const SURFACE = "#f5ede7";
+const OLIVE = "#6B8E23";
+const BG = "#FDFCFB";
+const SURFACE = "#fcf9f6";
 
 const sectionLabelSx = {
-    fontSize: "11px",
-    fontWeight: 700,
-    letterSpacing: "1px",
+    fontSize: "12px",
+    fontWeight: 800,
+    letterSpacing: "1.5px",
     textTransform: "uppercase",
-    color: "#3d2b1f",
+    color: BROWN,
+    display: "flex",
+    alignItems: "center",
+    gap: 1.5
 };
 
 const accordionSx = {
     boxShadow: "none",
-    borderBottom: "1px solid #f0ebe4",
+    background: "transparent",
+    borderBottom: "1px solid rgba(92, 64, 51, 0.06)",
     "&:before": { display: "none" },
     "&.Mui-expanded": { margin: 0 },
 };
 
 const accordionSummarySx = {
-    px: 2.5,
-    minHeight: "48px !important",
-    "& .MuiAccordionSummary-content": { my: "12px !important" },
-    "&:hover": { background: "#faf8f5" },
-    transition: "background 180ms ease",
+    px: 3,
+    minHeight: "64px !important",
+    "& .MuiAccordionSummary-content": { my: "0 !important" },
+    "& .MuiAccordionSummary-expandIconWrapper": { color: "#CCC" },
+    "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": { color: GOLD },
+    transition: "all 200ms ease",
 };
 
 const inputSx = {
     "& .MuiOutlinedInput-root": {
-        borderRadius: "12px",
-        background: BG,
-        fontSize: "13px",
-        "& fieldset": { borderColor: "#ede8e2", borderWidth: "1.5px" },
-        "&:hover fieldset": { borderColor: BROWN },
+        borderRadius: "16px",
+        background: "#FFF",
+        fontSize: "14px",
+        height: "45px",
+        "& fieldset": { borderColor: "rgba(92, 64, 51, 0.1)", borderWidth: "1.5px" },
+        "&:hover fieldset": { borderColor: GOLD },
         "&.Mui-focused fieldset": { borderColor: BROWN, borderWidth: "1.5px" },
     },
 };
 
 const FilterSidebar = ({ filters, setFilters }) => {
     const [categories, setCategories] = useState([]);
-    const [priceRange, setPriceRange] = useState([filters.minPrice || 0,filters.maxPrice || 5000,]);
+    const [priceRange, setPriceRange] = useState([filters.minPrice || 0, filters.maxPrice || 5000]);
 
     const activeCount = [
         filters.category,
@@ -56,13 +66,12 @@ const FilterSidebar = ({ filters, setFilters }) => {
         filters.featured === "true",
         filters.sort,
         filters.search,
-        filters.inStock,
+        filters.inStock === "true",
     ].filter(Boolean).length;
 
-    useEffect(() => {axios.get("http://localhost:5000/api/category")
-        
+    useEffect(() => {
+        axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/category`)
             .then((res) => setCategories(res.data))
-
             .catch((err) => console.log(err));
     }, []);
 
@@ -80,85 +89,87 @@ const FilterSidebar = ({ filters, setFilters }) => {
     };
 
     return (
-        <Paper elevation={0} sx={{borderRadius: "20px",border: "1px solid #ede8e2",overflow: "hidden",
+        <Paper 
+            elevation={0} 
+            sx={{
+                borderRadius: "32px",
+                border: "1px solid rgba(92, 64, 51, 0.08)",
+                overflow: "hidden",
                 background: "#fff",
+                boxShadow: "0 10px 40px rgba(92, 64, 51, 0.03)",
+                position: "sticky",
+                top: "100px"
             }}
         >
-            
             <Box
                 sx={{
-                    px: 2.5,
-                    py: 2,
-                    borderBottom: "1px solid #f0ebe4",
+                    px: 3,
+                    py: 3,
+                    background: SURFACE,
+                    borderBottom: "1px solid rgba(92, 64, 51, 0.06)",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "space-between",
                 }}
             >
-                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                    <TuneRounded sx={{ color: BROWN, fontSize: 18 }} />
-                    <Typography sx={{ fontSize: "15px", fontWeight: 700, color: "#1a1a1a" }}>
-                        Filters
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+                    <Box sx={{ 
+                        width: 36, 
+                        height: 36, 
+                        borderRadius: "10px", 
+                        background: BROWN, 
+                        display: "flex", 
+                        alignItems: "center", 
+                        justifyContent: "center",
+                        boxShadow: "0 4px 12px rgba(92, 64, 51, 0.2)"
+                    }}>
+                        <TuneRounded sx={{ color: "#FFF", fontSize: 20 }} />
+                    </Box>
+                    <Typography sx={{ fontSize: "18px", fontWeight: 900, color: BROWN, letterSpacing: "-0.5px" }}>
+                        Sort & Filter
                     </Typography>
-                    {activeCount > 0 && (
-                        <Box
-                            sx={{
-                                background: BROWN,
-                                color: "#fff",
-                                fontSize: "10px",
-                                fontWeight: 700,
-                                px: "7px",
-                                py: "2px",
-                                borderRadius: "50px",
-                                lineHeight: 1.6,
-                            }}
-                        >
-                            {activeCount}
-                        </Box>
-                    )}
                 </Box>
 
-                {activeCount > 0 && (
-                    <Button
-                        size="small"
-                        startIcon={<RestartAlt sx={{ fontSize: "14px !important" }} />}
-                        onClick={clearFilters}
-                        className={filterBarStyles.clearAllBtn}
-                    >
-                        Clear All
-                    </Button>
-                )}
+                <AnimatePresence>
+                    {activeCount > 0 && (
+                        <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.8 }}>
+                            <Button
+                                size="small"
+                                onClick={clearFilters}
+                                sx={{
+                                    textTransform: "none",
+                                    color: GOLD,
+                                    fontWeight: 700,
+                                    fontSize: "13px",
+                                    "&:hover": { background: "rgba(200, 155, 60, 0.08)" }
+                                }}
+                            >
+                                Reset All
+                            </Button>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
             </Box>
 
-
             <Accordion defaultExpanded disableGutters sx={accordionSx}>
-
-                <AccordionSummary expandIcon={<ExpandMore sx={{ fontSize: 18, color: "#999" }} />} sx={accordionSummarySx}>
-                    <Typography sx={sectionLabelSx}>Search</Typography>
+                <AccordionSummary expandIcon={<ExpandMore sx={{ fontSize: 20 }} />} sx={accordionSummarySx}>
+                    <Typography sx={sectionLabelSx}>
+                        <Search sx={{ fontSize: 20, color: GOLD }} /> Search
+                    </Typography>
                 </AccordionSummary>
-
-                <AccordionDetails sx={{ px: 2.5, pt: 0, pb: 2 }}>
+                <AccordionDetails sx={{ px: 3, pb: 3 }}>
                     <TextField
                         fullWidth
                         size="small"
-                        placeholder="Search products..."
+                        placeholder="What are you looking for?"
                         value={filters.search || ""}
                         onChange={(e) => setFilters({ ...filters, search: e.target.value })}
                         sx={inputSx}
                         InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <Search sx={{ fontSize: 16, color: "#bbb" }} />
-                                </InputAdornment>
-                            ),
                             endAdornment: filters.search ? (
                                 <InputAdornment position="end">
-                                    <IconButton
-                                        size="small"
-                                        onClick={() => setFilters({ ...filters, search: "" })}
-                                        sx={{ color: "#bbb", "&:hover": { color: BROWN } }}
-                                    >
-                                        <Close sx={{ fontSize: 14 }} />
+                                    <IconButton size="small" onClick={() => setFilters({ ...filters, search: "" })} sx={{ color: GOLD }}>
+                                        <Close sx={{ fontSize: 16 }} />
                                     </IconButton>
                                 </InputAdornment>
                             ) : null,
@@ -167,61 +178,38 @@ const FilterSidebar = ({ filters, setFilters }) => {
                 </AccordionDetails>
             </Accordion>
 
-
             <Accordion defaultExpanded disableGutters sx={accordionSx}>
-                <AccordionSummary expandIcon={<ExpandMore sx={{ fontSize: 18, color: "#999" }} />} sx={accordionSummarySx}>
-                    <Typography sx={sectionLabelSx}>Category</Typography>
+                <AccordionSummary expandIcon={<ExpandMore sx={{ fontSize: 20 }} />} sx={accordionSummarySx}>
+                    <Typography sx={sectionLabelSx}>
+                        <CategoryRounded sx={{ fontSize: 20, color: GOLD }} /> Collections
+                    </Typography>
                 </AccordionSummary>
-                <AccordionDetails sx={{ px: 2.5, pt: 0, pb: 2, display: "flex", flexDirection: "column", gap: "6px" }}>
-
-
+                <AccordionDetails sx={{ px: 3, pb: 3, display: "flex", flexDirection: "column", gap: "4px" }}>
                     <Box
                         onClick={() => setFilters({ ...filters, category: "" })}
                         sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                            px: 1.5,
-                            py: 1,
-                            borderRadius: "12px",
-                            cursor: "pointer",
-                            border: "1.5px solid",
-                            borderColor: !filters.category ? BROWN : "transparent",
-                            background: !filters.category ? BROWN : "transparent",
-                            transition: "all 200ms ease",
-                            "&:hover": { background: !filters.category ? BROWN : SURFACE, borderColor: !filters.category ? BROWN : "#e8d5c9" },
+                            px: 2, py: 1.2, borderRadius: "14px", cursor: "pointer", transition: "all 200ms ease",
+                            background: !filters.category ? "rgba(92, 64, 51, 0.05)" : "transparent",
+                            color: !filters.category ? BROWN : "#666",
+                            fontWeight: !filters.category ? 800 : 500,
+                            "&:hover": { background: "rgba(92, 64, 51, 0.03)", color: BROWN }
                         }}
                     >
-                        <Typography sx={{ fontSize: "13px", fontWeight: 500, color: !filters.category ? "#fff" : "#333" }}>
-                            All Categories
-                        </Typography>
+                        <Typography sx={{ fontSize: "14px" }}>All Products</Typography>
                     </Box>
-
                     {categories.map((cat) => (
                         <Box
                             key={cat._id}
                             onClick={() => setFilters({ ...filters, category: cat._id })}
                             sx={{
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "space-between",
-                                px: 1.5,
-                                py: 1,
-                                borderRadius: "12px",
-                                cursor: "pointer",
-                                border: "1.5px solid",
-                                borderColor: filters.category === cat._id ? BROWN : "transparent",
-                                background: filters.category === cat._id ? BROWN : "transparent",
-                                transition: "all 200ms ease",
-                                "&:hover": {
-                                    background: filters.category === cat._id ? BROWN : SURFACE,
-                                    borderColor: filters.category === cat._id ? BROWN : "#e8d5c9",
-                                },
+                                px: 2, py: 1.2, borderRadius: "14px", cursor: "pointer", transition: "all 200ms ease",
+                                background: filters.category === cat._id ? "rgba(200, 155, 60, 0.08)" : "transparent",
+                                color: filters.category === cat._id ? GOLD : "#666",
+                                fontWeight: filters.category === cat._id ? 800 : 500,
+                                "&:hover": { background: "rgba(200, 155, 60, 0.05)", color: GOLD }
                             }}
                         >
-                            <Typography sx={{ fontSize: "13px", fontWeight: 500, color: filters.category === cat._id ? "#fff" : "#333" }}>
-                                {cat.cname}
-                            </Typography>
+                            <Typography sx={{ fontSize: "14px" }}>{cat.cname}</Typography>
                         </Box>
                     ))}
                 </AccordionDetails>
@@ -229,177 +217,111 @@ const FilterSidebar = ({ filters, setFilters }) => {
 
 
             <Accordion defaultExpanded disableGutters sx={accordionSx}>
-                <AccordionSummary expandIcon={<ExpandMore sx={{ fontSize: 18, color: "#999" }} />} sx={accordionSummarySx}>
-                    <Typography sx={sectionLabelSx}>Price Range</Typography>
+                <AccordionSummary expandIcon={<ExpandMore sx={{ fontSize: 20 }} />} sx={accordionSummarySx}>
+                    <Typography sx={sectionLabelSx}>
+                        <PaymentsRounded sx={{ fontSize: 20, color: GOLD }} /> Price Range
+                    </Typography>
                 </AccordionSummary>
-                <AccordionDetails sx={{ px: 2.5, pt: 0, pb: 2 }}>
-
-                    <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 1, mb: 2 }}>
-                        <Box>
-                            <Typography sx={{ fontSize: "11px", color: "#bbb", mb: 0.5, fontWeight: 600 }}>Min (₹)</Typography>
-                            <TextField
-                                size="small"
-                                type="number"
-                                value={priceRange[0]}
-                                onChange={(e) => {
-                                    const val = Number(e.target.value);
-                                    setPriceRange([val, priceRange[1]]);
-                                }}
-                                onBlur={() => setFilters({ ...filters, minPrice: priceRange[0] })}
-                                sx={inputSx}
-                                inputProps={{ min: 0, max: 5000 }}
-                            />
+                <AccordionDetails sx={{ px: 3, pb: 3 }}>
+                    <Box sx={{ display: "flex", justifyContent: "space-between", mb: 4 }}>
+                        <Box sx={{ textAlign: "center" }}>
+                            <Typography sx={{ fontSize: "10px", color: "#999", fontWeight: 800, textTransform: "uppercase" }}>Min</Typography>
+                            <Typography sx={{ fontSize: "16px", fontWeight: 900, color: BROWN }}>₹{priceRange[0]}</Typography>
                         </Box>
-                        <Box>
-                            <Typography sx={{ fontSize: "11px", color: "#bbb", mb: 0.5, fontWeight: 600 }}>Max (₹)</Typography>
-                            <TextField
-                                size="small"
-                                type="number"
-                                value={priceRange[1]}
-                                onChange={(e) => {
-                                    const val = Number(e.target.value);
-                                    setPriceRange([priceRange[0], val]);
-                                }}
-                                onBlur={() => setFilters({ ...filters, maxPrice: priceRange[1] })}
-                                sx={inputSx}
-                                inputProps={{ min: 0, max: 5000 }}
-                            />
+                        <Box sx={{ textAlign: "center" }}>
+                            <Typography sx={{ fontSize: "10px", color: "#999", fontWeight: 800, textTransform: "uppercase" }}>Max</Typography>
+                            <Typography sx={{ fontSize: "16px", fontWeight: 900, color: BROWN }}>₹{priceRange[1]}+</Typography>
                         </Box>
                     </Box>
-
-
                     <Slider
                         value={priceRange}
                         onChange={handlePriceChange}
                         onChangeCommitted={handlePriceCommit}
                         min={0}
                         max={5000}
-                        valueLabelDisplay="auto"
-                        valueLabelFormat={(v) => `₹${v}`}
                         sx={{
-                            color: BROWN,
+                            color: GOLD,
+                            height: 6,
                             "& .MuiSlider-thumb": {
-                                width: 18,
-                                height: 18,
-                                border: "3px solid #fff",
-                                boxShadow: "0 2px 8px rgba(92,64,51,.35)",
-                                "&:hover, &.Mui-focusVisible": { boxShadow: `0 0 0 8px rgba(92,64,51,.15)` },
+                                width: 24, height: 24, background: "#FFF", border: `2px solid ${GOLD}`,
+                                "&:hover, &.Mui-active": { boxShadow: "0 0 0 8px rgba(200, 155, 60, 0.15)" },
+                                "&:after": { width: 8, height: 8, background: GOLD }
                             },
-                            "& .MuiSlider-rail": { background: "#ede8e2", opacity: 1 },
-                            "& .MuiSlider-valueLabel": {
-                                background: BROWN,
-                                borderRadius: "8px",
-                                fontSize: "11px",
-                            },
+                            "& .MuiSlider-track": { border: "none", borderRadius: 4 },
+                            "& .MuiSlider-rail": { opacity: 0.1, color: BROWN, borderRadius: 4 }
                         }}
                     />
-                    <Box sx={{ display: "flex", justifyContent: "space-between", mt: 0.5 }}>
-                        <Typography sx={{ fontSize: "11px", color: "#bbb" }}>₹0</Typography>
-                        <Typography sx={{ fontSize: "11px", color: "#bbb" }}>₹5,000</Typography>
-                    </Box>
                 </AccordionDetails>
             </Accordion>
 
-
             <Accordion defaultExpanded disableGutters sx={accordionSx}>
-                <AccordionSummary expandIcon={<ExpandMore sx={{ fontSize: 18, color: "#999" }} />} sx={accordionSummarySx}>
-                    <Typography sx={sectionLabelSx}>Sort By</Typography>
+                <AccordionSummary expandIcon={<ExpandMore sx={{ fontSize: 20 }} />} sx={accordionSummarySx}>
+                    <Typography sx={sectionLabelSx}>
+                        <ImportExportRounded sx={{ fontSize: 20, color: GOLD }} /> Sorted By
+                    </Typography>
                 </AccordionSummary>
-                <AccordionDetails sx={{ px: 2.5, pt: 0, pb: 2 }}>
-                    <FormControl fullWidth size="small">
+                <AccordionDetails sx={{ px: 3, pb: 3 }}>
+                    <FormControl fullWidth>
                         <Select
                             value={filters.sort || ""}
                             onChange={(e) => setFilters({ ...filters, sort: e.target.value })}
                             displayEmpty
                             sx={{
-                                borderRadius: "12px",
-                                background: BG,
-                                fontSize: "13px",
-                                "& .MuiOutlinedInput-notchedOutline": { borderColor: "#ede8e2", borderWidth: "1.5px" },
-                                "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: BROWN },
-                                "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: BROWN, borderWidth: "1.5px" },
+                                borderRadius: "16px",
+                                background: "#FFF",
+                                fontSize: "14px",
+                                fontWeight: 600,
+                                "& .MuiOutlinedInput-notchedOutline": { borderColor: "rgba(92, 64, 51, 0.1)", borderWidth: "1.5px" },
+                                "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: GOLD },
+                                "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: BROWN }
                             }}
                         >
-                            <MenuItem value="" sx={{ fontSize: "13px" }}>Newest First</MenuItem>
-                            <MenuItem value="price_low" sx={{ fontSize: "13px" }}>Price: Low to High</MenuItem>
-                            <MenuItem value="price_high" sx={{ fontSize: "13px" }}>Price: High to Low</MenuItem>
-                            <MenuItem value="rating" sx={{ fontSize: "13px" }}>Top Rated</MenuItem>
-                            <MenuItem value="popular" sx={{ fontSize: "13px" }}>Most Popular</MenuItem>
+                            <MenuItem value="" sx={{ fontWeight: 600 }}>Newest Arrivals</MenuItem>
+                            <MenuItem value="price_low" sx={{ fontWeight: 600 }}>Price: Low to High</MenuItem>
+                            <MenuItem value="price_high" sx={{ fontWeight: 600 }}>Price: High to Low</MenuItem>
+                            <MenuItem value="rating" sx={{ fontWeight: 600 }}>Customer Rating</MenuItem>
                         </Select>
                     </FormControl>
                 </AccordionDetails>
             </Accordion>
 
-
             <Accordion defaultExpanded disableGutters sx={{ ...accordionSx, borderBottom: "none" }}>
-                <AccordionSummary expandIcon={<ExpandMore sx={{ fontSize: 18, color: "#999" }} />} sx={accordionSummarySx}>
-                    <Typography sx={sectionLabelSx}>Availability</Typography>
+                <AccordionSummary expandIcon={<ExpandMore sx={{ fontSize: 20 }} />} sx={accordionSummarySx}>
+                    <Typography sx={sectionLabelSx}>
+                        <BoltRounded sx={{ fontSize: 20, color: GOLD }} /> Availability
+                    </Typography>
                 </AccordionSummary>
-                <AccordionDetails sx={{ px: 2.5, pt: 0, pb: 2, display: "flex", flexDirection: "column", gap: 0.5 }}>
-
-                
-                    <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", py: 0.5 }}>
-                        <Typography sx={{ fontSize: "13px", fontWeight: 500, color: "#333" }}>
-                            Featured Only
-                        </Typography>
+                <AccordionDetails sx={{ px: 3, pb: 4, display: "flex", flexDirection: "column", gap: 2 }}>
+                    <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                        <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+                            <BoltRounded sx={{ color: OLIVE, fontSize: 20 }} />
+                            <Typography sx={{ fontSize: "14px", fontWeight: 700, color: "#444" }}>Featured Gems</Typography>
+                        </Box>
                         <Switch
                             checked={filters.featured === "true"}
                             onChange={(e) => setFilters({ ...filters, featured: e.target.checked ? "true" : "" })}
-                            size="small"
                             sx={{
-                                "& .MuiSwitch-switchBase.Mui-checked": { color: BROWN },
-                                "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": { background: BROWN },
+                                "& .MuiSwitch-switchBase.Mui-checked": { color: OLIVE },
+                                "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": { background: OLIVE }
                             }}
                         />
                     </Box>
-
-                    <Divider sx={{ borderColor: "#f5f0ea" }} />
-
-                    
-                    <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", py: 0.5 }}>
-                        <Typography sx={{ fontSize: "13px", fontWeight: 500, color: "#333" }}>
-                            In Stock Only
-                        </Typography>
+                    <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                        <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+                            <InventoryRounded sx={{ color: BROWN, fontSize: 18 }} />
+                            <Typography sx={{ fontSize: "14px", fontWeight: 700, color: "#444" }}>In Stock Only</Typography>
+                        </Box>
                         <Switch
                             checked={filters.inStock === "true"}
                             onChange={(e) => setFilters({ ...filters, inStock: e.target.checked ? "true" : "" })}
-                            size="small"
                             sx={{
                                 "& .MuiSwitch-switchBase.Mui-checked": { color: BROWN },
-                                "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": { background: BROWN },
+                                "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": { background: BROWN }
                             }}
                         />
                     </Box>
                 </AccordionDetails>
             </Accordion>
-
-            
-            <Box sx={{ px: 2.5, py: 2.5 }}>
-                <Button
-                    fullWidth
-                    variant="contained"
-                    startIcon={<FilterList />}
-                    sx={{
-                        background: BROWN,
-                        borderRadius: "14px",
-                        py: 1.4,
-                        fontSize: "14px",
-                        fontWeight: 700,
-                        letterSpacing: "0.3px",
-                        textTransform: "none",
-                        boxShadow: "none",
-                        "&:hover": {
-                            background: "#4a3328",
-                            boxShadow: "0 6px 18px rgba(92,64,51,.30)",
-                            transform: "translateY(-1px)",
-                        },
-                        transition: "all 220ms ease",
-                    }}
-                >
-                    Apply Filters
-                </Button>
-            </Box>
-
         </Paper>
     );
 };

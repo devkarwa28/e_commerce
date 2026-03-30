@@ -11,7 +11,7 @@ const CartItems = ({ item, refreshCart }) => {
     const updateQuantity = async (qty) => {
         if (qty < 1) return;
         try {
-            await axios.put("http://localhost:5000/api/cart", {
+            await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/api/cart`, {
                 productId: item.product._id,
                 weightLabel: item.weightLabel,
                 quantity: qty
@@ -24,7 +24,7 @@ const CartItems = ({ item, refreshCart }) => {
 
     const removeItem = async () => {
         try {
-            await axios.delete("http://localhost:5000/api/cart", {
+            await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/cart`, {
                 data: {
                     productId: item.product._id,
                     weightLabel: item.weightLabel
