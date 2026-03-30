@@ -51,7 +51,7 @@ exports.createProduct = async (req, res) => {
     if ( req.files && req.files.images && req.files.images.length > 0) {
      galleryImages = await Promise.all(
         req.files.images.map(async (file) => {
-            const result = await uploadToCloudinary(file.buffer, "products/gallery");
+            const result = await uploadToCloudinary(file.buffer, "products/gallery");  
             return result.secure_url;
         })
      )
