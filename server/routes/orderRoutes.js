@@ -7,9 +7,10 @@ const orderRouter = express.Router();
 
 orderRouter.post("/",authMiddleware, placeOrder);
 orderRouter.get("/myorders",authMiddleware,getMyOrder);
-orderRouter.get("/:id",authMiddleware,getOrderById);
 
 orderRouter.get("/admin",authMiddleware,AdminOnly, getAllOrders);
 orderRouter.put("/admin/:id",authMiddleware,AdminOnly, updateOrderStatus);
+
+orderRouter.get("/:id",authMiddleware,getOrderById);
 
 module.exports = orderRouter;

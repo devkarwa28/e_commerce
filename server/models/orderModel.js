@@ -18,7 +18,7 @@ const orderItemSchema = new mongoose.Schema({
         required: true,
     },
     price:{
-        type: String,
+        type: Number,
         required: true,
     },
     quantity:{
@@ -31,7 +31,7 @@ const orderItemSchema = new mongoose.Schema({
 const orderSchema = new mongoose.Schema({
     user:{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "user",
+        ref: "User",
         required: true,
     },
     items:[orderItemSchema],
@@ -69,7 +69,9 @@ const orderSchema = new mongoose.Schema({
     },
     paitAt:{
         type: Date,
-        deliveredAt:Date,
+    },
+    deliveredAt:{
+        type: Date,
     },
     couponCode:{
         type: String,

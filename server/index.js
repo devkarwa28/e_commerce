@@ -1,6 +1,6 @@
+require('dotenv').config({ path: '.env.local' });
 const express = require('express');
 const cors = require('cors');
-require('dotenv').config();
 const authRouter = require('./routes/authRoutes');
 const cookieParser = require('cookie-parser');
 const categoryRouter = require('./routes/categoryRoutes');

@@ -13,6 +13,10 @@ exports.authMiddleware = async (req,res,next) =>{
 
         req.user= await User.findById(decoded.id).select("-password");
 
+        if (!req.user) {
+            return res.status(401).json({ message: "User no longer exists" });
+        }
+
         next();
     }
     catch(err){
@@ -21,11 +25,13 @@ exports.authMiddleware = async (req,res,next) =>{
 }
 
 exports.AdminOnly = (req,res,next) => {
+    console.log("AdminOnly Check - Role Found:", req.user?.role);
     if(req.user && req.user.role === "admin")
     {
         next()
     }
     else{
+        console.log("AdminOnly Check - FAILED (Forbidden)");
         res.status(403).json({message: "Admin Access Only"});
     }
 }

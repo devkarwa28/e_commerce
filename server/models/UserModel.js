@@ -10,7 +10,7 @@ let userSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true,
-        lowecase: true,
+        lowercase: true,
         index: true,
     },
     password:{
@@ -31,4 +31,4 @@ let userSchema = new mongoose.Schema({
 
 },{timestamps: true})
 
-module.exports = mongoose.model("user",userSchema);
+module.exports = mongoose.model("User",userSchema);
