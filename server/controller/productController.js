@@ -41,8 +41,8 @@ exports.createProduct = async (req, res) => {
     }
     let mainImageUrl = "";
 
-    if(req.file && req.file.mainImage){
-        const result = await uploadToCloudinary(req.file.mainImage[0].buffer, "products/main");
+    if(req.files && req.files.mainImage){
+        const result = await uploadToCloudinary(req.files.mainImage[0].buffer, "products/main");
         mainImageUrl = result.secure_url;
     }
 
