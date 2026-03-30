@@ -13,7 +13,23 @@ const couponRouter = require('./routes/couponRoutes');
 require('./config/dbconfig');
 const app = express()
 
-app.use(cors({origin: "http://localhost:3000",credentials: true,}));
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://e-commerce-nine-taupe-19.vercel.app"
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,
+}));
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
