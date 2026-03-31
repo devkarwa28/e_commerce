@@ -8,46 +8,71 @@ import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
+import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
+import { useState } from "react";
 
 const Footer = () => {
+  const [activeAccordion, setActiveAccordion] = useState(null);
+
+  const toggleAccordion = (index) => {
+    setActiveAccordion(activeAccordion === index ? null : index);
+  };
+
   const linkColumns = [
     {
       title: "Company",
-      links: ["About Us", "Leadership", "Certifications", "Careers", "Awards"],
+      links: [
+        { name: "About Us", href: "/aboutus" },
+        { name: "Leadership", href: "/leadership" },
+        { name: "Certifications", href: "/certifications" },
+        { name: "Careers", href: "/careers" },
+        { name: "Awards", href: "/awards" },
+      ],
     },
     {
       title: "Our Expertise",
       links: [
-        "Private Label",
-        "Wholesale",
-        "Modern Trade",
-        "Export Import",
-        "Quality & Safety",
+        { name: "Private Label", href: "/expertise/private-label" },
+        { name: "Wholesale", href: "/expertise/wholesale" },
+        { name: "Modern Trade", href: "/expertise/modern-trade" },
+        { name: "Export Import", href: "/expertise/export-import" },
+        { name: "Quality & Safety", href: "/expertise/quality-safety" },
       ],
     },
     {
       title: "Quick Links",
-      links: ["Blog", "Gifting", "Bulk Order", "Franchise", "Coupons"],
+      links: [
+        { name: "Blog", href: "/blog" },
+        { name: "Gifting", href: "/gifting" },
+        { name: "Bulk Order", href: "/bulk-order" },
+        { name: "Franchise", href: "/franchise" },
+        { name: "Coupons", href: "/admin/coupons" },
+      ],
     },
     {
       title: "Information",
       links: [
-        "Privacy Policy",
-        "Return Policy",
-        "Shipping Policy",
-        "Terms & Conditions",
+        { name: "Privacy Policy", href: "/privacy-policy" },
+        { name: "Return Policy", href: "/return-policy" },
+        { name: "Shipping Policy", href: "/shipping-policy" },
+        { name: "Terms & Conditions", href: "/terms-conditions" },
       ],
     },
     {
       title: "Customer Service",
-      links: ["Contact Us", "Grievance", "Track Order", "FAQ"],
+      links: [
+        { name: "Contact Us", href: "/contactus" },
+        { name: "Grievance", href: "/grievance" },
+        { name: "Track Order", href: "/track-order" },
+        { name: "FAQ", href: "/faq" },
+      ],
     },
   ];
 
   const socials = [
-    { icon: <FacebookRoundedIcon sx={{ fontSize: 20 }} />, label: "Facebook" },
-    { icon: <InstagramIcon sx={{ fontSize: 20 }} />, label: "Instagram" },
-    { icon: <XIcon sx={{ fontSize: 18 }} />, label: "Twitter" },
+    { icon: <FacebookRoundedIcon sx={{ fontSize: 20 }} />, label: "Facebook", url: "https://facebook.com" },
+    { icon: <InstagramIcon sx={{ fontSize: 20 }} />, label: "Instagram", url: "https://instagram.com/dev_maheshwari28" },
+    { icon: <XIcon sx={{ fontSize: 18 }} />, label: "Twitter", url: "https://twitter.com" },
   ];
 
   return (
@@ -57,7 +82,7 @@ const Footer = () => {
 
       <div className="container position-relative" style={{ zIndex: 2 }}>
         <div className="row">
-          <div className="col-lg-2 col-md-4 mb-5">
+          <div className="col-lg-2 col-md-12 mb-lg-5">
             <div className={footerStyles.brandBlock}>
               <h3 className={footerStyles.brandName}>Nutrivia</h3>
               <p className={footerStyles.brandDesc}>
@@ -81,35 +106,45 @@ const Footer = () => {
             </div>
           </div>
 
-          {linkColumns.map((col, index) => (
-            <div key={index} className="col-lg-2 col-md-4 col-6 mb-4">
-              <h6 className={footerStyles.colTitle}>{col.title}</h6>
-              <ul className={footerStyles.linkList}>
-                {col.links.map((link, i) => (
-                  <li key={i} className={footerStyles.linkItem}>
-                    <ArrowForwardIosRoundedIcon
-                      className={footerStyles.linkArrow}
-                      sx={{ fontSize: 10 }}
+          <div className="col-lg-10 col-md-12">
+            <div className="row">
+              {linkColumns.map((col, index) => (
+                <div key={index} className="col-lg-3 col-md-4 col-12 mb-md-4 mb-0">
+                  <div 
+                    className={`${footerStyles.colHeader} d-flex justify-content-between align-items-center`}
+                    onClick={() => toggleAccordion(index)}
+                  >
+                    <h6 className={footerStyles.colTitle}>{col.title}</h6>
+                    <ExpandMoreRoundedIcon 
+                      className={`${footerStyles.accordionIcon} d-md-none ${activeAccordion === index ? footerStyles.rotateIcon : ""}`} 
                     />
-                    <Link href="#">{link}</Link>
-                  </li>
-                ))}
-              </ul>
+                  </div>
+                  
+                  <ul className={`${footerStyles.linkList} ${activeAccordion === index ? footerStyles.showList : ""}`}>
+                    {col.links.map((link, i) => (
+                      <li key={i} className={footerStyles.linkItem}>
+                        <ArrowForwardIosRoundedIcon
+                          className={footerStyles.linkArrow}
+                          sx={{ fontSize: 10 }}
+                        />
+                        <Link href={link.href}>{link.name}</Link>
+                      </li>
+                    ))}
+                  </ul>
+                  <div className={`${footerStyles.mobileDivider} d-md-none`}></div>
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
         </div>
 
         <div className={footerStyles.footerDivider}></div>
 
         <div className={footerStyles.footerBottom}>
-          <p className={footerStyles.copyright}>
-            © {new Date().getFullYear()} Nutrivia. All Rights Reserved.
-          </p>
-
           <div className={footerStyles.socialIcons}>
             {socials.map((social, index) => (
               <Link
-                href="#"
+                href={social.url}
                 key={index}
                 className={footerStyles.socialBtn}
                 aria-label={social.label}
@@ -118,6 +153,10 @@ const Footer = () => {
               </Link>
             ))}
           </div>
+
+          <p className={footerStyles.copyright}>
+            © {new Date().getFullYear()} Nutrivia. All Rights Reserved.
+          </p>
 
           <p className={footerStyles.credit}>
             Designed & Developed By{" "}
@@ -130,3 +169,4 @@ const Footer = () => {
 };
 
 export default Footer;
+;

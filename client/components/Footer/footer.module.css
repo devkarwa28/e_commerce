@@ -216,3 +216,92 @@
     transform: translateY(-4px);
     box-shadow: 0 8px 20px rgba(200, 155, 60, 0.12);
 }
+
+/* Custom Grid for 5 columns */
+@media (min-width: 992px) {
+    .col-lg-2-4 {
+        flex: 0 0 20%;
+        max-width: 20%;
+        padding: 0 15px;
+    }
+}
+
+/* Accordion Specific */
+.accordionIcon {
+    color: var(--color-gold);
+    transition: transform 0.4s ease;
+    opacity: 0.6;
+}
+
+.rotateIcon {
+    transform: rotate(180deg);
+}
+
+.mobileDivider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.05);
+    margin-bottom: 20px;
+}
+
+/* Responsive Overrides */
+@media (max-width: 991px) {
+    .footer {
+        padding-top: 50px;
+    }
+
+    .brandBlock {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .contactInfo {
+        align-items: center;
+    }
+
+    .colTitle {
+        margin-bottom: 0px;
+        padding-bottom: 15px;
+        padding-top: 15px;
+        cursor: pointer;
+        width: 100%;
+    }
+
+    .colTitle::after {
+        display: none;
+    }
+
+    .linkList {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.5s cubic-bezier(0, 1, 0, 1);
+        margin-bottom: 0;
+    }
+
+    .showList {
+        max-height: 500px; /* High enough to contain links */
+        transition: max-height 1s ease-in-out;
+        margin-bottom: 15px;
+        margin-top: 5px;
+    }
+
+    .linkItem {
+        padding-left: 10px;
+    }
+
+    .footerBottom {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+
+    .socialIcons {
+        justify-content: center;
+        order: -1;
+    }
+}
+
+@media (max-width: 768px) {
+    .brandName {
+        font-size: 24px;
+    }
+}

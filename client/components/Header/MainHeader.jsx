@@ -6,11 +6,19 @@ import {
   Menu,
   MenuItem,
   Divider,
+  Drawer,
+  Box,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import {
+  CloseRounded,
   FavoriteBorderOutlined,
   Logout,
+  MenuRounded,
   Person2Outlined,
   Settings,
   ShoppingBag,
@@ -28,7 +36,21 @@ const MainHeader = () => {
   const router = useRouter();
   const [anchorEl, setAnchorEl] = useState(null);
   const [searchFocused, setSearchFocused] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const open = Boolean(anchorEl);
+
+  const categories = [
+    "Shop",
+    "Jumbo Nuts",
+    "Snacking",
+    "Dates",
+    "Combos",
+    "Seeds",
+    "Berries",
+    "Spices",
+    "Wholesale",
+    "Blog",
+  ];
 
   const handleOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -41,18 +63,29 @@ const MainHeader = () => {
     router.push("/login");
   };
 
+  const toggleMobileMenu = (open) => (event) => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+    }
+    setMobileMenuOpen(open);
+  };
+
   return (
     <section className={headerStyles.mainHeader}>
       <div className="container">
         <div className="d-flex align-items-center justify-content-between">
-          <Link href="/" className={headerStyles.logoLink}>
-            <h1 className={headerStyles.logo}>Nutrivia</h1>
-          </Link>
+          <div className="d-flex align-items-center gap-2">
+            <div className={headerStyles.menuToggle} onClick={toggleMobileMenu(true)}>
+              <MenuRounded />
+            </div>
+            <Link href="/" className={headerStyles.logoLink}>
+              <h1 className={headerStyles.logo}>Nutrivia</h1>
+            </Link>
+          </div>
 
           <div
-            className={`${headerStyles.searchWrap} ${
-              searchFocused ? headerStyles.searchFocused : ""
-            }`}
+            className={`${headerStyles.searchWrap} ${searchFocused ? headerStyles.searchFocused : ""
+              }`}
           >
             <SearchIcon className={headerStyles.searchIcon} />
             <input
@@ -65,7 +98,11 @@ const MainHeader = () => {
           </div>
 
           <div className={headerStyles.headerActions}>
-            <div className={headerStyles.actionBtn} onClick={handleOpen}>
+            <div className={`${headerStyles.actionBtn} d-lg-none`}>
+              <SearchIcon sx={{ fontSize: 24 }} />
+            </div>
+
+            <div className={`${headerStyles.actionBtn} d-none d-lg-flex`} onClick={handleOpen}>
               <Person2Outlined sx={{ fontSize: 22 }} />
             </div>
 
@@ -108,6 +145,7 @@ const MainHeader = () => {
         </div>
       </div>
 
+      {/* Desktop Profile Menu */}
       <Menu
         anchorEl={anchorEl}
         open={open}
@@ -137,41 +175,114 @@ const MainHeader = () => {
             Hello, {user.uname}
           </MenuItem>
         )}
-
         {user && <Divider sx={{ margin: "4px 12px !important" }} />}
-
         {user && (
-          <MenuItem onClick={() => router.push("/profile")}>
+          <MenuItem onClick={() => { handleClose(); router.push("/profile"); }}>
             <Settings sx={{ mr: 1.5, fontSize: 18, color: "var(--color-primary)" }} />
             Profile Settings
           </MenuItem>
         )}
-
         {user && (
-          <MenuItem onClick={() => router.push("/orders")}>
+          <MenuItem onClick={() => { handleClose(); router.push("/orders"); }}>
             <ShoppingBag sx={{ mr: 1.5, fontSize: 18, color: "var(--color-primary)" }} />
             My Orders
           </MenuItem>
         )}
-
         {user && <Divider sx={{ margin: "4px 12px !important" }} />}
-
         {user && (
           <MenuItem onClick={handleLogout}>
             <Logout sx={{ mr: 1.5, fontSize: 18, color: "var(--color-danger)" }} />
             Logout
           </MenuItem>
         )}
-
         {!user && (
-          <MenuItem onClick={() => router.push("/login")}>
+          <MenuItem onClick={() => { handleClose(); router.push("/login"); }}>
             <Person2Outlined sx={{ mr: 1.5, fontSize: 18 }} />
             Login
           </MenuItem>
         )}
       </Menu>
+
+      {/* Mobile Menu Drawer */}
+      <Drawer
+        anchor="left"
+        open={mobileMenuOpen}
+        onClose={toggleMobileMenu(false)}
+        PaperProps={{
+          sx: { width: "85%", maxWidth: 360, borderRadius: "0 24px 24px 0" }
+        }}
+      >
+        <div className={headerStyles.mobileDrawerHeader}>
+          <h2 className={headerStyles.logo}>Nutrivia</h2>
+          <IconButton onClick={toggleMobileMenu(false)}>
+            <CloseRounded />
+          </IconButton>
+        </div>
+
+        <Box sx={{ py: 2 }}>
+          {/* Mobile Search inside Drawer */}
+          <Box sx={{ px: 2, mb: 2 }}>
+            <div className={headerStyles.searchWrap} style={{ display: 'flex', width: '100%', marginBottom: '10px' }}>
+              <SearchIcon className={headerStyles.searchIcon} />
+              <input
+                type="text"
+                placeholder="Search..."
+                className={headerStyles.searchInput}
+              />
+            </div>
+          </Box>
+
+          <List>
+            {categories.map((cat) => (
+              <ListItem key={cat} disablePadding>
+                <ListItemButton onClick={() => { setMobileMenuOpen(false); router.push("/products"); }}>
+                  <ListItemText
+                    primary={cat}
+                    primaryTypographyProps={{ sx: { fontWeight: 600, color: "#4A4542" } }}
+                  />
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+
+          <Divider sx={{ my: 1, mx: 2 }} />
+
+          <List>
+            {user ? (
+              <>
+                <ListItem disablePadding>
+                  <ListItemButton onClick={() => { setMobileMenuOpen(false); router.push("/profile"); }}>
+                    <Settings sx={{ mr: 2, color: "var(--color-primary)" }} />
+                    <ListItemText primary="Profile Settings" />
+                  </ListItemButton>
+                </ListItem>
+                <ListItem disablePadding>
+                  <ListItemButton onClick={() => { setMobileMenuOpen(false); router.push("/orders"); }}>
+                    <ShoppingBag sx={{ mr: 2, color: "var(--color-primary)" }} />
+                    <ListItemText primary="My Orders" />
+                  </ListItemButton>
+                </ListItem>
+                <ListItem disablePadding>
+                  <ListItemButton onClick={handleLogout}>
+                    <Logout sx={{ mr: 2, color: "var(--color-danger)" }} />
+                    <ListItemText primary="Logout" />
+                  </ListItemButton>
+                </ListItem>
+              </>
+            ) : (
+              <ListItem disablePadding>
+                <ListItemButton onClick={() => { setMobileMenuOpen(false); router.push("/login"); }}>
+                  <Person2Outlined sx={{ mr: 2 }} />
+                  <ListItemText primary="Login / Sign Up" />
+                </ListItemButton>
+              </ListItem>
+            )}
+          </List>
+        </Box>
+      </Drawer>
     </section>
   );
 };
 
 export default MainHeader;
+;
