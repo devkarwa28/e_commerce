@@ -25,7 +25,6 @@ exports.authMiddleware = async (req,res,next) =>{
 }
 
 exports.AdminOnly = (req,res,next) => {
-    console.log("AdminOnly Check - Role Found:", req.user?.role);
     if(req.user && req.user.role === "admin")
     {
         next()

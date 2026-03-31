@@ -78,3 +78,41 @@ exports.applyCoupon = async (req,res) =>{
         res.status(500).json({message: "Server Error"});
     }
 }
+
+exports.getAllCoupons = async (req,res) =>{
+    try{
+        const coupons = await Coupon.find().sort({createdAt: -1});
+        res.json({success: true, coupons});
+    }
+    catch(err){
+        console.log(err);
+        res.status(500).json({message: "Server Error"});
+    }
+}
+
+exports.updateCouponStatus = async (req,res) =>{
+    try{
+        const coupon = await Coupon.findById(req.params.id);
+        if(!coupon) return res.status(404).json({message: "Coupon Not Found"});
+        
+        coupon.isActive = !coupon.isActive;
+        await coupon.save();
+        
+        res.json({success: true, message: "Status Updated", coupon});
+    }
+    catch(err){
+        console.log(err);
+        res.status(500).json({message: "Server Error"});
+    }
+}
+
+exports.deleteCoupon = async (req,res) =>{
+    try{
+        await Coupon.findByIdAndDelete(req.params.id);
+        res.json({success: true, message: "Coupon Deleted"});
+    }
+    catch(err){
+        console.log(err);
+        res.status(500).json({message: "Server Error"});
+    }
+}
