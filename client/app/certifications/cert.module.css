@@ -1,0 +1,173 @@
+.certContainer {
+    padding-top: 80px;
+    padding-bottom: 120px;
+    background: #FFFFFF;
+}
+
+.heroHeader {
+    text-align: center;
+    max-width: 750px;
+    margin: 0 auto 100px;
+}
+
+.subTitle {
+    color: var(--color-gold);
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.mainTitle {
+    font-size: 52px;
+    font-weight: 800;
+    color: var(--color-primary);
+    letter-spacing: -2px;
+    line-height: 1.1;
+    margin-bottom: 25px;
+}
+
+.heroDesc {
+    font-size: 17px;
+    color: var(--color-text-secondary);
+    line-height: 1.8;
+}
+
+.certGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 35px;
+    margin-top: 60px;
+}
+
+.certCard {
+    background: #FFFFFF;
+    border: 1px solid rgba(0,0,0,0.06);
+    border-radius: 32px;
+    padding: 50px 40px;
+    text-align: center;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.certCard:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 30px 70px rgba(92, 64, 51, 0.08);
+    border-color: var(--color-gold)88;
+}
+
+.badgeCircle {
+    width: 90px;
+    height: 90px;
+    background: #FDF9F4;
+    border-radius: 50%;
+    margin: 0 auto 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-gold);
+    font-size: 40px;
+    border: 1.5px solid rgba(200, 155, 60, 0.1);
+    transition: all 0.4s ease;
+}
+
+.certCard:hover .badgeCircle {
+    background: var(--color-gold);
+    color: #FFFFFF;
+    transform: scale(1.1);
+}
+
+.certName {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--color-primary);
+    margin-bottom: 12px;
+}
+
+.certId {
+    display: inline-block;
+    padding: 4px 14px;
+    background: rgba(200, 155, 60, 0.08);
+    color: var(--color-gold);
+    font-size: 12px;
+    font-weight: 700;
+    border-radius: 100px;
+    margin-bottom: 20px;
+}
+
+.certDesc {
+    font-size: 14px;
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+    margin: 0;
+}
+
+.auditSection {
+    margin-top: 120px;
+    background: var(--color-primary);
+    border-radius: 40px;
+    padding: 80px;
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 60px;
+}
+
+.auditText {
+    flex: 1.2;
+}
+
+.auditPoints {
+    flex: 1;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.auditPoint {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.checkIcon {
+    color: var(--color-gold);
+    font-size: 24px;
+}
+
+@media (max-width: 1024px) {
+    .certGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .auditSection {
+        flex-direction: column;
+        padding: 50px;
+        text-align: center;
+    }
+    
+    .auditPoints {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media (max-width: 600px) {
+    .certGrid {
+        grid-template-columns: 1fr;
+    }
+    
+    .mainTitle {
+        font-size: 36px;
+    }
+}
