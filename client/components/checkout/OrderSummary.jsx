@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import ReceiptLongOutlinedIcon from "@mui/icons-material/ReceiptLongOutlined";
 
-const OrderSummary = () => {
+const OrderSummary = ({ shippingAddress, paymentMethod }) => {
     const {cart} = useCart();
     const router = useRouter();
     const [discount, setDiscount] = useState(0);
@@ -28,17 +28,25 @@ const OrderSummary = () => {
     const finalTotal = cart ? cart.totalAmount - discount : 0;
 
     const placeOrder = async () => {
+        const { fullname, phone, address, city, state, pincode } = shippingAddress;
+        if (!fullname || !phone || !address || !city || !state || !pincode) {
+            alert("Please fill all shipping address fields.");
+            return;
+        }
+
         try {
-            const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/order`,{
-                shippingAddress: {address:"Test Address",city:"Jodhpur",pincode:"342001"},
-                paymentMethod: "COD"
-            },{withCredentials:true});
+            const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/order`, {
+                shippingAddress,
+                paymentMethod,
+                couponCode: couponCode || null
+            }, { withCredentials: true });
 
             const orderId = res.data.order._id;
-            sessionStorage.removeItem('appliedCoupon'); // clear after order
+            sessionStorage.removeItem('appliedCoupon');
             router.push(`/order-success/${orderId}`);
         } catch (error) {
             console.error(error);
+            alert(error.response?.data?.message || "Something went wrong while placing order.");
         }
     };
     

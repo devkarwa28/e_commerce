@@ -1,14 +1,11 @@
 "use client";
 
-import { useState } from "react";
 import CheckoutStyles from "./checkout.module.css";
 import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
 import LocalShippingOutlinedIcon from "@mui/icons-material/LocalShippingOutlined";
 import CreditCardOutlinedIcon from "@mui/icons-material/CreditCardOutlined";
 
-const PaymentMethod = () => {
-    const [selectedMethod, setSelectedMethod] = useState("COD");
-
+const PaymentMethod = ({ selectedMethod, setSelectedMethod }) => {
     return (
         <div className={CheckoutStyles.paymentContainer}>
             <h3 className={CheckoutStyles.sectionTitle}>
@@ -17,7 +14,6 @@ const PaymentMethod = () => {
             </h3>
 
             <div className={CheckoutStyles.paymentOptions}>
-                {/* Cash on Delivery */}
                 <div 
                     className={`${CheckoutStyles.paymentOption} ${selectedMethod === "COD" ? CheckoutStyles.active : ""}`}
                     onClick={() => setSelectedMethod("COD")}

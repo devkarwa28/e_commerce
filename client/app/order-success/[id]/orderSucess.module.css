@@ -1,52 +1,164 @@
-.successWrapper {
+.successContainer {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at top left, rgba(92, 64, 51, 0.05), transparent 400px),
+                radial-gradient(circle at bottom right, rgba(92, 64, 51, 0.05), transparent 400px);
+    padding: 2rem;
+}
+
+.successCard {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 24px;
+    padding: 3.5rem;
+    max-width: 550px;
+    width: 100%;
     text-align: center;
-    padding: 60px 40px;
-    background: white;
-    border-radius: 14px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08),0 6px 20px rgba(0, 0, 0, 0.05);
-    max-width: 650px;
-    margin: auto;
-    animation: fadeInUp 700ms ease;
-}
-@keyframes fadeInUp{
-from{
-opacity:0;
-transform:translateY(30px);
-}
-to{
-opacity:1;
-transform:translateY(0);
-}
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08), 
+                0 10px 20px rgba(0, 0, 0, 0.04);
 }
 
-.orderID{
-
-background:#F8F5F1;
-padding:10px 18px;
-border-radius:8px;
-display:inline-block;
-
-margin-top:10px;
-
+.iconCircle {
+    width: 110px;
+    height: 110px;
+    background: #5c4033;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 2rem;
+    box-shadow: 0 10px 20px rgba(92, 64, 51, 0.25);
+    position: relative;
+    overflow: hidden;
 }
 
-.successIcon{
-    animation: pop 600ms ease;
+.iconCircle::after {
+    content: "";
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    top: -50%;
+    left: -50%;
+    transform: rotate(45deg);
+    animation: shine 3s infinite;
 }
 
-@keyframes pop{
-
-0%{
-transform:scale(.4);
-opacity:0;
+@keyframes shine {
+    0% { transform: translateX(-100%) rotate(45deg); }
+    30% { transform: translateX(100%) rotate(45deg); }
+    100% { transform: translateX(100%) rotate(45deg); }
 }
 
-70%{
-transform:scale(1.1);
+.title {
+    color: #2c1e18;
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    letter-spacing: -0.5px;
 }
 
-100%{
-transform:scale(1);
-opacity:1;
+.description {
+    color: #6d5d54;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 2.5rem;
 }
+
+.idBadge {
+    display: inline-flex;
+    align-items: center;
+    background: #fdfaf8;
+    border: 1px dashed #d7ccc8;
+    padding: 0.75rem 1.75rem;
+    border-radius: 100px;
+    margin-bottom: 3rem;
+    transition: all 0.3s ease;
+}
+
+.idBadge:hover {
+    background: #f5f0ed;
+    border-color: #5c4033;
+}
+
+.idLabel {
+    color: #8d7a70;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-right: 0.75rem;
+}
+
+.idValue {
+    color: #5c4033;
+    font-weight: 700;
+    font-family: monospace;
+    font-size: 1.05rem;
+}
+
+.actions {
+    display: flex;
+    gap: 1.25rem;
+    justify-content: center;
+}
+
+.primaryBtn {
+    background: #5c4033 !important;
+    color: white !important;
+    padding: 0.85rem 2rem !important;
+    border-radius: 12px !important;
+    font-weight: 600 !important;
+    text-transform: none !important;
+    box-shadow: 0 4px 12px rgba(92, 64, 51, 0.2) !important;
+    transition: all 0.3s ease !important;
+}
+
+.primaryBtn:hover {
+    background: #4a332a !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(92, 64, 51, 0.3) !important;
+}
+
+.secondaryBtn {
+    border-color: #d7ccc8 !important;
+    color: #5c4033 !important;
+    padding: 0.85rem 2rem !important;
+    border-radius: 12px !important;
+    font-weight: 600 !important;
+    text-transform: none !important;
+    transition: all 0.3s ease !important;
+}
+
+.secondaryBtn:hover {
+    border-color: #5c4033 !important;
+    background: rgba(92, 64, 51, 0.04) !important;
+    transform: translateY(-2px);
+}
+
+.confetti {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* For mobile responsiveness */
+@media (max-width: 600px) {
+    .successCard {
+        padding: 2.5rem 1.5rem;
+    }
+    
+    .title {
+        font-size: 1.75rem;
+    }
+    
+    .actions {
+        flex-direction: column;
+    }
 }
