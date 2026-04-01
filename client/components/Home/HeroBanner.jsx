@@ -67,7 +67,7 @@ const HeroBanner = () => {
               </div>
 
               <div className="container position-relative" style={{ zIndex: 3 }}>
-                <div className="row align-items-center" style={{ minHeight: "520px" }}>
+                <div className={`row align-items-center ${homestyles.heroRow}`}>
                   <div className="col-lg-6">
                     <div className={homestyles.heroContent}>
                       <div className={homestyles.heroBadge}>{slide.badge}</div>

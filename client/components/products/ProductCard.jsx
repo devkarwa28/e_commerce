@@ -52,7 +52,7 @@ const ProductCard = ({ product }) => {
 
   return (
     <>
-    <Card className={productcardStyles.productCard}>
+    <div className={productcardStyles.productCard} onClick={() => router.push(`/products/${product.slug}`)}>
 
       <div className={productcardStyles.imageSection}>
 
@@ -62,7 +62,7 @@ const ProductCard = ({ product }) => {
 
         <div className={productcardStyles.offerBadge}>
           {
-            discount && (
+            discount > 0 && (
               <span className={productcardStyles.badgeDiscount}>{discount}% OFF</span>
             )
           }
@@ -75,21 +75,21 @@ const ProductCard = ({ product }) => {
         </div>
         <button
           className={`${productcardStyles.wishBtn} ${wished ? productcardStyles.wishActive : ""}`}
-          onClick={(e) => { e.preventDefault(); setWished(!wished); }}
+          onClick={(e) => { e.stopPropagation(); setWished(!wished); }}
           aria-label="Wishlist"
         >
-          <FavoriteBorder style={{ fontSize: 16 }} />
+          {wished ? <FavoriteBorderOutlined style={{ fontSize: 18 }} /> : <FavoriteBorder style={{ fontSize: 18 }} />}
         </button>
 
-        <div className={productcardStyles.quickVeiw}>
+        <div className={productcardStyles.quickVeiw} onClick={(e) => e.stopPropagation()}>
           <Link href={`/products/${product.slug}`} className={productcardStyles.quickViewBtn}>
-            <Visibility style={{ fontSize: 15, marginRight: 5 }} />
+            <Visibility style={{ fontSize: 16, marginRight: 6 }} />
             Quick View
           </Link>
         </div>
       </div>
 
-      <CardContent className={productcardStyles.CardContent}>
+      <div className={productcardStyles.CardContent}>
         {
           product.category?.cname && (
             <span className={productcardStyles.categoryName}>{product.category.cname}</span>
@@ -103,7 +103,7 @@ const ProductCard = ({ product }) => {
             precision={0.5}
             readOnly
             size="small"
-            sx={{ color: "#C89B3C", fontSize: "13px" }}
+            sx={{ color: "#C89B3C", fontSize: "14px" }}
           />
           <span className={productcardStyles.ratingCount}>({product.numReviews || 0})</span>
         </div>
@@ -119,7 +119,7 @@ const ProductCard = ({ product }) => {
           </div>
         )}
 
-        <Divider></Divider>
+        <div className={productcardStyles.divider}></div>
 
         <div className={productcardStyles.priceSection}>
           <div className={productcardStyles.priceBlock}>
@@ -127,21 +127,18 @@ const ProductCard = ({ product }) => {
             {mrp && <span className={productcardStyles.mrp}>₹{mrp}</span>}
           </div>
 
-          <Button
+          <button
             className={productcardStyles.addToCart}
-            variant="contained"
-            onClick={handlAddToCart}
+            onClick={(e) => { e.stopPropagation(); handlAddToCart(e); }}
             disabled={loading}
           >
-            <ShoppingCart style={{ fontSize: 16 }} />
-            <span>{loading ? "..." : "Add"}</span>
-          </Button>
+            <ShoppingCart style={{ fontSize: 18 }} />
+            <span>{loading ? "Adding..." : "Add"}</span>
+          </button>
         </div>
 
-
-
-      </CardContent>
-    </Card>
+      </div>
+    </div>
      <Snackbar
                 open={openToast.open}
                 autoHideDuration={3000}

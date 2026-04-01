@@ -167,6 +167,10 @@
     backdrop-filter: blur(8px);
 }
 
+.heroRow {
+    min-height: 520px;
+}
+
 .heroArrowBtn:hover {
     background: rgba(200, 155, 60, 0.2);
     border-color: rgba(200, 155, 60, 0.4);
@@ -1626,4 +1630,162 @@
 
 .dfCard:hover .dfCardLine {
     width: 50px;
+}
+
+
+@media (max-width: 991px) {
+    .dfSection {
+        padding: 50px 0 40px;
+    }
+    
+    .dfTitle {
+        font-size: 24px;
+    }
+
+    .dfImgWrap {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+@media (max-width: 768px) {
+    .dfSection {
+        padding: 40px 0 30px;
+    }
+
+    .dfHeader {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        margin-bottom: 24px;
+        position: relative;
+    }
+
+    .dfTitle {
+        font-size: 22px;
+    }
+
+    .dfSubtitle {
+        font-size: 13px;
+        max-width: 85%;
+    }
+
+    .dfArrows {
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+
+    .dfArrowBtn {
+        width: 32px;
+        height: 32px;
+    }
+
+    .dfCard {
+        padding: 16px 10px 14px;
+        border-radius: 16px;
+    }
+
+    .dfImgWrap {
+        width: 80px;
+        height: 80px;
+        margin-bottom: 12px;
+    }
+
+    .dfCardName {
+        font-size: 14px;
+        margin-bottom: 8px;
+    }
+
+    .dfCardTag {
+        top: 8px;
+        right: 8px;
+        font-size: 8px;
+        padding: 2px 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .dfCardTag {
+        display: none; /* Hide tags on mobile slider for cleaner minimalist look */
+    }
+    
+    .dfImgWrap {
+        width: 70px;
+        height: 70px;
+    }
+}
+
+/* ─── Premium Mobile Responsiveness for HeroBanner ─── */
+@media (max-width: 991px) {
+    .heroRow {
+        min-height: 450px;
+    }
+    
+    .heroTitle {
+        font-size: 40px;
+    }
+    
+    .heroSubtitle {
+        font-size: 15px;
+    }
+    
+    .heroContent {
+        padding: 60px 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .heroRow {
+        min-height: 400px;
+        text-align: center;
+    }
+    
+    .heroTitle {
+        font-size: 32px;
+        margin-bottom: 16px;
+    }
+    
+    .heroSubtitle {
+        font-size: 14px;
+        margin: 0 auto 24px;
+        line-height: 1.6;
+    }
+    
+    .heroBadge {
+        font-size: 11px;
+        padding: 5px 16px;
+        margin-bottom: 16px;
+    }
+    
+    .heroContent {
+        padding: 40px 0 60px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .heroControls {
+        bottom: 20px;
+    }
+    
+    .heroArrowBtn {
+        width: 32px;
+        height: 32px;
+    }
+}
+
+@media (max-width: 480px) {
+    .heroRow {
+        min-height: 360px;
+    }
+    
+    .heroTitle {
+        font-size: 28px;
+    }
+
+    .heroBtn {
+        padding: 12px 24px;
+        font-size: 14px;
+    }
 }
