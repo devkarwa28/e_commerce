@@ -82,7 +82,7 @@ const Footer = () => {
 
       <div className="container position-relative" style={{ zIndex: 2 }}>
         <div className="row">
-          <div className="col-lg-2 col-md-12 mb-lg-5">
+          <div className="col-lg-3 col-md-12 mb-lg-5">
             <div className={footerStyles.brandBlock}>
               <h3 className={footerStyles.brandName}>Nutrivia</h3>
               <p className={footerStyles.brandDesc}>
@@ -106,10 +106,10 @@ const Footer = () => {
             </div>
           </div>
 
-          <div className="col-lg-10 col-md-12">
+          <div className="col-lg-9 col-md-12">
             <div className="row">
               {linkColumns.map((col, index) => (
-                <div key={index} className="col-lg-3 col-md-4 col-12 mb-md-4 mb-0">
+                <div key={index} className="col-lg-2 col-md-4 col-12 mb-md-4 mb-0">
                   <div 
                     className={`${footerStyles.colHeader} d-flex justify-content-between align-items-center`}
                     onClick={() => toggleAccordion(index)}
