@@ -10,20 +10,19 @@ OauthRouter.get("/google", passport.authenticate("google",
 
 OauthRouter.get("/google/callback", passport.authenticate("google", {
     session: false,
-    failureRedirect: "/login"
+    failureRedirect: `${process.env.CLIENT_URL}/login?error=oauth_failed`
 }), (req, res) => {
     try {
-        console.log("USER:", req.user);
-
         if (!req.user) {
-            return res.status(400).send("User not found");
+            return res.redirect(`${process.env.CLIENT_URL}/login?error=user_not_found`);
+        }
+        const token = tokenGen(res, req.user._id);
+
+        if (!token) {
+            return res.redirect(`${process.env.CLIENT_URL}/login?error=token_generation_failed`);
         }
 
-        tokenGen(res, req.user._id);
-
-        console.log("TOKEN SET SUCCESS");
-
-        res.redirect(process.env.CLIENT_URL);
+        res.redirect(`${process.env.CLIENT_URL}/oauth-success?token=${token}`);
     }
     catch (err) {
         console.error("GOOGLE CALLBACK ERROR:", err);
