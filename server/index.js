@@ -11,12 +11,15 @@ const orderRouter = require('./routes/orderRoutes');
 const adminRouter = require('./routes/adminRoutes');
 const couponRouter = require('./routes/couponRoutes');
 const bannerRouter = require('./routes/bannerRoutes');
+const passport = require('passport');
+require('./config/passport');
+const OauthRouter = require('./routes/OauthRoutes');
 require('./config/dbconfig');
 const app = express()
 
 const allowedOrigins = [
   "http://localhost:3000",
-  "https://e-commerce-nine-taupe-19.vercel.app"
+  process.env.CLIENT_URL
 ];
 
 app.use(cors({
@@ -35,8 +38,10 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
-app.use('/api/auth',authRouter);
+app.use(passport.initialize());
 
+app.use('/api/auth',authRouter);
+app.use('/auth',OauthRouter)
 app.use('/api/category',categoryRouter);
 app.use('/api/products',productRouter);
 app.use('/api/reviews',reviewRouter);

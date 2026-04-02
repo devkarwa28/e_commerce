@@ -9,7 +9,7 @@ exports.authMiddleware = async (req,res,next) =>{
         {
             return res.status(401).json({message: "Not Authorized"})
         }
-        const decoded = jwt.verify(token,"devkarwa@2004");
+        const decoded = jwt.verify(token,process.env.JWT_SECRET);
 
         req.user= await User.findById(decoded.id).select("-password");
 

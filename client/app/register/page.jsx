@@ -42,7 +42,9 @@ const RegisterUser = () => {
         }
         setLoading(false);
     }
-
+    const handleGoogleLogin = () => {
+        window.open(`${process.env.NEXT_PUBLIC_API_URL}/auth/google`, "_self");
+    }
     return (
         <section className={RegisterStyles.pageWrapper}>
             <div className={RegisterStyles.registerCard}>
@@ -128,7 +130,7 @@ const RegisterUser = () => {
                 </div>
 
                 <div className={RegisterStyles.socialBtns}>
-                    <button className={`${RegisterStyles.socialBtn} ${RegisterStyles.googleBtn}`}>
+                    <button onClick={handleGoogleLogin} className={`${RegisterStyles.socialBtn} ${RegisterStyles.googleBtn}`}>
                         <Google />
                         Google
                     </button>

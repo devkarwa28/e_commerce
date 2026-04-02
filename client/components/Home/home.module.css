@@ -177,8 +177,9 @@
     color: var(--color-gold);
     transform: scale(1.1);
 }
+/* Hero banner section ended here */
 
-/* Categories Showcase Section */
+/* Categories  Section Started */
 .catSection {
     padding: 60px 0 70px;
     background: linear-gradient(180deg, #FFFFFF 0%, #F8F5F1 100%);
@@ -346,6 +347,10 @@
     background: rgba(200, 155, 60, 0.3);
     border-color: rgba(200, 155, 60, 0.4);
 }
+/* categories section ended  */
+
+
+
 /* Best Seller Section  */
 .bsSection {
     padding: 80px 0;
@@ -595,6 +600,8 @@
         display: none;
     }
 }
+/* best seller section ended here */
+
 /* Why Choose Us Section  */
 .whySection {
     padding: 80px 0;
@@ -751,6 +758,7 @@
 .whyCard:hover .whyCardLine {
     width: 70px;
 }
+/* why choose us section ended */
 
 
 
@@ -1036,6 +1044,7 @@
     box-shadow: 0 6px 20px rgba(92, 64, 51, 0.2);
     transform: translateY(-2px);
 }
+/* testimonial section ended */
 
 
 /* Newsletter Section */
@@ -1425,14 +1434,15 @@
 }
 
 .pxCardTag {
-    display: inline-block;
-    background: rgba(200, 155, 60, 0.15);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     color: var(--color-gold);
     font-size: 11px;
     font-weight: 700;
     letter-spacing: 1px;
     text-transform: uppercase;
-    padding: 4px 14px;
+    padding: 6px 14px;
     border-radius: 20px;
     margin-bottom: 18px;
 }
@@ -1456,24 +1466,34 @@
     align-items: center;
     gap: 8px;
     color: var(--color-gold);
-    font-size: 14px;
-    font-weight: 600;
+    font-size: 13px;
+    font-weight: 700;
     cursor: pointer;
-    transition: all 300ms ease;
-    padding: 8px 0;
-    border: none;
-    background: none;
+    transition: all 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    padding: 10px 24px;
+    border: 1px solid rgba(200, 155, 60, 0.2);
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 50px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .pxCardAction:hover {
     gap: 14px;
-    color: #E8C36A;
+    background: var(--color-gold);
+    color: #1E1B18;
+    border-color: var(--color-gold);
+    box-shadow: 0 8px 20px rgba(200, 155, 60, 0.3);
 }
 
 .pxCard:hover .pxCardAction {
-    gap: 14px;
+    border-color: rgba(200, 155, 60, 0.5);
 }
-/* ─── Shop By Purpose Section ─── */
+/* Parallax Section ended */
+
+
+
+/* Shop By Purpose Section  */
 .sbpSection {
     padding: 80px 0;
     background: linear-gradient(180deg, #F8F5F1 0%, #FFFFFF 100%);
@@ -1914,9 +1934,6 @@
     background: var(--color-gold);
 }
 
-/* ──────────────────────────────────────────────────────────
-   CONSULTATED & OPTIMIZED MEDIA QUERIES
-   ────────────────────────────────────────────────────────── */
 
 /* --- Tablet (991px) --- */
 @media (max-width: 991px) {

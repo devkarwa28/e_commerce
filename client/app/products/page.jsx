@@ -41,7 +41,7 @@ const ProductsPage = () => {
             const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/products`, { params: { ...filters, page } });
             setProducts(res.data.products);
             setTotalPages(res.data.totalPages);
-
+            console.log(res.data.products);
             const dataToCache = {
                 products: res.data.products,
                 totalPages: res.data.totalPages,
