@@ -1,33 +1,18 @@
 "use client";
-import { useRef } from "react";
-import dynamic from "next/dynamic";
+import { useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Navigation } from "swiper/modules";
+import { motion } from "framer-motion";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/autoplay";
 
 import dryfruitStyles from "./home.module.css";
 import ArrowBackIosNewRoundedIcon from "@mui/icons-material/ArrowBackIosNewRounded";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 
-const Slider = dynamic(() => import("react-slick"), { ssr: false });
-
 const DryFruitSlider = () => {
-  const sliderRef = useRef(null);
-
-  const settings = {
-    dots: false,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 5,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 3000,
-    arrows: false,
-    pauseOnHover: true,
-    responsive: [
-      { breakpoint: 1200, settings: { slidesToShow: 4 } },
-      { breakpoint: 992, settings: { slidesToShow: 3 } },
-      { breakpoint: 768, settings: { slidesToShow: 2, arrows: false } },
-      { breakpoint: 480, settings: { slidesToShow: 2, swipeToSlide: true, arrows: false } },
-    ],
-  };
+  const [swiper, setSwiper] = useState(null);
 
   const items = [
     { name: "Raisin", image: "/dryfruits/almonds.png", tag: "Popular" },
@@ -36,14 +21,22 @@ const DryFruitSlider = () => {
     { name: "Cashew", image: "/dryfruits/cashew.png", tag: "Creamy" },
     { name: "Almond", image: "/dryfruits/almonds.png", tag: "Superfood" },
     { name: "Fig", image: "/dryfruits/cashew.png", tag: "Natural" },
+    { name: "Dates", image: "/dryfruits/almonds.png", tag: "Energetic" },
+    { name: "Apricot", image: "/dryfruits/pista.png", tag: "Vibrant" },
   ];
 
   return (
     <section className={dryfruitStyles.dfSection}>
       <div className="container">
-        <div className={dryfruitStyles.dfHeader}>
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className={dryfruitStyles.dfHeader}
+        >
           <div>
-            <h3 className={dryfruitStyles.dfTitle}>Shop by Dry Fruits</h3>
+            <h3 className={dryfruitStyles.dfTitle}>Shop by <span className={dryfruitStyles.dfHighlight}>Dry Fruits</span></h3>
             <p className={dryfruitStyles.dfSubtitle}>
               Explore our finest selection of premium nuts and dried fruits
             </p>
@@ -51,41 +44,93 @@ const DryFruitSlider = () => {
           <div className={dryfruitStyles.dfArrows}>
             <button
               className={dryfruitStyles.dfArrowBtn}
-              onClick={() => sliderRef.current?.slickPrev()}
+              onClick={() => swiper?.slidePrev()}
               aria-label="Previous"
             >
               <ArrowBackIosNewRoundedIcon sx={{ fontSize: 16 }} />
             </button>
             <button
               className={dryfruitStyles.dfArrowBtn}
-              onClick={() => sliderRef.current?.slickNext()}
+              onClick={() => swiper?.slideNext()}
               aria-label="Next"
             >
               <ArrowForwardIosRoundedIcon sx={{ fontSize: 16 }} />
             </button>
           </div>
-        </div>
+        </motion.div>
 
-        <div className={dryfruitStyles.dfSliderWrap}>
-          <Slider ref={sliderRef} {...settings}>
+        <motion.div 
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className={dryfruitStyles.dfSliderWrap}
+        >
+          <Swiper
+            onSwiper={setSwiper}
+            modules={[Autoplay, Navigation]}
+            spaceBetween={20}
+            slidesPerView={2}
+            loop={true}
+            autoplay={{
+              delay: 3000,
+              disableOnInteraction: false,
+              pauseOnMouseEnter: true,
+            }}
+            breakpoints={{
+              480: {
+                slidesPerView: 2,
+                spaceBetween: 15,
+              },
+              768: {
+                slidesPerView: 3,
+                spaceBetween: 20,
+              },
+              992: {
+                slidesPerView: 4,
+                spaceBetween: 25,
+              },
+              1200: {
+                slidesPerView: 5,
+                spaceBetween: 30,
+              },
+              1400: {
+                slidesPerView: 6,
+                spaceBetween: 30,
+              }
+            }}
+            className={dryfruitStyles.dfSwiper}
+          >
             {items.map((item, index) => (
-              <div key={index} className="px-2">
-                <div className={dryfruitStyles.dfCard}>
+              <SwiperSlide key={index}>
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  whileHover={{ y: -5 }}
+                  transition={{ duration: 0.4, delay: index * 0.05 }}
+                  className={dryfruitStyles.dfCard}
+                >
                   <div className={dryfruitStyles.dfCardTag}>{item.tag}</div>
-                  <div className={dryfruitStyles.dfImgWrap}>
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className={dryfruitStyles.dfImg}
-                    />
+                  <div className={dryfruitStyles.dfImgContent}>
+                      <div className={dryfruitStyles.dfImgWrap}>
+                        <img
+                          src={item.image}
+                          alt={item.name}
+                          className={dryfruitStyles.dfImg}
+                        />
+                      </div>
+                      <div className={dryfruitStyles.dfCardOverlay}></div>
                   </div>
-                  <h5 className={dryfruitStyles.dfCardName}>{item.name}</h5>
-                  <div className={dryfruitStyles.dfCardLine}></div>
-                </div>
-              </div>
+                  <div className={dryfruitStyles.dfCardInfo}>
+                    <h5 className={dryfruitStyles.dfCardName}>{item.name}</h5>
+                    <div className={dryfruitStyles.dfCardLine}></div>
+                    <button className={dryfruitStyles.dfExploreBtn}>Explore</button>
+                  </div>
+                </motion.div>
+              </SwiperSlide>
             ))}
-          </Slider>
-        </div>
+          </Swiper>
+        </motion.div>
       </div>
     </section>
   );

@@ -1,16 +1,18 @@
 "use client";
-import { useState, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Rating } from "@mui/material";
 import testiStyles from "./home.module.css";
 import FormatQuoteRoundedIcon from "@mui/icons-material/FormatQuoteRounded";
 import ArrowBackIosNewRoundedIcon from "@mui/icons-material/ArrowBackIosNewRounded";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
-import dynamic from "next/dynamic";
-
-const Slider = dynamic(() => import("react-slick"), { ssr: false });
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
 
 function Testimonials() {
-  const sliderRef = useRef(null);
+  const [swiper, setSwiper] = useState(null);
   const [activeSlide, setActiveSlide] = useState(0);
 
   const testimonials = [
@@ -50,34 +52,6 @@ function Testimonials() {
       initials: "RM",
     },
   ];
-
-  const settings = {
-    infinite: true,
-    speed: 600,
-    autoplay: true,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    autoplaySpeed: 5000,
-    arrows: false,
-    dots: false,
-    pauseOnHover: true,
-    beforeChange: (_, next) => setActiveSlide(next),
-    responsive: [
-      {
-        breakpoint: 1200,
-        settings: { slidesToShow: 3 },
-      },
-      {
-        breakpoint: 992,
-        settings: { slidesToShow: 2 },
-      },
-      {
-        breakpoint: 768,
-        settings: { slidesToShow: 1 },
-      },
-    ],
-  };
-
   return (
     <section className={testiStyles.testiSection}>
       <div className="container">
@@ -95,12 +69,43 @@ function Testimonials() {
         </div>
 
         <div className={testiStyles.testiSliderWrap}>
-          <Slider ref={sliderRef} {...settings}>
+          <Swiper
+            onSwiper={setSwiper}
+            onSlideChange={(s) => setActiveSlide(s.realIndex)}
+            modules={[Autoplay, Pagination, Navigation]}
+            spaceBetween={40}
+            slidesPerView={1}
+            loop={true}
+            autoplay={{
+              delay: 5000,
+              disableOnInteraction: false,
+              pauseOnHover: true,
+            }}
+            breakpoints={{
+              768: {
+                slidesPerView: 1,
+                spaceBetween: 40,
+              },
+              992: {
+                slidesPerView: 2,
+                spaceBetween: 40,
+              },
+              1200: {
+                slidesPerView: 3,
+                spaceBetween: 40,
+              },
+            }}
+            className={testiStyles.testiSwiper}
+          >
             {testimonials.map((item, index) => (
-              <div key={index} className="px-3">
+              <SwiperSlide key={index}>
                 <div className={testiStyles.testiCard}>
                   <div className={testiStyles.testiQuoteIcon}>
                     <FormatQuoteRoundedIcon sx={{ fontSize: 24 }} />
+                  </div>
+
+                  <div className={testiStyles.testiCardBgQuote}>
+                    <FormatQuoteRoundedIcon />
                   </div>
 
                   <Rating
@@ -111,25 +116,24 @@ function Testimonials() {
                       color: "#C89B3C",
                       fontSize: 20,
                       marginBottom: "16px",
-                    }} />
+                    }}
+                  />
 
                   <p className={testiStyles.testiText}>&ldquo;{item.text}&rdquo;</p>
 
                   <div className={testiStyles.testiDivider}></div>
 
                   <div className={testiStyles.testiCustomer}>
-                    <div className={testiStyles.testiAvatar}>
-                      {item.initials}
-                    </div>
+                    <div className={testiStyles.testiAvatar}>{item.initials}</div>
                     <div>
                       <h6 className={testiStyles.testiName}>{item.name}</h6>
                       <span className={testiStyles.testiLocation}>{item.location}</span>
                     </div>
                   </div>
                 </div>
-              </div>
+              </SwiperSlide>
             ))}
-          </Slider>
+          </Swiper>
         </div>
 
         <div className={testiStyles.testiControls}>
@@ -137,22 +141,25 @@ function Testimonials() {
             {testimonials.map((_, index) => (
               <button
                 key={index}
-                className={`${testiStyles.testiDot} ${activeSlide === index ? testiStyles.testiDotActive : ""}`}
-                onClick={() => sliderRef.current?.slickGoTo(index)} />
+                className={`${testiStyles.testiDot} ${
+                  activeSlide === index ? testiStyles.testiDotActive : ""
+                }`}
+                onClick={() => swiper?.slideToLoop(index)}
+              />
             ))}
           </div>
 
           <div className={testiStyles.testiArrows}>
             <button
               className={testiStyles.testiArrowBtn}
-              onClick={() => sliderRef.current?.slickPrev()}
+              onClick={() => swiper?.slidePrev()}
               aria-label="Previous testimonial"
             >
               <ArrowBackIosNewRoundedIcon sx={{ fontSize: 18 }} />
             </button>
             <button
               className={testiStyles.testiArrowBtn}
-              onClick={() => sliderRef.current?.slickNext()}
+              onClick={() => swiper?.slideNext()}
               aria-label="Next testimonial"
             >
               <ArrowForwardIosRoundedIcon sx={{ fontSize: 18 }} />

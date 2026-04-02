@@ -23,7 +23,7 @@ export const metadata = {
   openGraph: {
     title: "Nutrivia | Premium Dry Fruits & Nuts",
     description: "Discover the best quality dry fruits and nuts online at Nutrivia. Pure, organic, and delivered fresh.",
-    url: "https://nutrivia.com",
+    url: "https://github.com/devkarwa/e_commerce ",
     siteName: "Nutrivia",
     locale: "en_US",
     type: "website",
