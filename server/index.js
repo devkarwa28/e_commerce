@@ -10,6 +10,7 @@ const cartRouter = require('./routes/cartRouter');
 const orderRouter = require('./routes/orderRoutes');
 const adminRouter = require('./routes/adminRoutes');
 const couponRouter = require('./routes/couponRoutes');
+const bannerRouter = require('./routes/bannerRoutes');
 require('./config/dbconfig');
 const app = express()
 
@@ -43,6 +44,7 @@ app.use('/api/cart',cartRouter);
 app.use('/api/order',orderRouter);
 app.use('/api/admin',adminRouter);
 app.use('/api/coupons',couponRouter);
+app.use('/api/banners',bannerRouter);
 
 app.listen(5000,()=>{
     console.log("Server Started on PORT 5000")

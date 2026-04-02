@@ -1,16 +1,20 @@
 "use client";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Slider from "react-slick";
+import axios from "axios";
 import homestyles from "./home.module.css";
 import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
 import ArrowBackIosNewRoundedIcon from "@mui/icons-material/ArrowBackIosNewRounded";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
+import Image from "next/image";
 
 const HeroBanner = () => {
   const sliderRef = useRef(null);
   const [activeSlide, setActiveSlide] = useState(0);
+  const [slides, setSlides] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const slides = [
+  const fallbackSlides = [
     {
       title: "Premium Dry Fruits",
       titleAccent: "For Every Occasion",
@@ -36,6 +40,35 @@ const HeroBanner = () => {
       badge: "LIMITED OFFER",
     },
   ];
+
+  useEffect(() => {
+    const fetchSlides = async () => {
+      try {
+        const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/banners`);
+        if (data && data.length > 0) {
+          setSlides(data);
+        } else {
+          setSlides(fallbackSlides);
+        }
+      } catch (error) {
+        console.error("Error fetching hero banners:", error);
+        setSlides(fallbackSlides);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchSlides();
+  }, []);
+
+  if (loading) {
+    return (
+      <section className={homestyles.heroSection}>
+        <div style={{ height: "520px", display: "flex", alignItems: "center", justifyContent: "center", color: "#cca750" }}>
+          <h4>Loading Premium Assets...</h4>
+        </div>
+      </section>
+    );
+  }
 
   const settings = {
     dots: false,
