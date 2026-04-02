@@ -1,6 +1,6 @@
 "use client";
 
-import { ThemeProvider } from "@emotion/react";
+import { ThemeProvider } from "@mui/material/styles";
 import theme from "@/theme/theme";
 import { CssBaseline } from "@mui/material";
 import AuthProvider from "@/context/AuthContext";

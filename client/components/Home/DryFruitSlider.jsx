@@ -1,9 +1,12 @@
 "use client";
 import { useRef } from "react";
-import Slider from "react-slick";
+import dynamic from "next/dynamic";
+
 import dryfruitStyles from "./home.module.css";
 import ArrowBackIosNewRoundedIcon from "@mui/icons-material/ArrowBackIosNewRounded";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
+
+const Slider = dynamic(() => import("react-slick"), { ssr: false });
 
 const DryFruitSlider = () => {
   const sliderRef = useRef(null);

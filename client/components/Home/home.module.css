@@ -1789,3 +1789,287 @@
         font-size: 14px;
     }
 }
+
+@media (max-width: 991px) {
+    .newsletterSection {
+        padding: 60px 0;
+    }
+    
+    .nlTitle {
+        font-size: 30px;
+    }
+    
+    .nlFormInner {
+        padding: 30px 24px;
+    }
+}
+
+@media (max-width: 768px) {
+    .newsletterSection {
+        padding: 50px 0;
+        text-align: center;
+    }
+    
+    .nlContent {
+        margin-bottom: 40px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .nlTitle {
+        font-size: 28px;
+    }
+    
+    .nlSubtitle {
+        margin: 0 auto 24px;
+        font-size: 15px;
+    }
+    
+    .nlPerks {
+        justify-content: center;
+        gap: 16px;
+    }
+
+    .nlFormCard {
+        max-width: 450px;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 576px) {
+    .nlInputWrapper {
+        flex-direction: column;
+        background: transparent;
+        border: none;
+        padding: 0;
+        gap: 12px;
+    }
+    
+    .nlInput {
+        width: 100%;
+        background: rgba(255, 255, 255, 0.07);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 12px;
+        padding: 14px 16px;
+    }
+    
+    .nlInputFocused .nlInput {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(200, 155, 60, 0.5);
+        box-shadow: 0 0 0 4px rgba(200, 155, 60, 0.1);
+    }
+    
+    .nlSubscribeBtn {
+        width: 100%;
+        padding: 14px;
+        border-radius: 12px;
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .nlTitle {
+        font-size: 24px;
+    }
+    
+    .nlSubtitle {
+        font-size: 14px;
+    }
+    
+    .nlBadge {
+        font-size: 11px;
+        padding: 5px 14px;
+    }
+    
+    .nlFormInner {
+        padding: 24px 20px;
+    }
+    
+    .nlFormTitle {
+        font-size: 18px;
+    }
+    
+    .nlPerks {
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+    }
+}
+
+/* ─── Premium Mobile Responsiveness for BestSeller ─── */
+@media (max-width: 991px) {
+    .bsSection {
+        padding: 60px 0;
+    }
+    .bsTitle {
+        font-size: 30px;
+    }
+    .bsImgWrap {
+        height: 220px;
+    }
+}
+
+@media (max-width: 768px) {
+    .bsSection {
+        padding: 50px 0;
+    }
+    .bsHeader {
+        margin-bottom: 35px;
+    }
+    .bsTitle {
+        font-size: 28px;
+    }
+    .bsSubtitle {
+        font-size: 15px;
+        padding: 0 15px;
+    }
+    .bsImgWrap {
+        height: 190px;
+        margin-bottom: 12px;
+    }
+}
+
+@media (max-width: 576px) {
+    .bsCard {
+        margin: 10px;
+        border-radius: 20px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+    
+    .bsImgWrap {
+        height: 240px;
+    }
+
+    /* On mobile, we make the button visible but more subtle */
+    .bsCartHover {
+        transform: translateY(0);
+        opacity: 1;
+        background: transparent;
+        padding: 10px;
+        bottom: 5px;
+    }
+
+    .bsAddToCartBtn {
+        padding: 8px 16px;
+        font-size: 12px;
+        box-shadow: 0 4px 15px rgba(200, 155, 60, 0.2);
+    }
+}
+
+@media (max-width: 480px) {
+    .bsTitle {
+        font-size: 24px;
+    }
+    .bsSubtitle {
+        font-size: 14px;
+    }
+    .bsName {
+        font-size: 15px;
+        margin-bottom: 6px;
+    }
+    .bsPrice {
+        font-size: 17px;
+    }
+    .bsImgWrap {
+        height: 210px;
+    }
+}
+
+.bsName {
+    height: 48px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.4;
+}
+
+/* Slick Dots Styling */
+.bsSliderWrap :global(.slick-dots) {
+    bottom: -40px;
+}
+
+.bsSliderWrap :global(.slick-dots li button:before) {
+    font-size: 10px;
+    color: var(--color-gold);
+    opacity: 0.25;
+}
+
+.bsSliderWrap :global(.slick-dots li.slick-active button:before) {
+    opacity: 1;
+    color: var(--color-gold);
+}
+
+/* ─── Premium Mobile Responsiveness for Testimonials ─── */
+@media (max-width: 991px) {
+    .testiSection {
+        padding: 60px 0;
+    }
+    .testiTitle {
+        font-size: 30px;
+    }
+    .testiCard {
+        padding: 28px 24px 24px;
+        min-height: 280px;
+    }
+}
+
+@media (max-width: 768px) {
+    .testiSection {
+        padding: 50px 0;
+    }
+    .testiTitle {
+        font-size: 28px;
+    }
+    .testiSubtitle {
+        font-size: 15px;
+        padding: 0 15px;
+    }
+    .testiSliderWrap {
+        margin: 0;
+    }
+    .testiCard {
+        min-height: auto;
+        padding: 24px 20px;
+    }
+    .testiText {
+        font-size: 14px;
+        margin-bottom: 16px;
+    }
+    .testiControls {
+        flex-direction: column;
+        gap: 24px;
+        margin-top: 30px;
+    }
+    .testiDots {
+        gap: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .testiTitle {
+        font-size: 24px;
+    }
+    .testiBadge {
+        font-size: 11px;
+        padding: 5px 14px;
+    }
+    .testiAvatar {
+        width: 40px;
+        height: 40px;
+        font-size: 14px;
+    }
+    .testiName {
+        font-size: 14px;
+    }
+    .testiArrowBtn {
+        width: 38px;
+        height: 38px;
+    }
+}
+
+
+
+

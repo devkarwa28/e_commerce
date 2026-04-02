@@ -4,12 +4,12 @@ import TopBar from "./TopBar"
 
 const Header = () => {
   return (
-    <>
-    <TopBar/>
-    <MainHeader/>
-    <NavBar/>
-    </>
-  )
-}
+    <header>
+      <TopBar />
+      <MainHeader />
+      <NavBar />
+    </header>
+  );
+};
 
 export default Header

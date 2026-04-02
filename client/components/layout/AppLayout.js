@@ -1,21 +1,19 @@
-"use client";
-
 import { usePathname } from "next/navigation";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 
- 
 
-const AppLayout = ({children}) => {
-    const pathName = usePathname();
-    const isAdmin = pathName.startsWith("/admin")
+
+const AppLayout = ({ children }) => {
+  const pathName = usePathname();
+  const isAdmin = pathName.startsWith("/admin")
   return (
-    <>
-    {!isAdmin && <Header/> }
-    {children}
-    {!isAdmin && <Footer/>}
-    </>
-  )
-}
+    <div className="app-layout">
+      {!isAdmin && <Header />}
+      <main className="content">{children}</main>
+      {!isAdmin && <Footer />}
+    </div>
+  );
+};
 
 export default AppLayout

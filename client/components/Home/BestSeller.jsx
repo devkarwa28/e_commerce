@@ -1,10 +1,12 @@
 "use client";
 import { Rating } from "@mui/material";
 import bestStyles from "./home.module.css";
-import Slider from "react-slick";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import StarBorderRoundedIcon from "@mui/icons-material/StarBorderRounded";
 import WorkspacePremiumOutlinedIcon from "@mui/icons-material/WorkspacePremiumOutlined";
+import dynamic from "next/dynamic";
+
+const Slider = dynamic(() => import("react-slick"), { ssr: false });
 
 const BestSeller = () => {
   const settings = {
@@ -19,15 +21,34 @@ const BestSeller = () => {
     responsive: [
       {
         breakpoint: 1200,
-        settings: { slidesToShow: 3 },
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 992,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+        },
       },
       {
         breakpoint: 768,
-        settings: { slidesToShow: 2 },
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+          dots: true,
+        },
       },
       {
         breakpoint: 576,
-        settings: { slidesToShow: 1 },
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          arrows: false,
+          dots: true,
+        },
       },
     ],
   };

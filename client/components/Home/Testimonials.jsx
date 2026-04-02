@@ -2,12 +2,14 @@
 import { useState, useRef } from "react";
 import { Rating } from "@mui/material";
 import testiStyles from "./home.module.css";
-import Slider from "react-slick";
 import FormatQuoteRoundedIcon from "@mui/icons-material/FormatQuoteRounded";
 import ArrowBackIosNewRoundedIcon from "@mui/icons-material/ArrowBackIosNewRounded";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
+import dynamic from "next/dynamic";
 
-const Testimonials = () => {
+const Slider = dynamic(() => import("react-slick"), { ssr: false });
+
+function Testimonials() {
   const sliderRef = useRef(null);
   const [activeSlide, setActiveSlide] = useState(0);
 
@@ -62,11 +64,15 @@ const Testimonials = () => {
     beforeChange: (_, next) => setActiveSlide(next),
     responsive: [
       {
+        breakpoint: 1200,
+        settings: { slidesToShow: 3 },
+      },
+      {
         breakpoint: 992,
         settings: { slidesToShow: 2 },
       },
       {
-        breakpoint: 600,
+        breakpoint: 768,
         settings: { slidesToShow: 1 },
       },
     ],
@@ -105,8 +111,7 @@ const Testimonials = () => {
                       color: "#C89B3C",
                       fontSize: 20,
                       marginBottom: "16px",
-                    }}
-                  />
+                    }} />
 
                   <p className={testiStyles.testiText}>&ldquo;{item.text}&rdquo;</p>
 
@@ -132,11 +137,8 @@ const Testimonials = () => {
             {testimonials.map((_, index) => (
               <button
                 key={index}
-                className={`${testiStyles.testiDot} ${
-                  activeSlide === index ? testiStyles.testiDotActive : ""
-                }`}
-                onClick={() => sliderRef.current?.slickGoTo(index)}
-              />
+                className={`${testiStyles.testiDot} ${activeSlide === index ? testiStyles.testiDotActive : ""}`}
+                onClick={() => sliderRef.current?.slickGoTo(index)} />
             ))}
           </div>
 
@@ -160,6 +162,6 @@ const Testimonials = () => {
       </div>
     </section>
   );
-};
+}
 
 export default Testimonials;
