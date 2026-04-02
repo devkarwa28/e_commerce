@@ -1,11 +1,10 @@
 "use client";
 
 
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
-
-export default function OAuthSuccess() {
+function oAuthHandler(){
     const router = useRouter();
     const searchParams = useSearchParams();
     const { fetchUser } = useAuth();
@@ -20,4 +19,11 @@ export default function OAuthSuccess() {
     }, []);
 
     return <p>Logging you in...</p>;
+}
+export default function OAuthSuccess() {
+    return (
+        <Suspense fallback={<p>Loading...</p>}>
+            <oAuthHandler/>
+        </Suspense>
+    )
 }
