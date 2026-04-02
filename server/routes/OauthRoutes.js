@@ -1,6 +1,6 @@
 const express = require('express');
 const passport = require('../config/passport');
-const tokenGenarator  = require('../utils/tokenGenerator');
+const tokenGenarator = require('../utilites/tokenGenarator');
 
 const OauthRouter = express.Router();
 
