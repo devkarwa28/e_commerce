@@ -4,21 +4,23 @@ const User = require('../models/UserModel');
 
 passport.use(
     new GoogleStrategy({
-        clientID : process.env.GOOGLE_CLIENT_ID,
-        clientSecret : process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL : `https://observant-intuition-production.up.railway.app/auth/google/callback`
+        clientID: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        callbackURL: `https://observant-intuition-production.up.railway.app/auth/google/callback`
     }, async (accessToken, refreshToken, profile, done) => {
         try {
-            const existingUser = await User.findOne({ googleId : profile.id });
-            if(existingUser){
+            const existingUser = await User.findOne({ googleId: profile.id });
+            if (existingUser) {
                 return done(null, existingUser);
             }
             const newUser = new User({
-                googleId : profile.id,
-                name : profile.displayName,
-                email : profile.emails[0].value,
-                avatar : profile.photos[0].value,
-                provider : 'google'
+                googleId: profile.id,
+                name: profile.displayName,
+                email: profile.emails[0].value,
+                avatar: profile.photos[0].value,
+                provider: 'google',
+                password: "google-auth",
+                uname: profile.displayName
             });
             await newUser.save();
             done(null, newUser);
