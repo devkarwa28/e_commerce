@@ -28,14 +28,17 @@ const UserLogin = () => {
 
         setLoading(true);
         try {
-            const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/login`, { email, password });
+            const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/login`, { email, password }, {withCredentials: true});
             setUser(res.data);
             router.push("/");
         } catch (err) {
             setError(err.response?.data?.message || "Invalid credentials. Please try again.");
-            console.log("Cannot Login", err);
         }
         setLoading(false);
+    }
+
+    const handleGoogleLogin = () => {
+        window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/auth/google`;
     }
 
     return (
@@ -96,7 +99,7 @@ const UserLogin = () => {
                 </div>
 
                 <div className={LoginStyles.socialBtns}>
-                    <button className={`${LoginStyles.socialBtn} ${LoginStyles.googleBtn}`}>
+                    <button onClick={handleGoogleLogin} className={`${LoginStyles.socialBtn} ${LoginStyles.googleBtn}`}>
                         <Google />
                         Google
                     </button>
