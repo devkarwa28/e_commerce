@@ -16,7 +16,7 @@ require('./config/passport');
 const OauthRouter = require('./routes/OauthRoutes');
 require('./config/dbconfig');
 const app = express()
-
+app.set('trust proxy',1)
 const allowedOrigins = [
   "http://localhost:3000",
   process.env.CLIENT_URL

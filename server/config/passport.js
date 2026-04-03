@@ -9,18 +9,29 @@ passport.use(
         callbackURL: `${process.env.SERVER_URL}/auth/google/callback`
     }, async (accessToken, refreshToken, profile, done) => {
         try {
-            const existingUser = await User.findOne({ googleId: profile.id });
-            if (existingUser) {
-                return done(null, existingUser);
+             const existingGoogleUser = await User.findOne({ googleId: profile.id });
+            if (existingGoogleUser) {
+                return done(null, existingGoogleUser);
+            }
+
+            const existingEmailUser = await User.findOne({ email: profile.emails[0].value });
+            if (existingEmailUser) {
+                existingEmailUser.googleId = profile.id;
+                existingEmailUser.provider = "google";
+                if (!existingEmailUser.avatar) {
+                    existingEmailUser.avatar = profile.photos[0].value;
+                }
+                await existingEmailUser.save();
+                return done(null, existingEmailUser);
             }
             const newUser = new User({
                 googleId: profile.id,
-                name: profile.displayName,
+                uname: profile.displayName,
                 email: profile.emails[0].value,
                 avatar: profile.photos[0].value,
                 provider: 'google',
                 password: "google-auth",
-                uname: profile.displayName
+                
             });
             await newUser.save();
             done(null, newUser);
