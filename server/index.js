@@ -20,14 +20,16 @@ const app = express()
 const allowedOrigins = [
   "http://localhost:3000",
   process.env.CLIENT_URL
-];
+].filter(Boolean);
 
 app.use(cors({
   origin: function (origin, callback) {
-
     if (!origin) return callback(null, true);
 
     if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    if (origin.endsWith("-dev-karwas-projects.vercel.app")) {
       return callback(null, true);
     }
 
