@@ -16,7 +16,20 @@ function OAuthHandler(){
         })
     }, []);
 
-    return <p>Logging you in...</p>;
+    return (
+        <div style={{ 
+            display: "flex", 
+            alignItems: "center", 
+            justifyContent: "center", 
+            height: "100vh",
+            flexDirection: "column",
+            gap: "16px"
+        }}>
+            <p style={{ fontSize: "18px", fontWeight: 600 }}>
+                Logging you in...
+            </p>
+        </div>
+    );
 }
 export default function OAuthSuccess() {
     return (
