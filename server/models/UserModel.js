@@ -13,22 +13,37 @@ let userSchema = new mongoose.Schema({
         lowercase: true,
         index: true,
     },
-    password:{
+    password: {
         type: String,
-        required: true,
+        required: function () {
+            return !this.googleId; // Password is required only if not using Google OAuth
+        },
         minlength: 6,
         select: false,
     },
-    role:{
+    googleId: {
         type: String,
-        enum: ["user","admin"],
+        unique: true,
+        sparse: true,
+    },
+    avatar: {
+        type: String,
+    },
+    provider: {
+        type: String,
+        enum: ["local", "google"],
+        default: "local",
+    },
+    role: {
+        type: String,
+        enum: ["user", "admin"],
         default: "user",
     },
-    isBlocked:{
+    isBlocked: {
         type: Boolean,
         default: false,
     }
 
-},{timestamps: true})
+}, { timestamps: true })
 
 module.exports = mongoose.model("User",userSchema);
