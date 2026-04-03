@@ -179,34 +179,71 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    padding: 12px;
+    gap: 12px;
+    padding: 14px;
     background: #FFFFFF;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 12px;
-    font-size: 14px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 14px;
+    font-size: 15px;
     font-weight: 600;
     color: var(--color-text-primary);
     cursor: pointer;
-    transition: all 300ms ease;
+    transition: all 400ms cubic-bezier(0.23, 1, 0.32, 1);
+    position: relative;
+    z-index: 1;
 }
 
-.socialBtn:hover {
-    background: #FAFAFA;
-    border-color: rgba(0, 0, 0, 0.2);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+.googleBtn {
+    background-color: #4285F4 !important;
+    background-image: 
+        radial-gradient(at 0% 0%, rgba(234, 67, 53, 0.8) 0, transparent 50%), 
+        radial-gradient(at 50% 0%, rgba(251, 188, 5, 0.8) 0, transparent 50%), 
+        radial-gradient(at 100% 0%, rgba(52, 168, 83, 0.8) 0, transparent 50%) !important;
+    color: #FFFFFF !important;
+    border: none !important;
+    box-shadow: 0 4px 15px rgba(66, 133, 244, 0.3) !important;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.googleBtn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, transparent 100%);
+    pointer-events: none;
+}
+
+.googleBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(66, 133, 244, 0.5);
+    filter: brightness(1.05);
+}
+
+.facebookBtn {
+    background: #1877F2 !important;
+    color: #FFFFFF !important;
+    border: none !important;
+    box-shadow: 0 4px 15px rgba(24, 119, 242, 0.25) !important;
+}
+
+.facebookBtn:hover {
+    background: #166fe5 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(24, 119, 242, 0.4);
 }
 
 .socialBtn svg {
     font-size: 20px;
+    transition: transform 0.3s ease;
 }
 
-.googleBtn {
-    color: #DB4437;
-}
-
-.facebookBtn {
-    color: #4267B2;
+.socialBtn:hover svg {
+    transform: scale(1.1);
 }
 
 .loginWrap {
