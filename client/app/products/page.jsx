@@ -87,14 +87,14 @@ const ProductsPage = () => {
                 <div className="col-lg-9">
                     <div className="row">
                         {loading ? (
-                            Array.from({ length: 9 }).map((_, index) => (
-                                <div key={index} className="col-xl-4 col-md-4 col-sm-6 mb-4">
+                            Array.from({ length: 8 }).map((_, index) => (
+                                <div key={index} className="col-xl-4 col-md-4 col-6 mb-4">
                                     <ProductCardSkeleton />
                                 </div>
                             ))
                         ) : products.length > 0 ? (
                             products.map(product => (
-                                <div key={product._id} className="col-xl-4 col-md-4 col-sm-6 mb-4">
+                                <div key={product._id} className="col-xl-4 col-md-4 col-6 mb-4">
                                     <ProductCard product={product} />
                                 </div>
                             ))

@@ -337,48 +337,144 @@
 /* Mobile specific optimisations for Product Card */
 @media (max-width: 768px) {
     .productCard {
-        border-radius: 20px;
+        border-radius: 16px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+        border: 1px solid rgba(92, 64, 51, 0.05);
     }
     
     .CardContent {
-        padding: 16px;
-        gap: 10px;
+        padding: 12px;
+        gap: 6px;
+    }
+
+    .categoryName {
+        font-size: 8px;
+        letter-spacing: 0.8px;
+        margin-bottom: 0;
     }
 
     .productName {
-        font-size: 1rem;
+        font-size: 0.9rem;
+        line-height: 1.25;
+        height: 2.5rem; /* Ensure consistent alignment */
+        margin-bottom: 2px;
+        font-weight: 600;
+    }
+
+    .ratingRow {
+        gap: 4px;
+        margin-bottom: 2px;
+    }
+
+    .ratingRow svg {
+        font-size: 10px !important;
+    }
+
+    .ratingCount {
+        font-size: 10px;
+    }
+
+    .weightRow {
+        gap: 4px;
+        margin-bottom: 8px;
+        height: 18px;
+        overflow: hidden;
+    }
+
+    .weightPill {
+        font-size: 9px;
+        padding: 2px 6px;
+        border-radius: 4px;
+    }
+
+    .weightMore {
+        font-size: 9px;
+    }
+
+    .divider {
+        display: none; /* Cleaner look on mobile */
+    }
+
+    .priceSection {
+        padding-top: 4px;
+        align-items: flex-end;
     }
 
     .price {
-        font-size: 20px;
+        font-size: 18px;
+        color: #4a3427;
+    }
+
+    .mrp {
+        font-size: 10px;
     }
 
     .addToCart {
-        padding: 10px 16px;
-        font-size: 13px;
-        border-radius: 12px;
+        padding: 8px 10px;
+        border-radius: 10px;
+        width: 36px; /* Circle icon only on small tabs/phones to save space */
+        height: 36px;
+        justify-content: center;
+        gap: 0;
+    }
+
+    .addToCart span {
+        display: none; /* Hide text to prevent cut-off and look cleaner */
+    }
+
+    .addToCart svg {
+        font-size: 18px !important;
+        margin: 0;
+    }
+
+    .offerBadge {
+        top: 8px;
+        left: 8px;
+        gap: 4px;
+    }
+
+    .badgeDiscount, .badgeFeatured {
+        padding: 2px 8px;
+        font-size: 8px;
+        border-radius: 4px;
+    }
+
+    .wishBtn {
+        top: 8px;
+        right: 8px;
+        width: 28px;
+        height: 28px;
+        background: rgba(255, 255, 255, 0.9);
+    }
+    
+    .wishBtn svg {
+        font-size: 14px !important;
     }
 
     .quickVeiw {
         display: none; 
     }
+}
 
-    .offerBadge {
-        top: 12px;
-        left: 12px;
-        gap: 6px;
+/* For slightly larger mobile screens, we can bring back the text but very small */
+@media (min-width: 450px) and (max-width: 768px) {
+    .addToCart {
+        width: auto;
+        padding: 6px 14px;
+        gap: 4px;
+    }
+    
+    .addToCart span {
+        display: inline;
+        font-size: 11px;
+    }
+    
+    .addToCart svg {
+        font-size: 14px !important;
     }
 
-    .badgeDiscount, .badgeFeatured {
-        padding: 4px 10px;
-        font-size: 10px;
-    }
-
-    .wishBtn {
-        top: 12px;
-        right: 12px;
-        width: 32px;
-        height: 32px;
+    .productName {
+        font-size: 0.95rem;
     }
 }
 
