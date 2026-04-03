@@ -3,6 +3,7 @@ import shopByStyles from "./home.module.css";
 import { CardGiftcard, FitnessCenter, Restaurant, Spa } from "@mui/icons-material";
 import TrackChangesOutlinedIcon from "@mui/icons-material/TrackChangesOutlined";
 import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
+import Link from "next/link";
 
 const ShopByPurpose = () => {
   const items = [
@@ -62,9 +63,11 @@ const ShopByPurpose = () => {
                 
                 <div className={shopByStyles.sbpCardFooter}>
                   <span className={shopByStyles.sbpActionText}>Explore</span>
+                  <Link href='/products'>
                   <div className={shopByStyles.sbpActionIcon}>
                     <ArrowForwardRoundedIcon sx={{ fontSize: 18 }} />
                   </div>
+                  </Link>
                 </div>
               </div>
             </div>

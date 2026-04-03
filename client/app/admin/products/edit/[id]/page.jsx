@@ -11,7 +11,9 @@ const ProductEditPage = () => {
 
     const fetchProduct = async () =>{
         try{
-            const res = await axios.get( `${process.env.NEXT_PUBLIC_API_URL}/api/products/admin/${id}`);
+            const res = await axios.get( `${process.env.NEXT_PUBLIC_API_URL}/api/products/admin/${id}`, {
+                withCredentials: true
+            });
 
             setProduct(res.data)
         }

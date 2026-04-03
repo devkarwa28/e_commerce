@@ -294,32 +294,33 @@ exports.updateProduct = async (req, res) => {
     }
 
     if (req.files && req.files.mainImage) {
-      const result = await uploadToCloudinary(req.file.mainImage[0].buffer, "products/main");
+      const result = await uploadToCloudinary(req.files.mainImage[0].buffer, "products/main");
       product.mainImage = result.secure_url;
     }
     
-    if (req.files && req.files.images && req.files.images.length > 0) {
-     let galleryImages = await Promise.all(
-        req.files.images.map(async (file) => {
-            const result = await uploadToCloudinary(file.buffer, "products/gallery");
-            return result.secure_url;
-        })
-     )
-     product.images = galleryImages;
-    }
+    let updatedImages = [...product.images];
+
     if (removedImages) {
       try {
         const removed = JSON.parse(removedImages);
-
-        product.images = product.images.filter(
-          (img) => !removed.includes(img)
-        );
+        updatedImages = updatedImages.filter(img => !removed.includes(img));
       } catch (err) {
-        return res.status(400).json({
-          message: "Invalid removed images",
-        });
+        console.error("Removed Images Parse Error:", err);
       }
     }
+
+    if (req.files && req.files.images && req.files.images.length > 0) {
+      const newGallery = await Promise.all(
+        req.files.images.map(async (file) => {
+          const result = await uploadToCloudinary(file.buffer, "products/gallery");
+          return result.secure_url;
+        })
+      );
+      updatedImages = [...updatedImages, ...newGallery];
+    }
+
+    product.images = updatedImages;
+
     await product.save();
 
     res.json({
@@ -328,6 +329,7 @@ exports.updateProduct = async (req, res) => {
       product,
     });
   } catch (err) {
+    console.error("Product Update Error:", err);
     res.status(500).json({ message: "Server Error" });
   }
 };

@@ -34,7 +34,7 @@ const Cart = () => {
         <div className="col-lg-8">
           {
             cart.items.length === 0 ? (
-              <p>Your Cart Is Empty</p>
+              <NoItemsInCart/>
             ) : (
               cart.items.map(item=>(
                 <CartItems key={item._id}  item={item} refreshCart={fetchCart} />

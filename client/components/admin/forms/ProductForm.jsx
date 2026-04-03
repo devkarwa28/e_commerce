@@ -120,7 +120,7 @@ const ProductForm = ({ editData }) => {
 
             if (editData) {
                 await axios.put(
-                    `http://localhost:5000/api/products/${editData._id}`,
+                    `${process.env.NEXT_PUBLIC_API_URL}/api/products/${editData._id}`,
                     formData,
                     { headers: { "Content-Type": "multipart/form-data" }, withCredentials: true }
                 );
@@ -189,7 +189,7 @@ const ProductForm = ({ editData }) => {
                     </div>
                 </div>
             );
-            case 1: return <ImageUploader mainImage={mainImage} setMainImage={setMainImage} galleryImage={galleryImage} setGalleryImage={setGalleryImage} existingImages={editData?.images || []} setRemovedImages={setRemovedImages} />
+            case 1: return <ImageUploader mainImage={mainImage} setMainImage={setMainImage} galleryImage={galleryImage} setGalleryImage={setGalleryImage} existingMainImage={editData?.mainImage} existingImages={editData?.images || []} setRemovedImages={setRemovedImages} />
             case 2: return <WeightsOption productName={form.pname} weightOptions={weightOptions} setWeightOptions={setWeightOptions} />
             case 3: return <SepcifiactionsForm specifications={specifications} setSepciciaction={setSpecifications} />
             case 4: return <NutritentsInfo nutrition={nutrition} setNutrition={setNutrition} />

@@ -5,17 +5,18 @@ import imgUploadStyle from './forms.module.css'
 import { Button, IconButton } from "@mui/material";
 import { CloudUpload, Delete } from "@mui/icons-material";
 
-const ImageUploader = ({ mainImage, galleryImage, setMainImage, setGalleryImage, existingImages = [],
+const ImageUploader = ({ mainImage, galleryImage, setMainImage, setGalleryImage, existingMainImage, existingImages = [],
     setRemovedImages }) => {
 
-    const [mainImgpreview, setMainImgPreview] = useState(mainImage);
-    const [galleryImgPreview, setGalleryImgPreview] = useState(galleryImage);
+    const [mainImgpreview, setMainImgPreview] = useState(null);
+    const [galleryImgPreview, setGalleryImgPreview] = useState([]);
     const [existingGallery, setExistingGallery] = useState(existingImages);
 
     useEffect(() => {
-
         if (mainImage) {
             setMainImgPreview(URL.createObjectURL(mainImage));
+        } else if (existingMainImage) {
+            setMainImgPreview(existingMainImage);
         }
 
         if (galleryImage && galleryImage.length > 0) {
@@ -23,9 +24,11 @@ const ImageUploader = ({ mainImage, galleryImage, setMainImage, setGalleryImage,
                 typeof img === "string" ? img : URL.createObjectURL(img)
             );
             setGalleryImgPreview(urls);
+        } else {
+            setGalleryImgPreview([]);
         }
 
-    }, [mainImage, galleryImage]);
+    }, [mainImage, galleryImage, existingMainImage]);
 
     useEffect(() => {
         setExistingGallery(existingImages);
