@@ -1,21 +1,19 @@
 "use client";
-
-
 import { Suspense, useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
-function oAuthHandler(){
+
+function OAuthHandler(){
     const router = useRouter();
-    const searchParams = useSearchParams();
     const { fetchUser } = useAuth();
 
     useEffect(() => {
-        const token = searchParams.get("token");
-        if (token) {
-            localStorage.setItem("token", token);
-            fetchUser();
-        }
-        router.replace("/");
+        fetchUser().then(()=>{
+            router.replace("/");
+        })
+        .catch(()=>{
+            router.replace("/login");
+        })
     }, []);
 
     return <p>Logging you in...</p>;
@@ -23,7 +21,7 @@ function oAuthHandler(){
 export default function OAuthSuccess() {
     return (
         <Suspense fallback={<p>Loading...</p>}>
-            <oAuthHandler/>
+            <OAuthHandler/>
         </Suspense>
     )
 }

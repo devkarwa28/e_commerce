@@ -16,13 +16,9 @@ OauthRouter.get("/google/callback", passport.authenticate("google", {
         if (!req.user) {
             return res.redirect(`${process.env.CLIENT_URL}/login?error=user_not_found`);
         }
-        const token = tokenGen(res, req.user._id);
+        tokenGen(res, req.user._id);
 
-        if (!token) {
-            return res.redirect(`${process.env.CLIENT_URL}/login?error=token_generation_failed`);
-        }
-
-        res.redirect(`${process.env.CLIENT_URL}/oauth-success?token=${token}`);
+        res.redirect(`${process.env.CLIENT_URL}/oauth-success`);
     }
     catch (err) {
         console.error("GOOGLE CALLBACK ERROR:", err);
