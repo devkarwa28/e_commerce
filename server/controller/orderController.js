@@ -8,7 +8,7 @@ const User = require('../models/UserModel');
 
 exports.placeOrder = async (req, res) => {
     try {
-        const { shippingAddress, paymentMethod, couponCode } = req.body;
+        const { shippingAddress, paymentMethod, couponCode, paymentStatus, paymentId } = req.body;
 
         if (!shippingAddress) {
             return res.status(400).json({ message: "Shipping address required" });
@@ -82,7 +82,10 @@ exports.placeOrder = async (req, res) => {
             totalAmount: cart.totalAmount,
             discountAmount: discount,
             finalAmount,
-            couponCode: couponCode || null
+            couponCode: couponCode || null,
+            paymentStatus: paymentStatus || "Pending",
+            isPaid: paymentStatus === "Paid",
+            paitAt: paymentStatus === "Paid" ? new Date() : null,
         });
 
         for (const item of cart.items) {

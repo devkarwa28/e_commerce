@@ -28,17 +28,19 @@ const PaymentMethod = ({ selectedMethod, setSelectedMethod }) => {
                     </div>
                 </div>
 
-                <div className={`${CheckoutStyles.paymentOption} ${CheckoutStyles.disabledOption}`}>
+                <div 
+                    className={`${CheckoutStyles.paymentOption} ${selectedMethod === "Online" ? CheckoutStyles.active : ""}`}
+                    onClick={() => setSelectedMethod("Online")}
+                >
                     <div className={CheckoutStyles.paymentRadio}>
                         <div className={CheckoutStyles.paymentRadioDot}></div>
                     </div>
-                    <CreditCardOutlinedIcon sx={{ color: "rgba(0,0,0,0.3)", fontSize: 28 }} />
+                    <CreditCardOutlinedIcon sx={{ color: selectedMethod === "Online" ? "var(--color-primary)" : "rgba(0,0,0,0.5)", fontSize: 28 }} />
                     <div className={CheckoutStyles.paymentDetails}>
                         <div className="d-flex align-items-center">
-                            <h5 className={CheckoutStyles.paymentTitle} style={{ color: "rgba(0,0,0,0.5)" }}>Online Payment</h5>
-                            <span className={CheckoutStyles.paymentTag}>Coming Soon</span>
+                            <h5 className={CheckoutStyles.paymentTitle}>Online Payment</h5>
                         </div>
-                        <p className={CheckoutStyles.paymentDesc}>Credit/Debit Cards, UPI, Net Banking seamlessly integrated.</p>
+                        <p className={CheckoutStyles.paymentDesc}>Credit/Debit Cards, UPI, Net Banking seamlessly integrated via Razorpay.</p>
                     </div>
                 </div>
             </div>
