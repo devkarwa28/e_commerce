@@ -4,6 +4,7 @@ import productcardStyles from "./products.module.css";
 import { FavoriteBorder, FavoriteBorderOutlined, ShoppingCart, Visibility } from "@mui/icons-material";
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
+import { useWishlist } from "@/context/WishlistContext";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -13,7 +14,9 @@ const ProductCard = ({ product }) => {
 
   const [loading, setLoading] = useState(false);
   const [openToast, setOpenToast] = useState({ open: false, message: "", severity: "success" })
-  const [wished, setWished] = useState()
+
+  const { wishlist, toggleWishlist } = useWishlist();
+  const wished = wishlist?.some(item => item._id === product._id);
 
   const startingOption = product.weightOptions?.[0];
   const price = startingOption?.price || product.baseprice;
@@ -75,7 +78,19 @@ const ProductCard = ({ product }) => {
         </div>
         <button
           className={`${productcardStyles.wishBtn} ${wished ? productcardStyles.wishActive : ""}`}
-          onClick={(e) => { e.stopPropagation(); setWished(!wished); }}
+          onClick={async (e) => {
+            e.stopPropagation();
+            if (!user) {
+              router.push("/login");
+              return;
+            }
+            try {
+              await toggleWishlist(product._id);
+              setOpenToast({ open: true, message: wished ? "Removed from wishlist" : "Added to wishlist", severity: "success" });
+            } catch (err) {
+              setOpenToast({ open: true, message: "Error updating wishlist", severity: "error" });
+            }
+          }}
           aria-label="Wishlist"
         >
           {wished ? <FavoriteBorderOutlined style={{ fontSize: 18 }} /> : <FavoriteBorder style={{ fontSize: 18 }} />}

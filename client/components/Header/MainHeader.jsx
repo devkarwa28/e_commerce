@@ -28,11 +28,13 @@ import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useCart } from "@/context/CartContext";
+import { useWishlist } from "@/context/WishlistContext";
 import Link from "next/link";
 
 const MainHeader = () => {
   const { user, logOut, loading } = useAuth();
   const { cart } = useCart();
+  const { wishlist } = useWishlist();
   const router = useRouter();
   const [anchorEl, setAnchorEl] = useState(null);
   const [searchFocused, setSearchFocused] = useState(false);
@@ -106,9 +108,9 @@ const MainHeader = () => {
               <Person2Outlined sx={{ fontSize: 22 }} />
             </div>
 
-            <div className={headerStyles.actionBtn}>
+            <Link href="/wishlist" className={headerStyles.actionBtn}>
               <Badge
-                badgeContent={3}
+                badgeContent={wishlist?.length || 0}
                 sx={{
                   "& .MuiBadge-badge": {
                     backgroundColor: "var(--color-gold)",
@@ -122,7 +124,7 @@ const MainHeader = () => {
               >
                 <FavoriteBorderOutlined sx={{ fontSize: 22 }} />
               </Badge>
-            </div>
+            </Link>
 
             <Link href="/cart" className={headerStyles.actionBtn}>
               <Badge
@@ -254,6 +256,13 @@ const MainHeader = () => {
                   <ListItemButton onClick={() => { setMobileMenuOpen(false); router.push("/profile"); }}>
                     <Settings sx={{ mr: 2, color: "var(--color-primary)" }} />
                     <ListItemText primary="Profile Settings" />
+                  </ListItemButton>
+                </ListItem>
+                <ListItem disablePadding>
+                  <ListItemButton onClick={() => { setMobileMenuOpen(false); router.push("/wishlist"); }}>
+                    <FavoriteBorderOutlined sx={{ mr: 2, color: "var(--color-primary)" }} />
+                    <ListItemText primary="My Wishlist" />
+                    <Badge badgeContent={wishlist?.length || 0} sx={{"& .MuiBadge-badge": { backgroundColor: "var(--color-gold)", color: "#1E1B18" }}} />
                   </ListItemButton>
                 </ListItem>
                 <ListItem disablePadding>

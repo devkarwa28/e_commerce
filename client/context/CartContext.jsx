@@ -2,7 +2,8 @@
 
 import axios from "axios";
 
-const { createContext, useState, useEffect, useContext } = require("react");
+import { createContext, useState, useEffect, useContext } from "react";
+import { useAuth } from "./AuthContext";
 const CartContext = createContext();
 
 const CartProvider = ({children}) => {
@@ -20,9 +21,15 @@ const CartProvider = ({children}) => {
         setLoading(false);
     }
 
+    const { user } = useAuth();
+
     useEffect(()=>{
-        fetchCart();
-    },[])
+        if(user){
+            fetchCart();
+        } else {
+            setCart(null);
+        }
+    },[user])
 
     const addToCart = async (productId,weightLabel,quantity) =>{
         await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/cart`,{productId,weightLabel,quantity},{withCredentials:true});
