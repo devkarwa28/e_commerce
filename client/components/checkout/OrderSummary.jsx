@@ -78,7 +78,7 @@ const OrderSummary = ({ shippingAddress, paymentMethod }) => {
                     key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
                     amount: orderData.amount,
                     currency: "INR",
-                    name: "Nutrivia",
+                    name: "Dev Karwa's E-Commerce",
                     description: "Order Payment",
                     order_id: orderData.id,
                     handler: async (response) => {
