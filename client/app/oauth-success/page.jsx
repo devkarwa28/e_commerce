@@ -8,12 +8,12 @@ function OAuthHandler(){
     const { fetchUser } = useAuth();
 
     useEffect(() => {
-        fetchUser().then(()=>{
-            router.replace("/");
-        })
-        .catch(()=>{
-            router.replace("/login");
-        })
+        const init = async () => {
+      await fetchUser();
+      router.push("/");
+    };
+
+    init();
     }, []);
 
     return (

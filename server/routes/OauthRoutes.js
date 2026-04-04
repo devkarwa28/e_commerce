@@ -19,7 +19,7 @@ OauthRouter.get("/google/callback",
                 return res.redirect(`${process.env.CLIENT_URL}/login?error=user_not_found`);
             }
 
-            // ✅ Generate JWT token string directly — don't use res here
+            
             const jwt = require('jsonwebtoken');
             const token = jwt.sign(
                 { id: req.user._id }, 
@@ -27,7 +27,6 @@ OauthRouter.get("/google/callback",
                 { expiresIn: '7d' }
             );
 
-            // ✅ Set cookie manually
             res.cookie("token", token, {
                 httpOnly: true,
                 secure: true,
@@ -36,7 +35,7 @@ OauthRouter.get("/google/callback",
                 maxAge: 7 * 24 * 60 * 60 * 1000
             });
 
-            // ✅ Then redirect — cookie and redirect are now separate, no conflict
+            
             return res.redirect(`${process.env.CLIENT_URL}/oauth-success`);
         }
         catch (err) {
