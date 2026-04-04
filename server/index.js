@@ -14,6 +14,7 @@ const bannerRouter = require('./routes/bannerRoutes');
 const passport = require('passport');
 require('./config/passport');
 const OauthRouter = require('./routes/OauthRoutes');
+const wishRouter = require('./routes/wishlistRoutes');
 require('./config/dbconfig');
 const app = express()
 app.set('trust proxy',1)
@@ -54,6 +55,7 @@ app.use('/api/order',orderRouter);
 app.use('/api/admin',adminRouter);
 app.use('/api/coupons',couponRouter);
 app.use('/api/banners',bannerRouter);
+app.use("/api/wishlist",wishRouter)
 
 app.listen(5000,()=>{
     console.log("Server Started on PORT 5000")
