@@ -69,7 +69,6 @@ const OrderSummary = ({ shippingAddress, paymentMethod }) => {
                     return;
                 }
 
-                // Create order in backend
                 const { data: orderData } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/payment/create-order`, {
                     amount: finalTotal
                 }, { withCredentials: true });
