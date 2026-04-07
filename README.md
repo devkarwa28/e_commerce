@@ -66,6 +66,7 @@ A full-stack e-commerce web application for a premium dry fruits store, featurin
  ```
 Directory structure:
 └── devkarwa28-e_commerce/
+    ├── README.md
     ├── client/
     │   ├── README.md
     │   ├── eslint.config.mjs
@@ -73,9 +74,13 @@ Directory structure:
     │   ├── next.config.mjs
     │   ├── package.json
     │   ├── app/
+    │   │   ├── ClientLayout.js
     │   │   ├── layout.js
     │   │   ├── page.jsx
     │   │   ├── page.module.css
+    │   │   ├── aboutus/
+    │   │   │   ├── about.module.css
+    │   │   │   └── page.jsx
     │   │   ├── admin/
     │   │   │   ├── adminPanel.module.css
     │   │   │   ├── layout.js
@@ -87,6 +92,11 @@ Directory structure:
     │   │   │   │   └── edit/
     │   │   │   │       └── [id]/
     │   │   │   │           └── page.jsx
+    │   │   │   ├── coupons/
+    │   │   │   │   ├── coupons.module.css
+    │   │   │   │   └── page.jsx
+    │   │   │   ├── orders/
+    │   │   │   │   └── page.jsx
     │   │   │   └── products/
     │   │   │       ├── page.jsx
     │   │   │       ├── create/
@@ -94,12 +104,47 @@ Directory structure:
     │   │   │       └── edit/
     │   │   │           └── [id]/
     │   │   │               └── page.jsx
+    │   │   ├── awards/
+    │   │   │   ├── awards.module.css
+    │   │   │   └── page.jsx
+    │   │   ├── blog/
+    │   │   │   ├── blog.module.css
+    │   │   │   └── page.jsx
+    │   │   ├── careers/
+    │   │   │   ├── careers.module.css
+    │   │   │   └── page.jsx
     │   │   ├── cart/
+    │   │   │   └── page.jsx
+    │   │   ├── certifications/
+    │   │   │   ├── cert.module.css
     │   │   │   └── page.jsx
     │   │   ├── checkout/
     │   │   │   └── page.jsx
+    │   │   ├── contactus/
+    │   │   │   ├── contact.module.css
+    │   │   │   └── page.jsx
+    │   │   ├── expertise/
+    │   │   │   ├── expertise.module.css
+    │   │   │   ├── export-import/
+    │   │   │   │   ├── export-import.module.css
+    │   │   │   │   └── page.jsx
+    │   │   │   ├── modern-trade/
+    │   │   │   │   ├── modern-trade.module.css
+    │   │   │   │   └── page.jsx
+    │   │   │   ├── private-label/
+    │   │   │   │   └── page.jsx
+    │   │   │   └── quality-safety/
+    │   │   │       └── page.jsx
+    │   │   ├── faq/
+    │   │   │   ├── faq.module.css
+    │   │   │   └── page.jsx
+    │   │   ├── leadership/
+    │   │   │   ├── leadership.module.css
+    │   │   │   └── page.jsx
     │   │   ├── login/
     │   │   │   ├── login.module.css
+    │   │   │   └── page.jsx
+    │   │   ├── oauth-success/
     │   │   │   └── page.jsx
     │   │   ├── order-success/
     │   │   │   └── [id]/
@@ -110,11 +155,16 @@ Directory structure:
     │   │   │   └── [id]/
     │   │   │       ├── orderDetail.module.css
     │   │   │       └── page.jsx
+    │   │   ├── privacy-policy/
+    │   │   │   ├── page.jsx
+    │   │   │   └── privacy.module.css
     │   │   ├── products/
     │   │   │   ├── layout.js
     │   │   │   ├── page.jsx
+    │   │   │   ├── products.module.css
     │   │   │   └── [slug]/
     │   │   │       ├── page.jsx
+    │   │   │       ├── ProductDetailsClient.jsx
     │   │   │       └── components/
     │   │   │           ├── BenifitsIcon.jsx
     │   │   │           ├── PinCodeChecker.jsx
@@ -122,15 +172,29 @@ Directory structure:
     │   │   │           ├── ProductGallery.jsx
     │   │   │           ├── ProductInfo.jsx
     │   │   │           └── ProductTabs.jsx
-    │   │   └── register/
+    │   │   ├── register/
+    │   │   │   ├── page.jsx
+    │   │   │   └── register.module.css
+    │   │   ├── return-policy/
+    │   │   │   ├── page.jsx
+    │   │   │   └── returns.module.css
+    │   │   ├── shipping-policy/
+    │   │   │   ├── page.jsx
+    │   │   │   └── shipping.module.css
+    │   │   ├── terms-conditions/
+    │   │   │   ├── page.jsx
+    │   │   │   └── terms.module.css
+    │   │   └── wishlist/
     │   │       ├── page.jsx
-    │   │       └── register.module.css
+    │   │       └── wishlist.module.css
     │   ├── components/
     │   │   ├── admin/
     │   │   │   ├── admin.module.css
     │   │   │   ├── CategoryTable.jsx
     │   │   │   ├── DailySalesChart.jsx
+    │   │   │   ├── OrderDetailsModal.jsx
     │   │   │   ├── OrderStatusChart.jsx
+    │   │   │   ├── OrderTable.jsx
     │   │   │   ├── ProductTable.jsx
     │   │   │   ├── RevenueChart.jsx
     │   │   │   ├── Sidebar.jsx
@@ -188,7 +252,8 @@ Directory structure:
     │   │       └── products.module.css
     │   ├── context/
     │   │   ├── AuthContext.jsx
-    │   │   └── CartContext.jsx
+    │   │   ├── CartContext.jsx
+    │   │   └── WishlistContext.jsx
     │   ├── fonts/
     │   │   └── LatinaPopular-Regular.ttf
     │   ├── styles/
@@ -198,39 +263,53 @@ Directory structure:
     └── server/
         ├── index.js
         ├── package.json
+        ├── config/
+        │   ├── cloudinary.js
+        │   ├── dbconfig.js
+        │   ├── passport.js
+        │   └── razorpay.js
         ├── controller/
         │   ├── adminController.js
         │   ├── authController.js
+        │   ├── bannerController.js
         │   ├── cartController.js
         │   ├── categoryController.js
         │   ├── couponController.js
         │   ├── orderController.js
+        │   ├── paymentController.js
         │   ├── productController.js
-        │   └── reviewController.js
-        ├── db/
-        │   └── dbconfig.js
+        │   ├── reviewController.js
+        │   └── wishlistController.js
         ├── middleware/
         │   ├── authMiddleware.js
         │   └── uploadMiddleware.js
         ├── models/
+        │   ├── bannerModel.js
         │   ├── cartModel.js
         │   ├── CategoryModel.js
         │   ├── couponModel.js
         │   ├── orderModel.js
         │   ├── productModel.js
         │   ├── reviewModel.js
-        │   └── UserModel.js
+        │   ├── UserModel.js
+        │   └── wishlistModel.js
         ├── routes/
         │   ├── adminRoutes.js
         │   ├── authRoutes.js
+        │   ├── bannerRoutes.js
         │   ├── cartRouter.js
         │   ├── categoryRoutes.js
         │   ├── couponRoutes.js
+        │   ├── OauthRoutes.js
         │   ├── orderRoutes.js
+        │   ├── paymentRoutes.js
         │   ├── productRoutes.js
-        │   └── reviewRoutes.js
+        │   ├── reviewRoutes.js
+        │   └── wishlistRoutes.js
         └── utilites/
-            └── tokenGenarator.js
+            ├── cloudinaryUpload.js
+            └── tokenGen.js
+
 ```
  
 ---
