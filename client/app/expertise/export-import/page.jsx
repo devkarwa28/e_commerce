@@ -17,9 +17,13 @@ import {
   SupportAgent,
   FactCheck,
   PrecisionManufacturing,
-  LocalShippingOutlined
+  LocalShippingOutlined,
+  BusinessCenter,
+  LanguageOutlined,
+  SettingsSuggest,
+  TrendingUp,
+  Security
 } from "@mui/icons-material";
-import { Box, Container, Typography, Grid, Button, Paper, Avatar } from "@mui/material";
 import styles from "./export-import.module.css";
 
 const ExportImportPage = () => {
@@ -29,39 +33,39 @@ const ExportImportPage = () => {
     offset: ["start start", "end start"],
   });
 
-  const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
-  const heroOpacity = useTransform(scrollYProgress, [0, 1], [1, 0.3]);
+  const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
+  const heroOpacity = useTransform(scrollYProgress, [0, 1], [1, 0.4]);
 
   const services = [
     {
       title: "Global Distribution",
       desc: "Our robust network spans over 50 countries, delivering premium grade dry fruits and nuts with unmatched speed and efficiency.",
-      icon: <Public fontSize="large" />,
+      icon: <Public />,
     },
     {
       title: "Customized Sourcing",
       desc: "We specialize in sourcing the rarest and finest quality products from around the world to meet your unique business requirements.",
-      icon: <Inventory fontSize="large" />,
+      icon: <Inventory />,
     },
     {
       title: "Quality Assurance",
       desc: "Every shipment undergoes rigorous multi-stage quality checks to ensure compliance with international food safety standards.",
-      icon: <VerifiedUser fontSize="large" />,
+      icon: <VerifiedUser />,
     },
     {
       title: "Seamless Logistics",
       desc: "End-to-end logistics solutions, from ocean freight to air cargo, ensuring your products arrive in pristine condition.",
-      icon: <LocalShipping fontSize="large" />,
+      icon: <LocalShipping />,
     },
     {
       title: "Market Insights",
       desc: "Real-time global market trends and analysis to help you make informed decisions for your export and import strategies.",
-      icon: <Assessment fontSize="large" />,
+      icon: <Assessment />,
     },
     {
       title: "Regulatory Compliance",
       desc: "Complete assistance with international documentation, customs clearances, and trade regulations across diverse jurisdictions.",
-      icon: <Storage fontSize="large" />,
+      icon: <Storage />,
     },
   ];
 
@@ -121,297 +125,335 @@ const ExportImportPage = () => {
           style={{ y: heroY, opacity: heroOpacity }}
         />
         <div className={styles.heroOverlay}></div>
-        <motion.div 
-          className={styles.heroContent}
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: "easeOut" }}
-        >
-          <motion.div
-            initial={{ opacity: 0, letterSpacing: "-5px" }}
-            animate={{ opacity: 1, letterSpacing: "2px" }}
-            transition={{ duration: 1.5 }}
-          >
-            <Typography variant="h6" className={styles.heroSubtitle} gutterBottom>
-              CONNECTING FINEST HARVESTS TO THE WORLD
-            </Typography>
-          </motion.div>
-          <h1 className={styles.heroTitle}>
-            Global <span className={styles.goldText}>Trading</span> Excellence
-          </h1>
-          <Typography variant="body1" className={styles.heroDesc}>
-            From the fertile valleys of California to the exotic groves of the Middle East, Nutrivia bridges the gap between premium nature and the global market.
-          </Typography>
-          <Box display="flex" gap={2} justifyContent="center" mt={4}>
-            <Button 
-              className={styles.ctaButton}
-              variant="contained"
-              endIcon={<FlightTakeoff />}
-            >
-              Get a Quote
-            </Button>
-            <Button 
-              variant="outlined"
-              className={styles.secondaryButton}
-            >
-              Our Network
-            </Button>
-          </Box>
-        </motion.div>
+        <div className="container">
+          <div className="row justify-content-center">
+            <div className="col-lg-10 col-md-11 text-center">
+              <motion.div 
+                className={styles.heroContent}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, ease: "easeOut" }}
+              >
+                <motion.div
+                  initial={{ opacity: 0, letterSpacing: "-5px" }}
+                  animate={{ opacity: 1, letterSpacing: "5px" }}
+                  transition={{ duration: 1.5 }}
+                >
+                  <span className={styles.heroSubtitle}>
+                    CONNECTING FINEST HARVESTS TO THE WORLD
+                  </span>
+                </motion.div>
+                <h1 className={styles.heroTitle}>
+                  Global <span className={styles.goldText}>Trading</span> Excellence
+                </h1>
+                <p className={styles.heroDesc}>
+                  From the fertile valleys of California to the exotic groves of the Middle East, Nutrivia bridges the gap between premium nature and the global market.
+                </p>
+                <div className="d-flex gap-3 justify-content-center mt-4">
+                  <button className={styles.ctaButton}>
+                    <span>Get a Quote</span>
+                    <FlightTakeoff sx={{ fontSize: 20 }} />
+                  </button>
+                  <button className={styles.secondaryButton}>
+                    Our Network
+                  </button>
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        </div>
         
         <div className={styles.scrollIndicator}>
           <motion.div 
-            animate={{ y: [0, 10, 0] }} 
+            animate={{ y: [0, 15, 0] }} 
             transition={{ repeat: Infinity, duration: 2 }}
             className={styles.scrollDot}
           />
         </div>
       </section>
 
-
+      {/* Stats Section */}
       <section className={styles.statsSection}>
-        <div className={styles.statsGrid}>
-          {[
-            { label: "Nations Reached", val: "55+" },
-            { label: "Annual Volume", val: "2500T+" },
-            { label: "Logistic Hubs", val: "12" },
-            { label: "Success Rate", val: "99.9%" }
-          ].map((stat, idx) => (
-            <motion.div 
-              key={idx} 
-              className={styles.statItem}
-              initial={{ opacity: 0, scale: 0.5 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.1, type: "spring", stiffness: 100 }}
-            >
-              <span className={styles.statValue}>{stat.val}</span>
-              <span className={styles.statLabel}>{stat.label}</span>
-            </motion.div>
-          ))}
+        <div className="container">
+          <div className="row g-4 align-items-center">
+            {[
+              { label: "Nations Reached", val: "55+", icon: <LanguageOutlined /> },
+              { label: "Annual Volume", val: "2500T+", icon: <TrendingUp /> },
+              { label: "Logistic Hubs", val: "12", icon: <SettingsSuggest /> },
+              { label: "Success Rate", val: "99.9%", icon: <Security /> }
+            ].map((stat, idx) => (
+              <div key={idx} className="col-6 col-md-3">
+                <motion.div 
+                  className={styles.statItem}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: idx * 0.1 }}
+                >
+                  <div className={styles.statIcon}>{stat.icon}</div>
+                  <span className={styles.statValue}>{stat.val}</span>
+                  <span className={styles.statLabel}>{stat.label}</span>
+                </motion.div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      
+      {/* Process Section */}
       <section className={styles.processSection}>
-        <Container maxWidth="lg">
-          <Box textAlign="center" mb={10}>
-            <Typography variant="overline" sx={{ color: "var(--color-gold)", letterSpacing: 4 }}>OPERATIONAL EXCELLENCE</Typography>
-            <Typography variant="h3" className={styles.sectionTitleWhite}>Our Export Odyssey</Typography>
-            <div className={styles.sectionLineGold}></div>
-          </Box>
+        <div className="container">
+          <div className="row justify-content-center mb-5">
+            <div className="col-lg-8 text-center">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+              >
+                <span className={styles.sectionBadgeGold}>OPERATIONAL EXCELLENCE</span>
+                <h2 className={styles.sectionTitleWhite}>Our Export Odyssey</h2>
+                <div className={styles.sectionLineGold}></div>
+              </motion.div>
+            </div>
+          </div>
 
-          <Grid container sx={{maxWidth: "1500px"}} spacing={3} justifyContent="center">
+          <div className="row g-4">
             {processSteps.map((step, idx) => (
-              <Grid item xs={12} sm={6} md={3} key={idx}>
+              <div className="col-md-6 col-lg-3" key={idx}>
                 <motion.div 
                   className={styles.processCard}
-                  initial={{ opacity: 0, x: -30 }}
-                  whileInView={{ opacity: 1, x: 0 }}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
-                  transition={{ delay: idx * 0.2 }}
+                  transition={{ delay: idx * 0.1 }}
                 >
                   <div className={styles.processIconWrapper}>
                     {step.icon}
                     <div className={styles.processNumber}>{idx + 1}</div>
                   </div>
-                  <Typography variant="h6" sx={{ mt: 3, mb: 1, fontWeight: 700 }}>{step.title}</Typography>
-                  <Typography variant="body2" sx={{ opacity: 0.7 }}>{step.desc}</Typography>
-                  {idx < 3 && <div className={styles.processConnector} />}
+                  <h4 className={styles.processTitle}>{step.title}</h4>
+                  <p className={styles.processDesc}>{step.desc}</p>
                 </motion.div>
-              </Grid>
+              </div>
             ))}
-          </Grid>
-        </Container>
+          </div>
+        </div>
       </section>
 
+      {/* Reach Section */}
       <section className={styles.reachSection}>
         <div className={styles.mapTexture} />
-        <Container maxWidth="lg" sx={{ position: "relative" }}>
-          <div className={styles.reachHeader}>
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-            >
-              <Typography variant="h3" className={styles.sectionTitle}>Global Trade Epicenter</Typography>
-              <div className={styles.sectionLine}></div>
-              <Typography variant="body1" className={styles.sectionHeadingDesc}>
-                Strategic distribution networks optimized for peak freshness across every time zone.
-              </Typography>
-            </motion.div>
+        <div className="container position-relative">
+          <div className="row justify-content-center mb-5">
+            <div className="col-lg-8 text-center">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+              >
+                <h2 className={styles.sectionTitle}>Global Trade Epicenter</h2>
+                <div className={styles.sectionLine}></div>
+                <p className={styles.sectionHeadingDesc}>
+                  Strategic distribution networks optimized for peak freshness across every time zone.
+                </p>
+              </motion.div>
+            </div>
           </div>
 
-          <motion.div 
-            className={styles.reachMapContainer}
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.5 }}
-          >
-            <img 
-              src="https://images.unsplash.com/photo-1521295121783-8a321d551ad2?q=80&w=1470&auto=format&fit=crop" 
-              alt="World Map Trade" 
-              className={styles.reachMap}
-            />
-            
-            <div className={styles.hotspots}>
-              {hotspots.map((spot, i) => (
-                <motion.div 
-                  key={i}
-                  className={styles.pulsePoint}
-                  style={{ top: spot.top, left: spot.left }}
-                  initial={{ scale: 0 }}
-                  whileInView={{ scale: 1 }}
-                  viewport={{ once: true }}
-                >
-                  <div className={styles.pulse} />
-                  <div className={styles.pulseLabel}>{spot.name}</div>
-                </motion.div>
-              ))}
+          <div className="row justify-content-center">
+            <div className="col-12">
+              <motion.div 
+                className={styles.reachMapContainer}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1.5 }}
+              >
+                <img 
+                  src="https://images.unsplash.com/photo-1521295121783-8a321d551ad2?q=80&w=1470&auto=format&fit=crop" 
+                  alt="World Map Trade" 
+                  className={styles.reachMap}
+                />
+                
+                <div className={styles.hotspots}>
+                  {hotspots.map((spot, i) => (
+                    <motion.div 
+                      key={i}
+                      className={styles.pulsePoint}
+                      style={{ top: spot.top, left: spot.left }}
+                      initial={{ scale: 0 }}
+                      whileInView={{ scale: 1 }}
+                      viewport={{ once: true }}
+                    >
+                      <div className={styles.pulse} />
+                      <div className={styles.pulseLabel}>{spot.name}</div>
+                    </motion.div>
+                  ))}
+                </div>
+              </motion.div>
             </div>
-          </motion.div>
-        </Container>
+          </div>
+        </div>
       </section>
 
+      {/* Certification Belt */}
       <div className={styles.certBelt}>
         <div className={styles.certTrack}>
-          {[...certifications, ...certifications].map((cert, i) => (
+          {[...certifications, ...certifications, ...certifications].map((cert, i) => (
             <div key={i} className={styles.certItem}>
-              <Star sx={{ color: "var(--color-gold)", mr: 1, fontSize: 16 }} />
+              <Star sx={{ color: "var(--color-gold)", mr: 1, fontSize: 18 }} />
               {cert}
             </div>
           ))}
         </div>
       </div>
 
+      {/* Services Section */}
       <section className={styles.servicesSection}>
-        <Container maxWidth="lg">
-          <Box textAlign="center" mb={10}>
-            <Typography variant="h3" sx={{ color: "#fff", mb: 2, fontWeight: 700 }}>Tailored Trade Solutions</Typography>
-            <div className={styles.sectionLineGold}></div>
-          </Box>
+        <div className="container">
+          <div className="row justify-content-center mb-5">
+            <div className="col-lg-8 text-center">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+              >
+                <h2 className={styles.sectionTitleWhite}>Tailored Trade Solutions</h2>
+                <div className={styles.sectionLineGold}></div>
+              </motion.div>
+            </div>
+          </div>
 
-          <Grid container spacing={4}>
+          <div className="row g-4">
             {services.map((service, idx) => (
-              <Grid item lg={3} md={4} sm={6} xs={12}  key={idx}>
+              <div className="col-md-6 col-lg-4" key={idx}>
                 <motion.div 
                   className={styles.enhancedServiceCard}
-                  whileHover={{ scale: 1.02, translateY: -5 }}
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: idx * 0.1 }}
+                  whileHover={{ translateY: -10 }}
                 >
                   <div className={styles.glassIcon}>
                     {service.icon}
                   </div>
-                  <Typography variant="h5" sx={{ color: "#fff", mb: 2, fontWeight: 600 }}>{service.title}</Typography>
-                  <Typography variant="body2" sx={{ color: "rgba(255,255,255,0.6)", lineHeight: 1.8 }}>
+                  <h3 className={styles.serviceTitle}>{service.title}</h3>
+                  <p className={styles.serviceDesc}>
                     {service.desc}
-                  </Typography>
+                  </p>
                 </motion.div>
-              </Grid>
+              </div>
             ))}
-          </Grid>
-        </Container>
+          </div>
+        </div>
       </section>
 
+      {/* Products Section */}
       <section className={styles.productsSection}>
-        <Container maxWidth="lg">
-          <Box display="flex" justifyContent="space-between" alignItems="center" mb={8}>
-            <Box>
-              <Typography variant="h3" className={styles.sectionTitle}>High-Value Commodities</Typography>
-              <div className={styles.sectionLine}></div>
-            </Box>
-            <Button 
-               variant="contained" 
-               sx={{ 
-                 bgcolor: "var(--color-primary)", 
-                 borderRadius: "30px",
-                 px: 4,
-                 '&:hover': { bgcolor: "var(--color-gold)" }
-               }} 
-               endIcon={<ArrowForward />}
-            >
-              View All
-            </Button>
-          </Box>
+        <div className="container">
+          <div className="row align-items-center mb-5 gx-0">
+            <div className="col-md-8">
+              <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+              >
+                <h2 className={styles.sectionTitle}>High-Value Commodities</h2>
+                <div className={styles.sectionLine}></div>
+              </motion.div>
+            </div>
+            <div className="col-md-4 text-md-end mt-4 mt-md-0">
+              <button className={styles.viewMoreBtn}>
+                <span>View All</span>
+                <ArrowForward sx={{ fontSize: 18 }} />
+              </button>
+            </div>
+          </div>
 
-          <Grid container spacing={3}>
+          <div className="row g-4">
             {exportProducts.map((prod, idx) => (
-              <Grid item xs={12} sm={6} md={3} key={idx}>
+              <div className="col-sm-6 col-lg-3" key={idx}>
                 <motion.div 
                   className={styles.premiumProductCard}
                   initial={{ opacity: 0, scale: 0.9 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
-                  whileHover={{ y: -10 }}
+                  transition={{ delay: idx * 0.1 }}
+                  whileHover={{ y: -15 }}
                 >
                   <div className={styles.prodImgWrapper}>
                     <img src={prod.img} alt={prod.name} className={styles.productImg} />
                     <div className={styles.originBadge}>{prod.origin}</div>
                   </div>
                   <div className={styles.prodContent}>
-                    <Typography variant="h6" className={styles.prodName}>{prod.name}</Typography>
+                    <h4 className={styles.prodName}>{prod.name}</h4>
                     <div className={styles.checkLine} />
-                    <Typography variant="caption" sx={{ color: "var(--color-text-secondary)" }}>EXPIRED & GRADED</Typography>
+                    <span className={styles.prodGrade}>PREMIUM GRADED</span>
                   </div>
                 </motion.div>
-              </Grid>
+              </div>
             ))}
-          </Grid>
-        </Container>
+          </div>
+        </div>
       </section>
 
+      {/* Ultimate CTA Section */}
       <section className={styles.ultimateCTA}>
         <div className={styles.ctaBgDecor} />
-        <Container maxWidth="md" sx={{ position: "relative", zIndex: 2 }}>
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className={styles.ctaBox}
-          >
-            <Typography variant="h2" className={styles.ctaTitle}>Start Your Global Journey</Typography>
-            <Typography variant="h6" className={styles.ctaSubtitle}>
-              Whether you are looking to source high-grade dry fruits or expand your brand presence internationally, our specialists are ready to architect your success.
-            </Typography>
-            <Box display="flex" gap={3} justifyContent="center" flexWrap="wrap">
-              <Button className={styles.premiumActionButton}>
-                Talk to an Expert
-              </Button>
-              <Button className={styles.ghostActionButton}>
-                Download Trade Brochure
-              </Button>
-            </Box>
-            
-            <Box mt={6} display="flex" justifyContent="center" gap={4} className={styles.ctaTrust}>
-              <Box display="flex" alignItems="center" gap={1}>
-                <SupportAgent /> 24/7 Support
-              </Box>
-              <Box display="flex" alignItems="center" gap={1}>
-                <VerifiedUser /> Secured Trade
-              </Box>
-            </Box>
-          </motion.div>
-        </Container>
+        <div className="container position-relative z-Index-2">
+          <div className="row justify-content-center">
+            <div className="col-lg-10 col-xl-9">
+              <motion.div
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className={styles.ctaBox}
+              >
+                <h2 className={styles.ctaTitle}>Start Your Global Journey</h2>
+                <p className={styles.ctaSubtitle}>
+                  Whether you are looking to source high-grade dry fruits or expand your brand presence internationally, our specialists are ready to architect your success.
+                </p>
+                <div className="d-flex flex-wrap gap-4 justify-content-center">
+                  <button className={styles.premiumActionButton}>
+                    Talk to an Expert
+                  </button>
+                  <button className={styles.ghostActionButton}>
+                    Trade Brochure
+                  </button>
+                </div>
+                
+                <div className={styles.ctaTrust}>
+                  <div className="d-flex align-items-center gap-2">
+                    <SupportAgent sx={{ fontSize: 20 }} /> 24/7 SUPPORT
+                  </div>
+                  <div className="d-flex align-items-center gap-2">
+                    <VerifiedUser sx={{ fontSize: 20 }} /> SECURED TRADE
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        </div>
       </section>
 
-      <Box sx={{ py: 6, textAlign: "center", backgroundColor: "#111", color: "rgba(255,255,255,0.2)" }}>
-        <Typography variant="body2" sx={{ letterSpacing: 2 }}>NUTRIVIA INTERNATIONAL DIV. — WORLD CLASS LOGISTICS</Typography>
-      </Box>
+      <footer className={styles.pageFooter}>
+        <div className="container">
+          <p className={styles.footerNote}>NUTRIVIA INTERNATIONAL DIV. — WORLD CLASS LOGISTICS</p>
+        </div>
+      </footer>
 
 
       <motion.div 
         className={styles.floatingInquiry}
-        whileHover={{ scale: 1.1 }}
+        whileHover={{ scale: 1.1, rotate: 15 }}
         whileTap={{ scale: 0.9 }}
       >
-        <SupportAgent sx={{ color: "#fff" }} />
+        <SupportAgent sx={{ color: "#fff", fontSize: 32 }} />
       </motion.div>
     </div>
   );
 };
 
 export default ExportImportPage;
+

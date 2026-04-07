@@ -1,31 +1,25 @@
-const SibApiV3Sdk = require("sib-api-v3-sdk");
-
-const client = SibApiV3Sdk.ApiClient.instance;
-
-const apiKey = client.authentications['api-key'];
-
-apiKey.apiKey = process.env.BREVO_API_KEY;
-
-const emailApi = new SibApiV3Sdk.TransactionalEmailsApi();
+const nodemailer = require("nodemailer");
+const trasnporter = nodemailer.createTransport({
+    service:"gmail",
+    auth:{
+        user:process.env.EMAIL_USER,
+        pass:process.env.EMAIL_PASS
+    }
+});
 
 const sendEmail = async ({to, subject, html}) =>{
-    try{
-        await emailApi.sendTransacEmail({
-            sender:{
-                email:"hardyadverts@gmail.com",
-                name:"Dev Karwa"
-            },
-            to:[
-                {email: to}
-            ],
-            subject: subject,
-            htmlContent: html
+     try{
+        const info = await trasnporter.sendMail({
+            from: `"Nutrivia" <${process.env.EMAIL_USER}>`,
+            to,
+            subject,
+            html,
         })
-        console.log("Email sent successfully")
-    }
-    catch(err){
-        console.log(err)
-    }
+        console.log("Email sent:", info.messageId);
+     }
+     catch(err){
+        console.error("Email Error")
+     }
 }
 
 module.exports = sendEmail
