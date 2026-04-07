@@ -1,8 +1,7 @@
 import "../styles/globals.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 import ClientLayout from "./ClientLayout";
+import { Analytics } from "@vercel/analytics/next"
 
 /** @type {import('next').Metadata} */
 export const metadata = {
@@ -48,6 +47,7 @@ export default function RootLayout({ children }) {
       <body>
         <ClientLayout>
           {children}
+          <Analytics/>
         </ClientLayout>
       </body>
     </html>
