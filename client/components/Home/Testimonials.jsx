@@ -31,18 +31,18 @@ function Testimonials() {
       initials: "DK",
     },
     {
-      name: "Harshit Vijaywargiya",
+      name: "Harsha Nawandhar",
       location: "Jaipur",
       text: "Best dry fruits brand I've ever tried. Quality and taste both are excellent. My family absolutely loves it.",
       rating: 5,
-      initials: "HV",
+      initials: "HN",
     },
     {
-      name: "Ayushi Maheshwari",
+      name: "Ekta Nawandhar",
       location: "Ahmedabad",
       text: "Ordered the premium mixed nuts box and was blown away by the freshness. Will definitely be a regular customer!",
       rating: 5,
-      initials: "AM",
+      initials: "EK",
     },
     {
       name: "Radika Maheshwari",
@@ -50,6 +50,13 @@ function Testimonials() {
       text: "The festive gift box was a hit at our Diwali celebration. Beautifully packed and absolutely delicious!",
       rating: 4.5,
       initials: "RM",
+    },
+    {
+      name: "Harshit Vijaywargiya",
+      location: "Kolkata",
+      text: "The festive gift box was a hit at our Diwali celebration. Beautifully packed and absolutely delicious!",
+      rating: 4.5,
+      initials: "HV",
     },
   ];
   return (

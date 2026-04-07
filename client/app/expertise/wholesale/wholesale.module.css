@@ -1,0 +1,687 @@
+.wholesaleContainer {
+  min-height: 100vh;
+  background-color: var(--color-bg-light);
+  font-family: inherit;
+  color: var(--color-text-primary);
+  overflow-x: hidden;
+}
+
+/* ==================== HERO SECTION ==================== */
+.hero {
+  position: relative;
+  height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--color-bg-dark);
+}
+
+.heroBg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 120%;
+  background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)),
+    url('https://images.unsplash.com/photo-1542838132-92c53300302c?q=80&w=2000&auto=format&fit=crop') center/cover no-repeat;
+  z-index: 1;
+}
+
+.heroOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(30, 27, 24, 0.95) 100%);
+  z-index: 2;
+}
+
+.heroContent {
+  text-align: center;
+  z-index: 3;
+  color: #fff;
+  max-width: 1100px;
+  padding: 0 20px;
+}
+
+.heroSubtitle {
+  font-size: clamp(0.85rem, 2vw, 1.15rem);
+  font-weight: 600;
+  margin-bottom: 25px;
+  opacity: 0.9;
+  letter-spacing: 6px;
+  color: var(--color-gold);
+}
+
+.heroTitle {
+  font-size: clamp(2.8rem, 9vw, 5.5rem);
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow: 0 12px 50px rgba(0, 0, 0, 0.6);
+}
+
+.goldText {
+  color: var(--color-gold);
+}
+
+.heroDesc {
+  font-size: clamp(1rem, 2.5vw, 1.35rem);
+  font-weight: 300;
+  margin-bottom: 50px;
+  opacity: 0.8;
+  max-width: 850px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.7;
+}
+
+.heroButtons {
+  display: flex;
+  gap: 25px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.ctaButton {
+  background-color: var(--color-gold) !important;
+  color: white !important;
+  padding: 16px 50px !important;
+  font-size: 1rem !important;
+  border-radius: 50px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 2px !important;
+  font-weight: 700 !important;
+  border: none !important;
+  box-shadow: 0 10px 25px rgba(200, 155, 60, 0.4) !important;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ctaButton:hover {
+  background-color: #b08933 !important;
+  transform: translateY(-5px) !important;
+  box-shadow: 0 15px 35px rgba(200, 155, 60, 0.5) !important;
+}
+
+.secondaryButton {
+  border: 2px solid rgba(255, 255, 255, 0.4) !important;
+  color: #fff !important;
+  background: transparent !important;
+  border-radius: 50px !important;
+  padding: 16px 50px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 2px !important;
+  font-weight: 700 !important;
+  font-size: 1rem !important;
+  transition: all 0.3s ease !important;
+  cursor: pointer;
+}
+
+.secondaryButton:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: #fff !important;
+}
+
+.scrollIndicator {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 28px;
+  height: 48px;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  border-radius: 20px;
+  z-index: 3;
+  display: flex;
+  justify-content: center;
+  padding-top: 10px;
+}
+
+.scrollDot {
+  width: 6px;
+  height: 6px;
+  background: #fff;
+  border-radius: 50%;
+}
+
+/* ==================== STATS SECTION ==================== */
+.statsSection {
+  padding: 100px 0;
+  background-color: var(--color-bg-dark);
+  color: white;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.statItem {
+  text-align: center;
+  padding: 40px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 25px;
+  transition: all 0.4s ease;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.statItem:hover {
+  border-color: var(--color-gold);
+  background: rgba(255, 255, 255, 0.04);
+  transform: translateY(-5px);
+}
+
+.statValue {
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: var(--color-gold);
+  display: block;
+  margin-bottom: 10px;
+  letter-spacing: -1.5px;
+}
+
+.statLabel {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  opacity: 0.6;
+  font-weight: 700;
+}
+
+/* ==================== SECTION HEADINGS ==================== */
+.sectionOverline {
+  color: var(--color-gold);
+  letter-spacing: 6px;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+  display: block;
+  text-align: center;
+}
+
+.sectionTitle {
+  font-size: clamp(2.2rem, 5vw, 3.2rem);
+  color: var(--color-primary);
+  margin-bottom: 20px;
+  font-weight: 800;
+  text-align: center;
+  letter-spacing: -1px;
+}
+
+.sectionLine {
+  width: 100px;
+  height: 4px;
+  background-color: var(--color-gold);
+  margin: 0 auto 50px;
+  border-radius: 4px;
+}
+
+.sectionTitleWhite {
+  font-size: clamp(2.2rem, 5vw, 3.2rem);
+  color: #fff;
+  font-weight: 800;
+  margin-bottom: 20px;
+  text-align: center;
+  letter-spacing: -1px;
+}
+
+/* ==================== OFFERINGS / SERVICES ==================== */
+.offerSection {
+  padding: 150px 0;
+  background-color: #fff;
+}
+
+.offerCard {
+  background: #fbfbfb;
+  border: 1px solid #eee;
+  padding: 60px 45px;
+  border-radius: 35px;
+  text-align: center;
+  height: 100%;
+  transition: all 0.5s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.offerCard:hover {
+  background: #fff;
+  border-color: var(--color-gold);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.06);
+  transform: translateY(-10px);
+}
+
+.offerIconWrap {
+  width: 90px;
+  height: 90px;
+  background: linear-gradient(135deg, var(--color-gold), #b08933);
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  margin: 0 auto 35px;
+  box-shadow: 0 10px 20px rgba(200, 155, 60, 0.2);
+}
+
+.offerIconWrap svg {
+  font-size: 44px;
+}
+
+.offerTitle {
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin-bottom: 20px;
+  color: var(--color-primary);
+}
+
+.offerDesc {
+  line-height: 1.8;
+  color: var(--color-text-secondary);
+  font-size: 1.05rem;
+}
+
+/* ==================== PROCESS SECTION ==================== */
+.processSection {
+  padding: 150px 0;
+  background-color: #111;
+  color: #fff;
+  position: relative;
+}
+
+.processCard {
+  padding: 50px 35px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 30px;
+  text-align: center;
+  height: 100%;
+  transition: all 0.4s ease;
+  position: relative;
+}
+
+.processCard:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--color-gold);
+  transform: translateY(-8px);
+}
+
+.processNum {
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 45px;
+  height: 45px;
+  background: var(--color-gold);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1.2rem;
+  border: 4px solid #111;
+}
+
+.processIcon {
+  color: var(--color-gold);
+  margin-bottom: 25px;
+}
+
+.processIcon svg {
+  font-size: 50px;
+}
+
+.processTitle {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.processDesc {
+  opacity: 0.6;
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+/* ==================== PRODUCT CATALOG BELT ==================== */
+.catalogBelt {
+  background: #0a0a0a;
+  padding: 60px 0;
+  overflow: hidden;
+}
+
+.catalogTrack {
+  display: flex;
+  gap: 100px;
+  animation: beltScroll 40s linear infinite;
+  width: max-content;
+}
+
+@keyframes beltScroll {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.beltItem {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 1.2rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  white-space: nowrap;
+}
+
+.beltItem svg {
+  color: var(--color-gold);
+  font-size: 24px;
+}
+
+/* ==================== CATALOG GRID ==================== */
+.catalogSection {
+  padding: 150px 0;
+  background-color: var(--color-bg-light);
+}
+
+.catalogHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 80px;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.catalogTitleWrap {
+  text-align: left;
+}
+
+.catalogSectionTitle {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  color: var(--color-primary);
+  margin-bottom: 10px;
+}
+
+.catalogSectionLine {
+  width: 80px;
+  height: 4px;
+  background-color: var(--color-gold);
+  border-radius: 2px;
+}
+
+.bulkCard {
+  background: #fff;
+  border-radius: 30px;
+  overflow: hidden;
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.05);
+  transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+  height: 100%;
+  border: 1px solid #f0f0f0;
+}
+
+.bulkCard:hover {
+  transform: translateY(-15px);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.08);
+}
+
+.bulkImgWrap {
+  position: relative;
+  height: 340px;
+  overflow: hidden;
+}
+
+.bulkImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.bulkCard:hover .bulkImg {
+  transform: scale(1.1);
+}
+
+.bulkTag {
+  position: absolute;
+  top: 25px;
+  right: 25px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  padding: 10px 20px;
+  border-radius: 50px;
+  font-weight: 800;
+  font-size: 0.75rem;
+  color: var(--color-primary);
+  letter-spacing: 1px;
+}
+
+.bulkContent {
+  padding: 40px;
+  text-align: center;
+}
+
+.bulkName {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: 15px;
+}
+
+.bulkMoq {
+  font-size: 0.85rem;
+  color: var(--color-gold);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  display: block;
+}
+
+/* ==================== CTA SECTION ==================== */
+.ctaSection {
+  padding: 180px 0;
+  background-color: var(--color-primary);
+  color: white;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+.ctaBgWrap {
+  position: absolute;
+  top: -30%;
+  right: -10%;
+  width: 1000px;
+  height: 1000px;
+  background: radial-gradient(circle, rgba(200, 155, 60, 0.15) 0%, transparent 70%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.ctaBox {
+  position: relative;
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(25px);
+  padding: 90px 60px;
+  max-width: 1000px;
+  margin: 0 auto;
+  border-radius: 45px;
+}
+
+.ctaTitleMain {
+  font-size: clamp(2.5rem, 7vw, 4rem);
+  font-weight: 800;
+  margin-bottom: 30px;
+  line-height: 1.1;
+}
+
+.ctaDesc {
+  font-size: clamp(1.1rem, 2.2vw, 1.35rem);
+  opacity: 0.8;
+  max-width: 750px;
+  margin: 0 auto 50px;
+  line-height: 1.7;
+}
+
+.ctaSubmitBtn {
+  background-color: var(--color-gold) !important;
+  color: white !important;
+  padding: 20px 65px !important;
+  font-size: 1.1rem !important;
+  border-radius: 100px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 3px !important;
+  font-weight: 800 !important;
+  border: none !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4) !important;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+  cursor: pointer;
+}
+
+.ctaSubmitBtn:hover {
+  transform: translateY(-8px) scale(1.05) !important;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5) !important;
+}
+
+.ctaTrustWrap {
+  margin-top: 60px;
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  flex-wrap: wrap;
+}
+
+.trustItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  opacity: 0.6;
+  font-size: 0.85rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+/* ==================== FLOATING FAB ==================== */
+.fabWrap {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  width: 75px;
+  height: 75px;
+  background: var(--color-gold);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 20px 45px rgba(200, 155, 60, 0.5);
+  cursor: pointer;
+  z-index: 1000;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.fabWrap:hover {
+  transform: scale(1.1) rotate(15deg);
+}
+
+/* ==================== FOOTER STRIP ==================== */
+.footerStrip {
+  padding: 30px 0;
+  background-color: #0d0d0d;
+  color: rgba(255, 255, 255, 0.2);
+  text-align: center;
+  letter-spacing: 4px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 1024px) {
+  .heroTitle {
+    font-size: 4rem;
+  }
+
+  .offerCard {
+    padding: 40px 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .heroTitle {
+    font-size: 3.2rem;
+  }
+
+  .statsSection {
+    padding: 60px 0;
+  }
+
+  .statValue {
+    font-size: 2.8rem;
+  }
+
+  .offerSection,
+  .processSection,
+  .catalogSection {
+    padding: 80px 0;
+  }
+
+  .ctaSection {
+    padding: 100px 0;
+  }
+
+  .ctaBox {
+    padding: 60px 30px;
+  }
+
+  .ctaTitleMain {
+    font-size: 2.5rem;
+  }
+
+  .catalogHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .heroTitle {
+    font-size: 2.5rem;
+  }
+
+  .heroSubtitle {
+    letter-spacing: 4px;
+  }
+
+  .statItem {
+    padding: 30px 10px;
+  }
+
+  .statValue {
+    font-size: 2.2rem;
+  }
+
+  .sectionTitle,
+  .sectionTitleWhite {
+    font-size: 2rem;
+  }
+
+  .ctaSubmitBtn {
+    padding: 18px 45px !important;
+    font-size: 1rem !important;
+  }
+}
