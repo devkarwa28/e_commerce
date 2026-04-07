@@ -5,6 +5,12 @@
     background: var(--color-bg-dark);
 }
 
+.heroSwiper {
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
 .heroSlide {
     position: relative;
     overflow: hidden;

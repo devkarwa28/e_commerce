@@ -1,15 +1,21 @@
 "use client";
-import { useState, useRef, useEffect } from "react";
-import Slider from "react-slick";
+import { useState, useEffect } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, EffectFade, Navigation, Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/effect-fade";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+
 import axios from "axios";
 import homestyles from "./home.module.css";
 import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
 import ArrowBackIosNewRoundedIcon from "@mui/icons-material/ArrowBackIosNewRounded";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
-import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
 
 const HeroBanner = () => {
-  const sliderRef = useRef(null);
+  const [swiper, setSwiper] = useState(null);
   const [activeSlide, setActiveSlide] = useState(0);
   const [slides, setSlides] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -64,34 +70,41 @@ const HeroBanner = () => {
     return (
       <section className={homestyles.heroSection}>
         <div style={{ height: "520px", display: "flex", alignItems: "center", justifyContent: "center", color: "#cca750" }}>
-          <h4>Loading Premium Assets...</h4>
+          <motion.h4
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, repeat: Infinity, repeatType: "reverse" }}
+          >
+            Loading Premium Assets...
+          </motion.h4>
         </div>
       </section>
     );
   }
 
-  const settings = {
-    dots: false,
-    infinite: true,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    speed: 800,
-    autoplaySpeed: 5000,
-    cssEase: "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-    arrows: false,
-    fade: true,
-    beforeChange: (_, next) => setActiveSlide(next),
-  };
-
   return (
     <section className={homestyles.heroSection}>
-      <Slider ref={sliderRef} {...settings}>
+      <Swiper
+        onSwiper={setSwiper}
+        onSlideChange={(s) => setActiveSlide(s.realIndex)}
+        modules={[Autoplay, EffectFade, Navigation, Pagination]}
+        effect="fade"
+        loop={true}
+        speed={1000}
+        autoplay={{
+          delay: 5000,
+          disableOnInteraction: false,
+        }}
+        className={homestyles.heroSwiper}
+      >
         {slides.map((slide, index) => (
-          <div key={index}>
+          <SwiperSlide key={index}>
             <div className={homestyles.heroSlide}>
               <div className={homestyles.heroImgWrap}>
-                <img
+                <motion.img
+                  initial={{ scale: 1.1 }}
+                  animate={{ scale: activeSlide === index ? 1 : 1.1 }}
+                  transition={{ duration: 6, ease: "easeOut" }}
                   src={slide.image}
                   alt={slide.title}
                   className={homestyles.heroImg}
@@ -102,28 +115,65 @@ const HeroBanner = () => {
               <div className="container position-relative" style={{ zIndex: 3 }}>
                 <div className={`row align-items-center ${homestyles.heroRow}`}>
                   <div className="col-lg-6">
-                    <div className={homestyles.heroContent}>
-                      <div className={homestyles.heroBadge}>{slide.badge}</div>
-                      <h1 className={homestyles.heroTitle}>
-                        {slide.title}
-                        <br />
-                        <span className={homestyles.heroTitleGold}>
-                          {slide.titleAccent}
-                        </span>
-                      </h1>
-                      <p className={homestyles.heroSubtitle}>{slide.subtitle}</p>
-                      <button className={homestyles.heroBtn}>
-                        <span>Shop Now</span>
-                        <ArrowForwardRoundedIcon sx={{ fontSize: 20 }} />
-                      </button>
-                    </div>
+                    <AnimatePresence mode="wait">
+                      {activeSlide === index && (
+                        <div className={homestyles.heroContent}>
+                          <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -30 }}
+                            transition={{ duration: 0.6, delay: 0.2 }}
+                            className={homestyles.heroBadge}
+                          >
+                            {slide.badge}
+                          </motion.div>
+                          
+                          <motion.h1
+                            initial={{ opacity: 0, y: 30 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -30 }}
+                            transition={{ duration: 0.6, delay: 0.3 }}
+                            className={homestyles.heroTitle}
+                          >
+                            {slide.title}
+                            <br />
+                            <span className={homestyles.heroTitleGold}>
+                              {slide.titleAccent}
+                            </span>
+                          </motion.h1>
+
+                          <motion.p
+                            initial={{ opacity: 0, y: 30 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -30 }}
+                            transition={{ duration: 0.6, delay: 0.4 }}
+                            className={homestyles.heroSubtitle}
+                          >
+                            {slide.subtitle}
+                          </motion.p>
+
+                          <motion.button
+                            initial={{ opacity: 0, y: 30 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -30 }}
+                            transition={{ duration: 0.6, delay: 0.5 }}
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            className={homestyles.heroBtn}
+                          >
+                            <span>Shop Now</span>
+                            <ArrowForwardRoundedIcon sx={{ fontSize: 20 }} />
+                          </motion.button>
+                        </div>
+                      )}
+                    </AnimatePresence>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+          </SwiperSlide>
         ))}
-      </Slider>
+      </Swiper>
 
       <div className={homestyles.heroControls}>
         <div className={homestyles.heroDots}>
@@ -133,21 +183,21 @@ const HeroBanner = () => {
               className={`${homestyles.heroDot} ${
                 activeSlide === index ? homestyles.heroDotActive : ""
               }`}
-              onClick={() => sliderRef.current?.slickGoTo(index)}
+              onClick={() => swiper?.slideToLoop(index)}
             />
           ))}
         </div>
         <div className={homestyles.heroArrows}>
           <button
             className={homestyles.heroArrowBtn}
-            onClick={() => sliderRef.current?.slickPrev()}
+            onClick={() => swiper?.slidePrev()}
             aria-label="Previous slide"
           >
             <ArrowBackIosNewRoundedIcon sx={{ fontSize: 16 }} />
           </button>
           <button
             className={homestyles.heroArrowBtn}
-            onClick={() => sliderRef.current?.slickNext()}
+            onClick={() => swiper?.slideNext()}
             aria-label="Next slide"
           >
             <ArrowForwardIosRoundedIcon sx={{ fontSize: 16 }} />
@@ -159,3 +209,4 @@ const HeroBanner = () => {
 };
 
 export default HeroBanner;
+
