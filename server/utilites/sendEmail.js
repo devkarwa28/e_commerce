@@ -6,32 +6,39 @@ const API_SECRET = process.env.PULSE_KEY;
 const TOKEN_STORAGE = "/tmp/";
 
 const sendEmail = ({ to, subject, html }) => {
-  return new Promise((resolve, reject) => {
-    sendpulse.init(API_USER_ID, API_SECRET, TOKEN_STORAGE, () => {
+    return new Promise((resolve, reject) => {
+        sendpulse.init(API_USER_ID, API_SECRET, TOKEN_STORAGE, () => {
 
-      const email = {
-        html: html,
-        text: "Order confirmation",
-        subject: subject,
-        from: {
-          name: "Nutrivia",
-          email: "hardyadverts@gmail.com",
-        },
-        to: [
-          {
-            name: "User",
-            email: to,
-          },
-        ],
-      };
+            const email = {
+                html: html,
+                text: "Order confirmation",
+                subject: subject,
+                from: {
+                    name: "Nutrivia",
+                    email: "hardyadverts@gmail.com",
+                },
+                to: [
+                    {
+                        name: "User",
+                        email: to,
+                    },
+                ],
+            };
 
-      sendpulse.smtpSendMail((data) => {
-        console.log("✅ Email sent:", data);
-        resolve(data);
-      }, email);
+            sendpulse.smtpSendMail((data) => {
+                console.log("📩 SendPulse response:", data);
 
+                if (data.error_code) {
+                    console.error("❌ Email failed:", data);
+                    return reject(data);
+                }
+
+                console.log("✅ Email sent successfully");
+                resolve(data);
+            }, email);
+
+        });
     });
-  });
 };
 
 module.exports = sendEmail;
