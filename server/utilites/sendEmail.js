@@ -15,7 +15,7 @@ const sendEmail = ({ to, subject, html }) => {
         subject: subject,
         from: {
           name: "Nutrivia",
-          email: "noreply@sendpulse.com",
+          email: "hardyadverts@gmail.com",
         },
         to: [
           {
