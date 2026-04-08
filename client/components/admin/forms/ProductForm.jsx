@@ -126,7 +126,7 @@ const ProductForm = ({ editData }) => {
                 );
             } else {
                 await axios.post(
-                    `${process.env.NEXT_PUBLIC_API_URL}/api/products`, 
+                    `${process.env.NEXT_PUBLIC_API_URL}/api/products`,
                     formData,
                     { headers: { "Content-Type": "multipart/form-data" }, withCredentials: true }
                 );
@@ -145,13 +145,13 @@ const ProductForm = ({ editData }) => {
             case 0: return (
                 <div style={{ display: "grid", gap: "24px", padding: "10px 0" }}>
                     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "24px" }}>
-                        <TextField 
-                            fullWidth 
-                            label="Product Name" 
-                            name="pname" 
-                            onChange={handleChange} 
-                            value={form.pname} 
-                            error={!!errors.pname} 
+                        <TextField
+                            fullWidth
+                            label="Product Name"
+                            name="pname"
+                            onChange={handleChange}
+                            value={form.pname}
+                            error={!!errors.pname}
                             helperText={errors.pname}
                             variant="outlined"
                         />
@@ -165,16 +165,16 @@ const ProductForm = ({ editData }) => {
                         </FormControl>
                     </div>
 
-                    <TextField 
-                        fullWidth 
-                        label="Rich Description" 
-                        value={form.description} 
-                        name="description" 
-                        multiline 
-                        rows={5} 
-                        onChange={handleChange} 
-                        error={!!errors.description} 
-                        helperText={errors.description} 
+                    <TextField
+                        fullWidth
+                        label="Rich Description"
+                        value={form.description}
+                        name="description"
+                        multiline
+                        rows={5}
+                        onChange={handleChange}
+                        error={!!errors.description}
+                        helperText={errors.description}
                     />
 
                     <div style={{ display: "flex", gap: "40px", marginTop: "10px", padding: "20px", background: "#FAFAFA", borderRadius: "16px", border: "1px solid rgba(0,0,0,0.04)" }}>
@@ -198,7 +198,7 @@ const ProductForm = ({ editData }) => {
                 return (
                     <div style={{ padding: "30px", background: "#FAFAFA", borderRadius: "16px", border: "1px solid rgba(0,0,0,0.05)" }}>
                         <h4 style={{ color: "var(--color-primary, #5c4033)", fontWeight: 800, marginBottom: "24px" }}>Review Product Details</h4>
-                        
+
                         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px" }}>
                             <div style={{ background: "#FFF", padding: "20px", borderRadius: "12px", boxShadow: "0 2px 10px rgba(0,0,0,0.02)" }}>
                                 <p style={{ fontSize: "12px", color: "#888", textTransform: "uppercase", fontWeight: 700, margin: "0 0 5px" }}>Identity</p>
@@ -245,9 +245,9 @@ const ProductForm = ({ editData }) => {
             </AnimatePresence>
 
             <div style={{ display: "flex", justifyContent: "space-between", marginTop: "40px", paddingTop: "24px", borderTop: "1px solid rgba(0,0,0,0.05)" }}>
-                <Button 
-                    type="button" 
-                    disabled={activeStep === 0} 
+                <Button
+                    type="button"
+                    disabled={activeStep === 0}
                     onClick={prevStep}
                     startIcon={<ArrowBackRounded />}
                     sx={{ color: "#666", fontWeight: 700, padding: "10px 24px", borderRadius: "12px", border: "1px solid rgba(0,0,0,0.1)", "&:hover": { background: "#F5F5F5" } }}
@@ -256,7 +256,7 @@ const ProductForm = ({ editData }) => {
                 </Button>
 
                 {activeStep === steps.length - 1 ? (
-                    <Button 
+                    <Button
                         type="button"
                         onClick={submitHandler}
                         disabled={isSubmitting}
@@ -267,9 +267,9 @@ const ProductForm = ({ editData }) => {
                         {isSubmitting ? "Processing..." : (editData ? "Update Product" : "Create Product")}
                     </Button>
                 ) : (
-                    <Button 
-                        type="button" 
-                        onClick={nextStep} 
+                    <Button
+                        type="button"
+                        onClick={nextStep}
                         variant="contained"
                         endIcon={<ArrowForwardRounded />}
                         sx={{ background: "var(--color-primary, #5c4033)", color: "#FFF", fontWeight: 700, padding: "10px 32px", borderRadius: "12px", boxShadow: "0 6px 15px rgba(92, 64, 51, 0.2)", "&:hover": { background: "#4a332a", transform: "translateY(-2px)" }, transition: "all 200ms ease" }}
