@@ -7,18 +7,22 @@ import AuthProvider from "@/context/AuthContext";
 import CartProvider from "@/context/CartContext";
 import AppLayout from "@/components/layout/AppLayout";
 import WishlistProvider from "@/context/WishlistContext";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 export default function ClientLayout({ children }) {
+  const queryClient = new QueryClient();
   return (
-    <AuthProvider>
-      <CartProvider>
-        <WishlistProvider>
-          <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <AppLayout>{children}</AppLayout>
-          </ThemeProvider>
-        </WishlistProvider>
-      </CartProvider>
-    </AuthProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <CartProvider>
+          <WishlistProvider>
+            <ThemeProvider theme={theme}>
+              <CssBaseline />
+              <AppLayout>{children}</AppLayout>
+            </ThemeProvider>
+          </WishlistProvider>
+        </CartProvider>
+      </AuthProvider>
+    </QueryClientProvider>
   );
 }

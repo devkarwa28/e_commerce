@@ -6,59 +6,76 @@ import ProductCardSkeleton from "@/components/products/ProductCardSkeleton";
 import { Button, Drawer, IconButton, Box, Typography } from "@mui/material";
 import { FilterList, Close, Inventory2Outlined } from "@mui/icons-material";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
 
 const ProductsPage = () => {
-    const [products, setProducts] = useState([]);
+    // const [products, setProducts] = useState([]);
     const [page, setPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(1);
+    // const [totalPages, setTotalPages] = useState(1);
     const [mobileOpen, setMobileOpen] = useState(false);
-    const [loading, setLoading] = useState(true);
+    // const [loading, setLoading] = useState(true);
     const [filters, setFilters] = useState({ category: "", minPrice: "", maxPrice: "", featured: "", inStock: "", sort: "", search: "" });
     const router = useRouter();
 
-    const getCacheKey = () => {
-        return `products_${page}_${JSON.stringify(filters)}`;
-    };
+    const fetchProducts = async ({queryKey}) =>{
+        console.log("API called");
+        const [_key,page,filters] = queryKey;
 
-    const fetchProducts = async () => {
-        setLoading(true);
-        const cacheKey = getCacheKey();
-        const cacheData = localStorage.getItem(cacheKey);
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/products`,{params: {...filters,page}})
+        return res.data;
+    }
+    
+    const {data,isLoading,error} = useQuery({
+        queryKey: [`products`,page,JSON.stringify(filters)],
+        queryFn: fetchProducts,
+        staleTime: 1000 * 60 * 5,
+        keepPreviousData: true,
+    });
 
-        if (cacheData) {
-            const parsedData = JSON.parse(cacheData);
-            if (Date.now() - parsedData.time < 5 * 60 * 1000) {
-                setProducts(parsedData.products);
-                setTotalPages(parsedData.totalPages);
-                setLoading(false);
-                return;
-            }
-        }
 
-        try {
-            const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/products`, { params: { ...filters, page } });
-            setProducts(res.data.products);
-            setTotalPages(res.data.totalPages);
-            console.log(res.data.products);
-            const dataToCache = {
-                products: res.data.products,
-                totalPages: res.data.totalPages,
-                time: Date.now(),
-            };
+    // const getCacheKey = () => {
+    //     return `products_${page}_${JSON.stringify(filters)}`;
+    // };
 
-            localStorage.setItem(cacheKey, JSON.stringify(dataToCache));
-        } catch (err) {
-            console.log(err);
-        }
-        setLoading(false);
-    };
+    // const fetchProducts = async () => {
+    //     setLoading(true);
+    //     const cacheKey = getCacheKey();
+    //     const cacheData = localStorage.getItem(cacheKey);
 
-    useEffect(() => {
-        fetchProducts();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, [page, filters]);
+    //     if (cacheData) {
+    //         const parsedData = JSON.parse(cacheData);
+    //         if (Date.now() - parsedData.time < 5 * 60 * 1000) {
+    //             setProducts(parsedData.products);
+    //             setTotalPages(parsedData.totalPages);
+    //             setLoading(false);
+    //             return;
+    //         }
+    //     }
+
+    //     try {
+    //         const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/products`, { params: { ...filters, page } });
+    //         setProducts(res.data.products);
+    //         setTotalPages(res.data.totalPages);
+    //         console.log(res.data.products);
+    //         const dataToCache = {
+    //             products: res.data.products,
+    //             totalPages: res.data.totalPages,
+    //             time: Date.now(),
+    //         };
+
+    //         localStorage.setItem(cacheKey, JSON.stringify(dataToCache));
+    //     } catch (err) {
+    //         console.log(err);
+    //     }
+    //     setLoading(false);
+    // };
+
+    // useEffect(() => {
+    //     fetchProducts();
+    //     window.scrollTo({ top: 0, behavior: 'smooth' });
+    // }, [page, filters]);
 
     return (
         <div style={{ paddingBottom: "3rem", paddingTop: "1rem" }}>
@@ -86,14 +103,14 @@ const ProductsPage = () => {
 
                 <div className="col-lg-9">
                     <div className="row">
-                        {loading ? (
+                        {isLoading ? (
                             Array.from({ length: 8 }).map((_, index) => (
                                 <div key={index} className="col-xl-4 col-md-4 col-6 mb-4">
                                     <ProductCardSkeleton />
                                 </div>
                             ))
-                        ) : products.length > 0 ? (
-                            products.map(product => (
+                        ) : data?.products?.length > 0 ? (
+                            data?.products?.map(product => (
                                 <div key={product._id} className="col-xl-4 col-md-4 col-6 mb-4">
                                     <ProductCard product={product} />
                                 </div>
@@ -114,9 +131,9 @@ const ProductsPage = () => {
                         )}
                     </div>
 
-                    {!loading && totalPages > 1 && (
+                    {!isLoading && data?.totalPages > 1 && (
                         <div className={styles.paginationWrapper}>
-                            {Array.from({ length: totalPages }).map((_, index) => (
+                            {Array.from({ length: data?.totalPages || 0 }).map((_, index) => (
                                 <Button
                                     key={index}
                                     onClick={() => setPage(index + 1)}
