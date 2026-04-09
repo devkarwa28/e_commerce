@@ -2,6 +2,7 @@ const Product = require("../models/productModel");
 const Category = require("../models/CategoryModel");
 const slugify = require("slugify");
 const uploadToCloudinary = require("../utilites/cloudinaryUpload");
+const redis = require("../config/upstashRedis");
 
 
 exports.createProduct = async (req, res) => {
@@ -125,12 +126,29 @@ exports.createProduct = async (req, res) => {
 exports.getProducts = async (req, res) => {
   try {
     const page = Number(req.query.page) || 1;
-    const limit = Number(req.query.limit) || 10;
+    const limit = Number(req.query.limit) || 12;
 
     const skip = (page - 1) * limit;
     const { category, search, minPrice, maxPrice, featured } = req.query;
-
     let query = { isActive: true };
+    
+
+    const cacheKey = `products:${JSON.stringify(query)}:${page}:${limit}:${JSON.stringify({
+      category,
+      search,
+      minPrice,
+      maxPrice,
+      featured
+    })}`;
+
+    const cachedData = await redis.get(cacheKey);
+    if(cachedData)
+    {
+      console.log("Cache Hit");
+      return res.json(cachedData);
+    }
+
+    
 
     if (category) {
       query.category = category;
@@ -160,12 +178,19 @@ exports.getProducts = async (req, res) => {
       });
     }
     const totalProducts = await Product.countDocuments(query);
-    res.json({
+    const result = {
       products,
       page,
       totalPages: Math.ceil(totalProducts / limit),
       totalProducts,
-    });
+    };
+
+    await redis.set(cacheKey,result,{ex:300});
+    console.log("Data cached in Redis");
+
+    res.json(result);
+
+
   } catch (err) {
     res.status(500).json({ message: "Server Error" });
   }
