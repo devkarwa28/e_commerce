@@ -30,7 +30,7 @@ const EditCategoryPage = () => {
     useEffect(() => {
         const fetchCategory = async () => {
             try {
-                const res = await axios.get(`http://localhost:5000/api/category/${id}`, {
+                const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/category/${id}`, {
                     withCredentials: true,
                 });
                 const cat = res.data;

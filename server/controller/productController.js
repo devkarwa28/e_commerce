@@ -42,20 +42,20 @@ exports.createProduct = async (req, res) => {
     }
     let mainImageUrl = "";
 
-    if(req.files && req.files.mainImage){
-        const result = await uploadToCloudinary(req.files.mainImage[0].buffer, "products/main");
-        mainImageUrl = result.secure_url;
+    if (req.files && req.files.mainImage) {
+      const result = await uploadToCloudinary(req.files.mainImage[0].buffer, "products/main");
+      mainImageUrl = result.secure_url;
     }
 
     let galleryImages = [];
 
-    if ( req.files && req.files.images && req.files.images.length > 0) {
-     galleryImages = await Promise.all(
+    if (req.files && req.files.images && req.files.images.length > 0) {
+      galleryImages = await Promise.all(
         req.files.images.map(async (file) => {
-            const result = await uploadToCloudinary(file.buffer, "products/gallery");  
-            return result.secure_url;
+          const result = await uploadToCloudinary(file.buffer, "products/gallery");
+          return result.secure_url;
         })
-     )
+      )
     }
 
     let parsedWeightOptions = [];
@@ -131,7 +131,7 @@ exports.getProducts = async (req, res) => {
     const skip = (page - 1) * limit;
     const { category, search, minPrice, maxPrice, featured } = req.query;
     let query = { isActive: true };
-    
+
 
     const cacheKey = `products:${JSON.stringify(query)}:${page}:${limit}:${JSON.stringify({
       category,
@@ -142,13 +142,12 @@ exports.getProducts = async (req, res) => {
     })}`;
 
     const cachedData = await redis.get(cacheKey);
-    if(cachedData)
-    {
+    if (cachedData) {
       console.log("Product Listing Cache Hit");
       return res.json(cachedData);
     }
 
-    
+
 
     if (category) {
       query.category = category;
@@ -185,7 +184,7 @@ exports.getProducts = async (req, res) => {
       totalProducts,
     };
 
-    await redis.set(cacheKey,result,{ex:300});
+    await redis.set(cacheKey, result, { ex: 300 });
     console.log("Product Listing Data cached in Redis");
 
     res.json(result);
@@ -322,7 +321,7 @@ exports.updateProduct = async (req, res) => {
       const result = await uploadToCloudinary(req.files.mainImage[0].buffer, "products/main");
       product.mainImage = result.secure_url;
     }
-    
+
     let updatedImages = [...product.images];
 
     if (removedImages) {

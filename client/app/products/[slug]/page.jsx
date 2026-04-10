@@ -1,4 +1,3 @@
-import axios from "axios";
 import ProductDetailsClient from "./ProductDetailsClient";
 import { notFound } from "next/navigation";
 
@@ -6,10 +5,13 @@ export async function generateMetadata({ params }) {
     const { slug } = params;
 
     try {
-        const res = await axios.get(
-            `${process.env.NEXT_PUBLIC_API_URL}/api/products/${slug}`
+        const res = await fetch(
+            `${process.env.NEXT_PUBLIC_API_URL}/api/products/${slug}`,
+            {next: {revalidate: 300}}
         );
-        const product = res.data;
+        if(!res.ok) throw new Error();
+
+        const product = res.json();
 
         return {
             title: product.seoTitle || product.pname,
@@ -38,11 +40,14 @@ export default async function Page({ params }) {
     const { slug } = resolvedParams;
 
     try {
-        const res = await axios.get(
-            `${process.env.NEXT_PUBLIC_API_URL}/api/products/${slug}`
+        const res = await fetch(
+            `${process.env.NEXT_PUBLIC_API_URL}/api/products/${slug}`,
+            {
+                next: { revalidate: 300 }
+            }
         );
 
-        const product = res.data;
+        const product = await res.json();
 
         return <ProductDetailsClient product={product} />;
     } catch (error) {

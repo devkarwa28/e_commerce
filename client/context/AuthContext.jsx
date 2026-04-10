@@ -20,9 +20,7 @@ const AuthProvider = ({children}) => {
         setLoading(false);
     }
 
-    useEffect(()=>{
-        fetchUser();
-    },[])
+    
 
     const logOut = async () =>{
         await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/logout`,{},{withCredentials: true});

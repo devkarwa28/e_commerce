@@ -1,0 +1,271 @@
+.qualitySafetyContainer {
+  background-color: #0f0a07;
+  color: #ffffff;
+  font-family: var(--font-primary, "Inter", sans-serif);
+  overflow-x: hidden;
+}
+
+.goldText {
+  color: #c89b3c;
+}
+
+/* Hero Section */
+.hero {
+  position: relative;
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 100px 0;
+}
+
+.heroBg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("https://images.unsplash.com/photo-1579152276532-535c21af3bb5?q=80&w=1470&auto=format&fit=crop") no-repeat center center;
+  background-size: cover;
+  z-index: 1;
+}
+
+.heroOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, rgba(15, 10, 7, 0.9) 30%, rgba(15, 10, 7, 0.4) 100%);
+  z-index: 2;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 3;
+}
+
+.heroSubtitle {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  color: #c89b3c;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.heroTitle {
+  font-size: clamp(36px, 6vw, 65px);
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 24px;
+}
+
+.heroDesc {
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.8);
+  max-width: 600px;
+  line-height: 1.6;
+  margin-bottom: 40px;
+}
+
+/* Pillar Section */
+.pillarSection {
+  padding: 100px 0;
+  background-color: #0f0a07;
+}
+
+.pillarCard {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 40px 30px;
+  border-radius: 24px;
+  height: 100%;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.pillarCard:hover {
+  background: rgba(200, 155, 60, 0.05);
+  border-color: rgba(200, 155, 60, 0.3);
+  transform: translateY(-10px);
+}
+
+.pillarIcon {
+  width: 60px;
+  height: 60px;
+  background: rgba(200, 155, 60, 0.1);
+  color: #c89b3c;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+  font-size: 30px;
+}
+
+.pillarTitle {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.pillarDesc {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.6;
+}
+
+/* Progress / Process Section */
+.processSection {
+  padding: 100px 0;
+  background: #140e0b;
+}
+
+.sectionHeader {
+  text-align: center;
+  margin-bottom: 70px;
+}
+
+.sectionLabel {
+  color: #c89b3c;
+  font-weight: 800;
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.sectionTitle {
+  font-size: clamp(30px, 4vw, 45px);
+  font-weight: 800;
+  margin-top: 10px;
+}
+
+.processTimeline {
+  position: relative;
+  padding: 20px 0;
+}
+
+.processItem {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 50px;
+  position: relative;
+}
+
+.processNumber {
+  width: 50px;
+  height: 50px;
+  background: #c89b3c;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 20px;
+  flex-shrink: 0;
+  z-index: 2;
+  box-shadow: 0 0 20px rgba(200, 155, 60, 0.3);
+}
+
+.processContent {
+  padding-top: 10px;
+}
+
+.processStepTitle {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.processStepDesc {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 15px;
+}
+
+/* Certifications */
+.certSection {
+  padding: 80px 0;
+  background: #0f0a07;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.certLogo {
+  height: 60px;
+  opacity: 0.5;
+  filter: grayscale(1);
+  transition: all 0.3s ease;
+  margin: 0 auto;
+}
+
+.certLogo:hover {
+  opacity: 1;
+  filter: grayscale(0);
+}
+
+/* CTA */
+.ctaSection {
+  padding: 100px 0;
+  background: linear-gradient(rgba(15, 10, 7, 0.8), rgba(15, 10, 7, 0.8)), url("https://images.unsplash.com/photo-1542601906970-3cf97b7cdde3?q=80&w=1470&auto=format&fit=crop");
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.ctaBox {
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 30px;
+  padding: 60px 40px;
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.ctaTitle {
+  font-size: 32px;
+  font-weight: 800;
+  margin-bottom: 20px;
+}
+
+.ctaBtn {
+  background: #c89b3c;
+  color: #fff;
+  padding: 15px 40px;
+  border-radius: 50px;
+  font-weight: 700;
+  border: none;
+  font-size: 16px;
+  margin-top: 30px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.ctaBtn:hover {
+  background: #b5892c;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(200, 155, 60, 0.3);
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 80px 0;
+    text-align: center;
+  }
+  .heroDesc {
+    margin: 0 auto 40px;
+  }
+  .processItem {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+    align-items: center;
+  }
+  .processTimeline::after {
+    display: none;
+  }
+}
