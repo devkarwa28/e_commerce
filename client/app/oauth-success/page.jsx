@@ -11,20 +11,7 @@ function OAuthHandler(){
 
     useEffect(() => {
         const init = async () => {
-            const params = new URLSearchParams(window.location.search);
-            const token = params.get("token");
-
-            if(token){
-                await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/set-cookie`,{
-                    method: "POST",
-                    credentials: "include",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({ token })
-                });
-                await fetchUser();
-            }
+            await fetchUser();
             router.push("/");
         };
         init();
