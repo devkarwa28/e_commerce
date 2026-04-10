@@ -1,9 +1,21 @@
 const express = require('express');
 const passport = require('../config/passport');
-const tokenGen = require('../utilites/tokenGen');
 
 const OauthRouter = express.Router();
 
+OauthRouter.post("/set-cookie", (req, res) => {
+    const { token } = req.body;
+
+    res.cookie("token", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+        path: "/",
+        maxAge: 7 * 24 * 60 * 60 * 1000
+    });
+
+    res.json({ success: true });
+});
 OauthRouter.get("/google", passport.authenticate("google",
     { scope: ["profile", "email"] }
 ));
@@ -27,16 +39,7 @@ OauthRouter.get("/google/callback",
                 { expiresIn: '7d' }
             );
 
-            res.cookie("token", token, {
-                httpOnly: true,
-                secure: true,
-                sameSite: "none",
-                path: "/",
-                maxAge: 7 * 24 * 60 * 60 * 1000
-            });
-
-            
-            return res.redirect(`${process.env.CLIENT_URL}/oauth-success`);
+            return res.redirect(`${process.env.CLIENT_URL}/oauth-success?token=${token}`);
         }
         catch (err) {
             console.error("GOOGLE CALLBACK ERROR:", err);
