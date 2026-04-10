@@ -8,9 +8,10 @@ import CartProvider from "@/context/CartContext";
 import AppLayout from "@/components/layout/AppLayout";
 import WishlistProvider from "@/context/WishlistContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useState } from "react";
 
 export default function ClientLayout({ children }) {
-  const queryClient = new QueryClient();
+  const [queryClient] = useState(()=> new QueryClient());
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
