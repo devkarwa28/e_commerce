@@ -1,10 +1,11 @@
 const Banner = require('../models/bannerModel');
+const redis = require('../config/upstashRedis');
 const uploadToCloudinary = require('../utilites/cloudinaryUpload');
 
 exports.createBanner = async (req, res) => {
     try {
         const { title, titleAccent, subtitle, badge, active } = req.body;
-        
+
         let imageUrl = "";
         if (req.file) {
             const result = await uploadToCloudinary(req.file.buffer, "banners");
@@ -24,7 +25,20 @@ exports.createBanner = async (req, res) => {
 exports.getBanners = async (req, res) => {
     try {
         const filter = req.query.all ? {} : { active: true };
+
+        const cacheKey = req.query.all ? "banners:all" : "banners:active";
+        const cachedBanners = await redis.get(cacheKey);
+
+        if(cachedBanners)
+        {
+            console.log("Cached Banner Hit");
+            return res.status(200).json(cachedBanners);
+        }
+
         const banners = await Banner.find(filter).sort({ createdAt: -1 });
+
+        await redis.set(cacheKey,banners,{ex: 600});
+        console.log("Banner Cached In Redis")
         res.status(200).json(banners);
     } catch (error) {
         res.status(500).json({ error: "Failed to fetch banner slides", details: error.message });
@@ -43,7 +57,7 @@ exports.updateBanner = async (req, res) => {
 
         const updatedBanner = await Banner.findByIdAndUpdate(id, updateData, { new: true });
         if (!updatedBanner) return res.status(404).json({ message: "Banner not found" });
-        
+
         res.status(200).json({ message: "Banner updated", banner: updatedBanner });
     } catch (error) {
         res.status(500).json({ error: "Failed to update banner", details: error.message });

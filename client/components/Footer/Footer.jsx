@@ -46,7 +46,7 @@ const Footer = () => {
         { name: "Gifting", href: "/gifting" },
         { name: "Bulk Order", href: "/bulk-order" },
         { name: "Franchise", href: "/franchise" },
-        { name: "Coupons", href: "/admin/coupons" },
+        { name: "Coupons", href: "/coupons-user" },
       ],
     },
     {

@@ -2019,6 +2019,8 @@
         font-size: 14px;
         margin: 0 auto 24px;
         line-height: 1.6;
+        max-width: 100%;
+        padding: 0 10px;
     }
     .heroBadge {
         font-size: 11px;
@@ -2244,17 +2246,27 @@
 /* --- Extra Small Devices (480px) --- */
 @media (max-width: 480px) {
     .heroRow {
-        min-height: 360px;
-    }
-    .heroRow {
-        min-height: 360px;
+        min-height: auto;
     }
     .heroTitle {
-        font-size: 28px;
+        font-size: clamp(24px, 8vw, 28px);
+        line-height: 1.2;
+    }
+    .heroSubtitle {
+        font-size: 13px;
+        max-width: 100%;
+        margin-bottom: 24px;
+        padding: 0px 40px;
     }
     .heroBtn {
         padding: 12px 24px;
         font-size: 14px;
+    }
+    .heroContent {
+        padding: 40px 0px 60px;
+    }
+    .heroRow {
+        min-height: auto;
     }
     .dfTitle {
         font-size: 24px;

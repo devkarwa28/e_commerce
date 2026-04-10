@@ -13,60 +13,39 @@ import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
 import ArrowBackIosNewRoundedIcon from "@mui/icons-material/ArrowBackIosNewRounded";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 import { motion, AnimatePresence } from "framer-motion";
+import { useQuery } from "@tanstack/react-query";
 
 const HeroBanner = () => {
   const [swiper, setSwiper] = useState(null);
   const [activeSlide, setActiveSlide] = useState(0);
-  const [slides, setSlides] = useState([]);
-  const [loading, setLoading] = useState(true);
 
-  const fallbackSlides = [
-    {
-      title: "Premium Dry Fruits",
-      titleAccent: "For Every Occasion",
-      subtitle:
-        "Naturally sourced from the finest orchards, freshly packed and delivered with care to your doorstep.",
-      image: "/hero1.jpg",
-      badge: "UP TO 40% OFF",
-    },
-    {
-      title: "Healthy Snacking",
-      titleAccent: "Starts Here",
-      subtitle:
-        "Rich in nutrients, full of natural taste — premium quality dry fruits for a healthier lifestyle.",
-      image: "/hero2.jpg",
-      badge: "FESTIVE SPECIAL",
-    },
-    {
-      title: "Luxury Gifting",
-      titleAccent: "Combos",
-      subtitle:
-        "Elegant dry fruit gift boxes crafted for weddings, festivals and celebrations.",
-      image: "/hero3.jpg",
-      badge: "LIMITED OFFER",
-    },
-  ];
+  const fetchBanner = async () =>{
+    console.log(" API CALLED (Hero Banner)");
+      const {data} = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/banners`);
+      return data;
+  }
 
-  useEffect(() => {
-    const fetchSlides = async () => {
-      try {
-        const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/banners`);
-        if (data && data.length > 0) {
-          setSlides(data);
-        } else {
-          setSlides(fallbackSlides);
-        }
-      } catch (error) {
-        console.error("Error fetching hero banners:", error);
-        setSlides(fallbackSlides);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchSlides();
-  }, []);
+  const {data: slides, isLoading} = useQuery({
+    queryKey: ["hero-banners"],
+    queryFn: fetchBanner,
+    staleTime: 10 * 60 * 1000,
+  })
+// const fetchSlides = async () => {
+//       try {
+//         const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/banners`);
+//         setSlides(data);
+//       } catch (error) {
+//         console.error("Error fetching hero banners:", error);
+//       } finally {
+//         setLoading(false);
+//       }
+//     };
 
-  if (loading) {
+  // useEffect(() => {
+  //   fetchSlides();
+  // }, []);
+
+  if (isLoading) {
     return (
       <section className={homestyles.heroSection}>
         <div style={{ height: "520px", display: "flex", alignItems: "center", justifyContent: "center", color: "#cca750" }}>
@@ -114,7 +93,7 @@ const HeroBanner = () => {
 
               <div className="container position-relative" style={{ zIndex: 3 }}>
                 <div className={`row align-items-center ${homestyles.heroRow}`}>
-                  <div className="col-lg-6">
+                  <div className="col-12 col-lg-6">
                     <AnimatePresence mode="wait">
                       {activeSlide === index && (
                         <div className={homestyles.heroContent}>
@@ -127,7 +106,7 @@ const HeroBanner = () => {
                           >
                             {slide.badge}
                           </motion.div>
-                          
+
                           <motion.h1
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
@@ -180,9 +159,8 @@ const HeroBanner = () => {
           {slides.map((_, index) => (
             <button
               key={index}
-              className={`${homestyles.heroDot} ${
-                activeSlide === index ? homestyles.heroDotActive : ""
-              }`}
+              className={`${homestyles.heroDot} ${activeSlide === index ? homestyles.heroDotActive : ""
+                }`}
               onClick={() => swiper?.slideToLoop(index)}
             />
           ))}

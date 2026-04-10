@@ -1,0 +1,269 @@
+.bulkOrderContainer {
+  background-color: #0f0a07; /* Dark luxury background */
+  color: #ffffff;
+  font-family: var(--font-primary, "Inter", sans-serif);
+  overflow-x: hidden;
+}
+
+/* Typography Helpers */
+.goldText {
+  color: #c89b3c;
+}
+
+/* Hero Section */
+.hero {
+  position: relative;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.heroBg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 120%; /* For parallax */
+  background: url("https://images.unsplash.com/photo-1596422846543-75c6fc197f07?q=80&w=1471&auto=format&fit=crop") no-repeat center center;
+  background-size: cover;
+  z-index: 1;
+}
+
+.heroOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(15, 10, 7, 0.4) 0%, rgba(15, 10, 7, 0.95) 100%);
+  z-index: 2;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 3;
+  padding: 40px 20px;
+}
+
+.heroSubtitle {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 700;
+  color: #c89b3c;
+  margin-bottom: 20px;
+}
+
+.heroTitle {
+  font-size: clamp(40px, 6vw, 75px);
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 24px;
+  text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.heroDesc {
+  font-size: clamp(16px, 2vw, 20px);
+  color: rgba(255, 255, 255, 0.8);
+  max-width: 700px;
+  margin: 0 auto 40px;
+  font-weight: 300;
+}
+
+/* Buttons */
+.ctaButton {
+  background: linear-gradient(135deg, #c89b3c, #a87b2c);
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  padding: 16px 40px;
+  font-size: 16px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  box-shadow: 0 8px 25px rgba(200, 155, 60, 0.4);
+  transition: all 0.3s ease;
+}
+
+.ctaButton:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(200, 155, 60, 0.6);
+}
+
+/* Features Section */
+.featuresSection {
+  padding: 80px 0;
+  background-color: #0f0a07;
+  position: relative;
+  z-index: 5;
+}
+
+.featureCard {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  padding: 40px 30px;
+  text-align: center;
+  height: 100%;
+  transition: all 0.4s ease;
+  cursor: pointer;
+}
+
+.featureCard:hover {
+  background: rgba(200, 155, 60, 0.05);
+  border-color: rgba(200, 155, 60, 0.3);
+  transform: translateY(-10px);
+}
+
+.featureIcon {
+  width: 70px;
+  height: 70px;
+  background: rgba(200, 155, 60, 0.1);
+  color: #c89b3c;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px;
+  font-size: 32px;
+  transition: all 0.3s ease;
+}
+
+.featureCard:hover .featureIcon {
+  background: #c89b3c;
+  color: #fff;
+}
+
+.featureTitle {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.featureDesc {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* Form Section */
+.formSection {
+  padding: 100px 0;
+  background: #140e0b;
+  position: relative;
+}
+
+.sectionHeader {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.sectionTitle {
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 800;
+  margin-bottom: 16px;
+}
+
+.sectionLine {
+  width: 60px;
+  height: 4px;
+  background: #c89b3c;
+  margin: 0 auto;
+  border-radius: 2px;
+}
+
+.formCard {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 24px;
+  padding: 50px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+.inputGroup {
+  margin-bottom: 24px;
+}
+
+.inputLabel {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 8px;
+  letter-spacing: 0.5px;
+}
+
+.inputField {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+  padding: 16px 20px;
+  border-radius: 12px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.inputField:focus {
+  outline: none;
+  border-color: #c89b3c;
+  background: rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 0 4px rgba(200, 155, 60, 0.1);
+}
+
+.submitBtn {
+  width: 100%;
+  background: #c89b3c;
+  color: #fff;
+  border: none;
+  padding: 18px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+.submitBtn:hover {
+  background: #b5892c;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(200, 155, 60, 0.3);
+}
+
+/* Testimonial / B2B Stats */
+.statsSection {
+  padding: 60px 0;
+  background: linear-gradient(90deg, rgba(200, 155, 60, 0.05) 0%, rgba(200, 155, 60, 0.15) 50%, rgba(200, 155, 60, 0.05) 100%);
+  border-top: 1px solid rgba(200, 155, 60, 0.2);
+  border-bottom: 1px solid rgba(200, 155, 60, 0.2);
+}
+
+.statNumber {
+  font-size: 48px;
+  font-weight: 900;
+  color: #c89b3c;
+  line-height: 1;
+  margin-bottom: 10px;
+}
+
+.statLabel {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+@media (max-width: 768px) {
+  .heroContent {
+    padding: 20px;
+  }
+  .formCard {
+    padding: 30px 20px;
+  }
+}

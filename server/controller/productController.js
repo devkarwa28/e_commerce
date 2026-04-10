@@ -144,7 +144,7 @@ exports.getProducts = async (req, res) => {
     const cachedData = await redis.get(cacheKey);
     if(cachedData)
     {
-      console.log("Cache Hit");
+      console.log("Product Listing Cache Hit");
       return res.json(cachedData);
     }
 
@@ -186,7 +186,7 @@ exports.getProducts = async (req, res) => {
     };
 
     await redis.set(cacheKey,result,{ex:300});
-    console.log("Data cached in Redis");
+    console.log("Product Listing Data cached in Redis");
 
     res.json(result);
 

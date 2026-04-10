@@ -1,0 +1,204 @@
+.couponsContainer {
+  background-color: #0f0a07;
+  color: #ffffff;
+  min-height: 100vh;
+  padding-bottom: 80px;
+  font-family: var(--font-primary, "Inter", sans-serif);
+}
+
+.hero {
+  padding: 80px 0 60px;
+  background: linear-gradient(to bottom, #1a140f, #0f0a07);
+  text-align: center;
+}
+
+.heroSubtitle {
+  color: #c89b3c;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  font-size: 14px;
+  display: block;
+  margin-bottom: 15px;
+}
+
+.heroTitle {
+  font-size: clamp(32px, 5vw, 48px);
+  font-weight: 800;
+  margin-bottom: 20px;
+}
+
+.heroDesc {
+  color: rgba(255, 255, 255, 0.7);
+  max-width: 600px;
+  margin: 0 auto;
+  font-size: 16px;
+}
+
+.couponGrid {
+  padding-top: 40px;
+}
+
+.couponCard {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px dashed rgba(200, 155, 60, 0.3);
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  transition: all 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.couponCard:hover {
+  border-color: #c89b3c;
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.cardHeader {
+  padding: 25px 25px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.discountBadge {
+  background: #c89b3c;
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-weight: 800;
+  font-size: 18px;
+  box-shadow: 0 4px 10px rgba(200, 155, 60, 0.3);
+}
+
+.iconWrapper {
+  color: rgba(255, 255, 255, 0.2);
+}
+
+.cardBody {
+  padding: 0 25px 20px;
+  flex-grow: 1;
+}
+
+.couponTitle {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+.couponDesc {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.codeArea {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  padding: 12px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.couponCode {
+  font-family: "Courier New", Courier, monospace;
+  font-weight: 800;
+  font-size: 18px;
+  color: #c89b3c;
+  letter-spacing: 1px;
+}
+
+.copyBtn {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: color 0.2s;
+  padding: 0;
+  display: flex;
+}
+
+.copyBtn:hover {
+  color: #c89b3c;
+}
+
+.cardFooter {
+  padding: 15px 25px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.expiryDate {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.4);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.tncLink {
+  background: none;
+  border: none;
+  color: #c89b3c;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.tncLink:hover {
+  color: #fff;
+}
+
+/* Semi-circles on sides for "ticket" effect */
+.couponCardContent {
+  position: relative;
+  z-index: 1;
+}
+
+.sideNotch {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-color: #0f0a07;
+  border-radius: 50%;
+  top: 50%;
+  z-index: 2;
+  border: 1px dashed rgba(200, 155, 60, 0.3);
+}
+
+.leftNotch {
+  left: -11px;
+  transform: translateY(-50%);
+  border-left: none;
+}
+
+.rightNotch {
+  right: -11px;
+  transform: translateY(-50%);
+  border-right: none;
+}
+
+@media (max-width: 576px) {
+  .hero {
+    padding: 60px 0 40px;
+  }
+  .heroTitle {
+    font-size: 28px;
+  }
+  .couponCard {
+    margin-bottom: 20px;
+  }
+}

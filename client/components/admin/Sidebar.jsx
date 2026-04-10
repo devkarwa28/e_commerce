@@ -1,13 +1,14 @@
 "use client";
 
-import { 
-    CategoryRounded, 
-    DashboardRounded, 
-    Inventory2Rounded, 
-    LocalOfferRounded, 
+import {
+    CategoryRounded,
+    DashboardRounded,
+    Inventory2Rounded,
+    LocalOfferRounded,
     ShoppingBagRounded,
     StorefrontRounded,
-    LogoutRounded
+    LogoutRounded,
+    Image
 } from "@mui/icons-material";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
@@ -23,6 +24,8 @@ const Sidebar = () => {
         { label: "Categories", href: "/admin/category", icon: <CategoryRounded /> },
         { label: "Orders", href: "/admin/orders", icon: <ShoppingBagRounded /> },
         { label: "Coupons", href: "/admin/coupons", icon: <LocalOfferRounded /> },
+        {label: "Hero Banner", href: "/admin/hero-banner", icon: <Image />}
+
     ];
 
     return (
@@ -46,10 +49,10 @@ const Sidebar = () => {
                 marginBottom: "24px"
             }}>
                 <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
-                    <div style={{ 
-                        width: "44px", 
-                        height: "44px", 
-                        background: "var(--color-gold, #c89b3c)", 
+                    <div style={{
+                        width: "44px",
+                        height: "44px",
+                        background: "var(--color-gold, #c89b3c)",
                         borderRadius: "14px",
                         display: "flex",
                         alignItems: "center",
@@ -75,8 +78,8 @@ const Sidebar = () => {
                     const isHovered = hoveredPath === item.href;
 
                     return (
-                        <Link 
-                            key={item.label} 
+                        <Link
+                            key={item.label}
                             href={item.href}
                             onMouseEnter={() => setHoveredPath(item.href)}
                             onMouseLeave={() => setHoveredPath(null)}
@@ -110,10 +113,10 @@ const Sidebar = () => {
                                     boxShadow: "0 0 10px rgba(200, 155, 60, 0.5)"
                                 }} />
                             )}
-                            
-                            <div style={{ 
-                                display: "flex", 
-                                alignItems: "center", 
+
+                            <div style={{
+                                display: "flex",
+                                alignItems: "center",
                                 justifyContent: "center",
                                 transition: "transform 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275)",
                                 transform: isHovered || isActive ? "scale(1.15)" : "scale(1)"
@@ -128,7 +131,7 @@ const Sidebar = () => {
 
             {/* Bottom Section */}
             <div style={{ padding: "24px", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
-                <button 
+                <button
                     style={{
                         width: "100%",
                         display: "flex",
