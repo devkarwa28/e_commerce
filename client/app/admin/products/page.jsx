@@ -16,33 +16,30 @@ const ProductsPage = () => {
         console.log(" API CALLED (Products Admin Page)");
         try {
             const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/products`, { withCredentials: true });
-            return res.data.product;
+            return res.data.products;
         }
         catch (err) {
             console.log(err)
         }
     }
     
+   
+
+   const {data: products = [], isLoading, refetch} = useQuery({
+    queryKey: ["admin-products"],
+    queryFn: fetchProducts,
+    staleTime: 1000 * 3
+   })
     const toggleStatus = async (id) => {
         try {
             await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/products/${id}`,{},{ withCredentials:true });
-            setProducts(prev =>
-                prev.map(p =>
-                    p._id === id ? { ...p, isActive: !p.isActive } : p
-                )
-            );
+            refetch();
         } catch (err) {
             console.log(err);
         }
     };
 
-   const {data: product, isLoading, refetch} = useQuery({
-    queryKey: ["admin-products"],
-    queryFn: fetchProducts,
-    staleTime: 1000 * 3
-   })
-
-    const filteredProducts = product.filter(p => 
+    const filteredProducts = products.filter(p => 
         p.pname.toLowerCase().includes(search.toLowerCase())
     );
 
