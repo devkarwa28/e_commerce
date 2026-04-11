@@ -6,6 +6,7 @@ import CartStyles from "./cart.module.css";
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import RemoveRoundedIcon from "@mui/icons-material/RemoveRounded";
+import Image from "next/image";
 
 const CartItems = ({ item, refreshCart }) => {
     const updateQuantity = async (qty) => {
@@ -40,7 +41,7 @@ const CartItems = ({ item, refreshCart }) => {
     return (
         <div className={CartStyles.cartItemCard}>
             <div className={CartStyles.cartImageWrap}>
-                <img src={item.product?.mainImage} className={CartStyles.cartImage} alt={item.product?.pname} />
+                <Image src={item.product?.mainImage} className={CartStyles.cartImage} alt={item.product?.pname} width={100} height={100} />
             </div>
 
             <div className={CartStyles.cartItemDetails}>

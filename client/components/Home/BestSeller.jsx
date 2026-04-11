@@ -16,6 +16,7 @@ import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+import Image from "next/image";
 
 const BestSeller = () => {
   const [swiper, setSwiper] = useState(null);
@@ -161,7 +162,7 @@ function ProductCard({ product }) {
     <div className={bestStyles.bsCard}>
       <div className={bestStyles.bsImgWrap}>
         {product.tag && <span className={bestStyles.bsCardTag}>{product.tag}</span>}
-        <img src={product.image} alt={product.name} className={bestStyles.bsImg} />
+        <Image src={product.image} alt={product.name} className={bestStyles.bsImg} width={200} height={200} />
         <div className={bestStyles.bsCartHover}>
           <button className={bestStyles.bsAddToCartBtn}>
             <ShoppingBagOutlinedIcon sx={{ fontSize: 18 }} />

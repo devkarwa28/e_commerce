@@ -10,6 +10,7 @@ import "swiper/css/autoplay";
 import dryfruitStyles from "./home.module.css";
 import ArrowBackIosNewRoundedIcon from "@mui/icons-material/ArrowBackIosNewRounded";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
+import Image from "next/image";
 
 const DryFruitSlider = () => {
   const [swiper, setSwiper] = useState(null);
@@ -113,10 +114,12 @@ const DryFruitSlider = () => {
                   <div className={dryfruitStyles.dfCardTag}>{item.tag}</div>
                   <div className={dryfruitStyles.dfImgContent}>
                       <div className={dryfruitStyles.dfImgWrap}>
-                        <img
+                        <Image
                           src={item.image}
                           alt={item.name}
                           className={dryfruitStyles.dfImg}
+                          width={200}
+                          height={200}
                         />
                       </div>
                       <div className={dryfruitStyles.dfCardOverlay}></div>

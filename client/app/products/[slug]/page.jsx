@@ -2,7 +2,7 @@ import ProductDetailsClient from "./ProductDetailsClient";
 import { notFound } from "next/navigation";
 
 export async function generateMetadata({ params }) {
-    const { slug } = params;
+    const { slug } = await params;
 
     try {
         const res = await fetch(

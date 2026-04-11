@@ -30,20 +30,6 @@ const HeroBanner = () => {
     queryFn: fetchBanner,
     staleTime: 10 * 60 * 1000,
   })
-// const fetchSlides = async () => {
-//       try {
-//         const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/banners`);
-//         setSlides(data);
-//       } catch (error) {
-//         console.error("Error fetching hero banners:", error);
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
-
-  // useEffect(() => {
-  //   fetchSlides();
-  // }, []);
 
   if (isLoading) {
     return (

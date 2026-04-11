@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import productStyles from './productDetail.module.css';
+import Image from "next/image";
 
 const ProductGallery = ({ product }) => {
     const images = [product.mainImage, ...(product.images || [])];
@@ -9,9 +10,10 @@ const ProductGallery = ({ product }) => {
     return (
         <div className={productStyles.galleryWrap}>
             <div className={productStyles.mainImageWrap}>
-                <img 
+                <Image
                     src={images[activeIndex]} 
                     alt="Product Main" 
+                    fill
                     className={productStyles.mainImage} 
                 />
             </div>
@@ -24,7 +26,7 @@ const ProductGallery = ({ product }) => {
                             className={`${productStyles.thumbnail} ${activeIndex === index ? productStyles.activeThumbnail : ''}`}
                             onClick={() => setActiveIndex(index)}
                         >
-                            <img src={img} alt={`Thumbnail ${index}`} />
+                            <Image src={img} alt={`Thumbnail ${index}`} width={100} height={100} />
                         </div>
                     ))}
                 </div>
