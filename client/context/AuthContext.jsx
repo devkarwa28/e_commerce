@@ -20,6 +20,10 @@ const AuthProvider = ({children}) => {
         setLoading(false);
     }
 
+    useEffect(()=>{
+        fetchUser();
+    },[])
+
     
 
     const logOut = async () =>{
