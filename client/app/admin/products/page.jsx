@@ -2,20 +2,21 @@
 
 import ProductTable from "@/components/admin/ProductTable";
 import { AddRounded, SearchRounded } from "@mui/icons-material";
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const ProductsPage = () => {
-    const [products, setProducts] = useState([]);
     const [search, setSearch] = useState("");
 
     const router = useRouter();
 
     const fetchProducts = async () => {
+        console.log(" API CALLED (Products Admin Page)");
         try {
             const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/products`, { withCredentials: true });
-            setProducts(res.data.products);
+            return res.data.product;
         }
         catch (err) {
             console.log(err)
@@ -35,11 +36,13 @@ const ProductsPage = () => {
         }
     };
 
-    useEffect(() => {
-        fetchProducts();
-    }, []);
+   const {data: product, isLoading, refetch} = useQuery({
+    queryKey: ["admin-products"],
+    queryFn: fetchProducts,
+    staleTime: 1000 * 3
+   })
 
-    const filteredProducts = products.filter(p => 
+    const filteredProducts = product.filter(p => 
         p.pname.toLowerCase().includes(search.toLowerCase())
     );
 

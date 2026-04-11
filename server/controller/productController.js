@@ -196,14 +196,28 @@ exports.getProducts = async (req, res) => {
 };
 exports.getProductBySlug = async (req, res) => {
   try {
+    const {slug} = req.params;
+
+    const cacheKey = `products: ${slug}`;
+
+    const cachedData = await redis.get(cacheKey);
+    if(cachedData)
+    {
+      console.log("Product Details Cache Hit");
+      return res.json(cachedData);
+    }
+
+
     const product = await Product.findOne({
-      slug: req.params.slug,
+      slug,
       isActive: true,
     }).populate("category", "cname");
 
     if (!product) {
       return res.status(404).json({ message: "Product Not Found" });
     }
+    await redis.set(cacheKey,product,{ex: 300});
+    console.log("Product Details Cached in Redis");
     res.json(product);
   } catch (err) {
     res.status(500).json({ message: "Server Error" });
