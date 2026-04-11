@@ -1,6 +1,7 @@
 "use client";
 import headerStyles from "./header.module.css";
 import {
+  Avatar,
   Badge,
   IconButton,
   Menu,
@@ -30,6 +31,15 @@ import { useState } from "react";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 import Link from "next/link";
+
+const getInitials = (name) => {
+  if (!name) return "?";
+  const parts = name.trim().split(/\s+/);
+  if (parts.length >= 2) {
+    return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+  }
+  return parts[0][0].toUpperCase();
+};
 
 const MainHeader = () => {
   const { user, logOut, loading } = useAuth();
@@ -105,7 +115,27 @@ const MainHeader = () => {
             </div>
 
             <div className={`${headerStyles.actionBtn} d-none d-lg-flex`} onClick={handleOpen}>
-              <Person2Outlined sx={{ fontSize: 22 }} />
+              {user ? (
+                <Avatar
+                  src={user.avatar || ""}
+                  alt={user.uname}
+                  sx={{
+                    width: 32,
+                    height: 32,
+                    fontSize: 13,
+                    fontWeight: 700,
+                    bgcolor: "var(--color-primary)",
+                    color: "#fff",
+                    border: "2px solid var(--color-gold)",
+                    transition: "all 300ms ease",
+                    "&:hover": { transform: "scale(1.08)" },
+                  }}
+                >
+                  {!user.avatar && getInitials(user.uname)}
+                </Avatar>
+              ) : (
+                <Person2Outlined sx={{ fontSize: 22 }} />
+              )}
             </div>
 
             <Link href="/wishlist" className={headerStyles.actionBtn}>
@@ -173,9 +203,31 @@ const MainHeader = () => {
         }}
       >
         {user && (
-          <MenuItem disabled sx={{ opacity: "0.7 !important" }}>
-            Hello, {user.uname}
-          </MenuItem>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, px: 2, py: 1.5, pb: 0.5 }}>
+            <Avatar
+              src={user.avatar || ""}
+              alt={user.uname}
+              sx={{
+                width: 38,
+                height: 38,
+                fontSize: 15,
+                fontWeight: 700,
+                bgcolor: "var(--color-primary)",
+                color: "#fff",
+                border: "2px solid var(--color-gold)",
+              }}
+            >
+              {!user.avatar && getInitials(user.uname)}
+            </Avatar>
+            <Box>
+              <Box sx={{ fontWeight: 700, fontSize: 14, color: "#1E1B18", lineHeight: 1.3 }}>
+                {user.uname}
+              </Box>
+              <Box sx={{ fontSize: 12, color: "#999", lineHeight: 1.3 }}>
+                {user.email}
+              </Box>
+            </Box>
+          </Box>
         )}
         {user && <Divider sx={{ margin: "4px 12px !important" }} />}
         {user && (
@@ -252,6 +304,33 @@ const MainHeader = () => {
           <List>
             {user ? (
               <>
+                {/* Mobile User Info */}
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, px: 3, py: 2, mb: 1 }}>
+                  <Avatar
+                    src={user.avatar || ""}
+                    alt={user.uname}
+                    sx={{
+                      width: 44,
+                      height: 44,
+                      fontSize: 16,
+                      fontWeight: 700,
+                      bgcolor: "var(--color-primary)",
+                      color: "#fff",
+                      border: "2px solid var(--color-gold)",
+                    }}
+                  >
+                    {!user.avatar && getInitials(user.uname)}
+                  </Avatar>
+                  <Box>
+                    <Box sx={{ fontWeight: 700, fontSize: 15, color: "#1E1B18", lineHeight: 1.3 }}>
+                      {user.uname}
+                    </Box>
+                    <Box sx={{ fontSize: 12, color: "#999", lineHeight: 1.3 }}>
+                      {user.email}
+                    </Box>
+                  </Box>
+                </Box>
+                <Divider sx={{ mx: 2, mb: 1 }} />
                 <ListItem disablePadding>
                   <ListItemButton onClick={() => { setMobileMenuOpen(false); router.push("/profile"); }}>
                     <Settings sx={{ mr: 2, color: "var(--color-primary)" }} />
