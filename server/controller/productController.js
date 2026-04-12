@@ -3,6 +3,7 @@ const Category = require("../models/CategoryModel");
 const slugify = require("slugify");
 const uploadToCloudinary = require("../utilites/cloudinaryUpload");
 const redis = require("../config/upstashRedis");
+const { clearProductsCache, clearProductDetailCache } = require("../utilites/cacheInvalidation");
 
 
 exports.createProduct = async (req, res) => {
@@ -113,6 +114,9 @@ exports.createProduct = async (req, res) => {
       seo: parsedSeo,
       isFeatured: isFeatured === "true",
     });
+
+    await clearProductsCache();
+
     res.status(201).json({
       success: true,
       message: "Product Created SuccessFully",
@@ -133,18 +137,12 @@ exports.getProducts = async (req, res) => {
     let query = { isActive: true };
 
 
-    const cacheKey = `products:${JSON.stringify(query)}:${page}:${limit}:${JSON.stringify({
-      category,
-      search,
-      minPrice,
-      maxPrice,
-      featured
-    })}`;
+    const cacheKey = `products:list:page=${page}:limit=${limit}:category=${category || "all"}:search=${search || "none"}:min=${minPrice || 0}:max=${maxPrice || 0}:featured=${featured || "false"}`;
 
     const cachedData = await redis.get(cacheKey);
     if (cachedData) {
       console.log("Product Listing Cache Hit");
-      return res.json(cachedData);
+      return res.json(JSON.parse(cachedData));
     }
 
 
@@ -184,7 +182,7 @@ exports.getProducts = async (req, res) => {
       totalProducts,
     };
 
-    await redis.set(cacheKey, result, { ex: 300 });
+    await redis.set(cacheKey, JSON.stringify(result), { ex: 300 });
     console.log("Product Listing Data cached in Redis");
 
     res.json(result);
@@ -196,15 +194,14 @@ exports.getProducts = async (req, res) => {
 };
 exports.getProductBySlug = async (req, res) => {
   try {
-    const {slug} = req.params;
+    const { slug } = req.params;
 
-    const cacheKey = `products: ${slug}`;
+    const cacheKey = `product:detail:${slug}`;
 
     const cachedData = await redis.get(cacheKey);
-    if(cachedData)
-    {
+    if (cachedData) {
       console.log("Product Details Cache Hit");
-      return res.json(cachedData);
+      return res.json(JSON.parse(cachedData));
     }
 
 
@@ -216,7 +213,7 @@ exports.getProductBySlug = async (req, res) => {
     if (!product) {
       return res.status(404).json({ message: "Product Not Found" });
     }
-    await redis.set(cacheKey,product,{ex: 300});
+    await redis.set(cacheKey, JSON.stringify(product), { ex: 300 });
     console.log("Product Details Cached in Redis");
     res.json(product);
   } catch (err) {
@@ -361,6 +358,9 @@ exports.updateProduct = async (req, res) => {
 
     await product.save();
 
+    await clearProductsCache();
+    await clearProductDetailCache(product.slug);
+
     res.json({
       success: true,
       message: "Product Updated Successfully",
@@ -384,6 +384,9 @@ exports.toggleProductStatus = async (req, res) => {
     product.isActive = !product.isActive;
 
     await product.save();
+
+    await clearProductsCache();
+    await clearProductDetailCache(product.slug);
 
     res.json({
       success: true,

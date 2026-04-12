@@ -95,7 +95,7 @@ exports.placeOrder = async (req, res) => {
                 html: `
         <div style="font-family: Arial;">
             <h2 style="color:#5c4033;">Nutrivia Order Confirmation</h2>
-            <p>Hello ${req.user.name},</p>
+            <p>Hello ${req.user.uname},</p>
 
             <p>Your order has been placed successfully 🎉</p>
 

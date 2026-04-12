@@ -8,6 +8,7 @@ import { Search, ExpandMore, FilterList, Close, TuneRounded, RestartAlt, Categor
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useQuery } from '@tanstack/react-query';
 
 const BROWN = "#5c4033";
 const GOLD = "#C89B3C";
@@ -56,7 +57,6 @@ const inputSx = {
 };
 
 const FilterSidebar = ({ filters, setFilters }) => {
-    const [categories, setCategories] = useState([]);
     const [priceRange, setPriceRange] = useState([filters.minPrice || 0, filters.maxPrice || 5000]);
 
     const activeCount = [
@@ -69,11 +69,23 @@ const FilterSidebar = ({ filters, setFilters }) => {
         filters.inStock === "true",
     ].filter(Boolean).length;
 
-    useEffect(() => {
-        axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/category`)
-            .then((res) => setCategories(res.data))
-            .catch((err) => console.log(err));
-    }, []);
+    // useEffect(() => {
+    //     axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/category`)
+    //         .then((res) => setCategories(res.data))
+    //         .catch((err) => console.log(err));
+    // }, []);
+    const fetchCategories = async () =>{
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/category`);
+        return res.data
+    }
+
+    const {data: categories = [], isLoading} = useQuery({
+        queryKey: ['categories'],
+        queryFn: fetchCategories,
+        staleTime: 1000 * 60 * 10,
+        refetchOnWindowFocus: false,
+
+    })
 
     const handlePriceChange = (_, newValue) => {
         setPriceRange(newValue);

@@ -1,6 +1,7 @@
 require('dotenv').config({ path: '.env.local' });
 const express = require('express');
 const cors = require('cors');
+const helmet = require('helmet');
 const authRouter = require('./routes/authRoutes');
 const cookieParser = require('cookie-parser');
 const categoryRouter = require('./routes/categoryRoutes');
@@ -43,7 +44,7 @@ app.use(cors({
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
-
+app.use(helmet())
 app.use(passport.initialize());
 
 app.use('/api/auth',authRouter);

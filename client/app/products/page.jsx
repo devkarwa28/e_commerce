@@ -11,71 +11,27 @@ import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 
 const ProductsPage = () => {
-    // const [products, setProducts] = useState([]);
     const [page, setPage] = useState(1);
-    // const [totalPages, setTotalPages] = useState(1);
     const [mobileOpen, setMobileOpen] = useState(false);
-    // const [loading, setLoading] = useState(true);
     const [filters, setFilters] = useState({ category: "", minPrice: "", maxPrice: "", featured: "", inStock: "", sort: "", search: "" });
     const router = useRouter();
 
     const fetchProducts = async ({queryKey}) =>{
         console.log("API called");
-        const [_key,page,filters] = queryKey;
+        const [,page,filters] = queryKey;
 
         const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/products`,{params: {...filters,page}})
         return res.data;
     }
     
     const {data,isLoading,error} = useQuery({
-        queryKey: [`products`,page,JSON.stringify(filters)],
+        queryKey: [`products`,page,filters],
         queryFn: fetchProducts,
         staleTime: 1000 * 60 * 5,
         keepPreviousData: true,
+        placeholderData: (prevData) => prevData,
+        refetchOnWindowFocus: false,
     });
-
-
-    // const getCacheKey = () => {
-    //     return `products_${page}_${JSON.stringify(filters)}`;
-    // };
-
-    // const fetchProducts = async () => {
-    //     setLoading(true);
-    //     const cacheKey = getCacheKey();
-    //     const cacheData = localStorage.getItem(cacheKey);
-
-    //     if (cacheData) {
-    //         const parsedData = JSON.parse(cacheData);
-    //         if (Date.now() - parsedData.time < 5 * 60 * 1000) {
-    //             setProducts(parsedData.products);
-    //             setTotalPages(parsedData.totalPages);
-    //             setLoading(false);
-    //             return;
-    //         }
-    //     }
-
-    //     try {
-    //         const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/products`, { params: { ...filters, page } });
-    //         setProducts(res.data.products);
-    //         setTotalPages(res.data.totalPages);
-    //         console.log(res.data.products);
-    //         const dataToCache = {
-    //             products: res.data.products,
-    //             totalPages: res.data.totalPages,
-    //             time: Date.now(),
-    //         };
-
-    //         localStorage.setItem(cacheKey, JSON.stringify(dataToCache));
-    //     } catch (err) {
-    //         console.log(err);
-    //     }
-    //     setLoading(false);
-    // };
-
-    // useEffect(() => {
-    //     fetchProducts();
-    //     window.scrollTo({ top: 0, behavior: 'smooth' });
-    // }, [page, filters]);
 
     return (
         <div style={{ paddingBottom: "3rem", paddingTop: "1rem" }}>
