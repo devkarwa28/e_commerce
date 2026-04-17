@@ -1,5 +1,4 @@
 "use client";
-import filterBarStyles from './products.module.css'
 import {
     Box, Typography, TextField, InputAdornment, Slider, Select, MenuItem, FormControl, Accordion,
     AccordionSummary, AccordionDetails, Switch, Button, Divider, IconButton, Paper, Badge

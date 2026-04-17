@@ -1,12 +1,50 @@
-let mongoose = require('mongoose');
+const mongoose = require('mongoose');
+const addressSchema = new mongoose.Schema({
+    fullName: { 
+        type: String, 
+        required: true 
+    },
+    phone: { 
+        type: String, 
+        required: true 
+    },
+    pincode: { 
+        type: String, 
+        required: true 
+    },
+    city: { 
+        type: String, 
+        required: true 
+    },
+    state: { 
+        type: String, 
+        required: true 
+    },
+    street: { 
+        type: String, 
+        required: true 
+    },
+    landmark: { 
+        type: String 
+    },
+    type: { 
+        type: String, 
+        enum: ["home", "work"], 
+        default: "home" 
+    },
+    isDefault: { 
+        type: Boolean, 
+        default: false 
+    }
+}, { timestamps: true });
 
-let userSchema = new mongoose.Schema({
-    uname:{
+const userSchema = new mongoose.Schema({
+    uname: {
         type: String,
         required: true,
         trim: true,
     },
-    email:{
+    email: {
         type: String,
         required: true,
         unique: true,
@@ -42,8 +80,10 @@ let userSchema = new mongoose.Schema({
     isBlocked: {
         type: Boolean,
         default: false,
-    }
+    },
+    addresses: [addressSchema],
+
 
 }, { timestamps: true })
 
-module.exports = mongoose.model("User",userSchema);
+module.exports = mongoose.model("User", userSchema);
