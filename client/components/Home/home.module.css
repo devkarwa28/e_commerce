@@ -183,6 +183,55 @@
     color: var(--color-gold);
     transform: scale(1.1);
 }
+
+/* Hero Banner Responsive */
+@media (max-width: 991px) {
+    .heroTitle {
+        font-size: 40px;
+    }
+}
+
+@media (max-width: 768px) {
+    .heroRow {
+        min-height: 460px;
+    }
+    .heroTitle {
+        font-size: 36px;
+    }
+    .heroContent {
+        padding: 60px 15px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .heroSubtitle {
+        margin-left: auto;
+        margin-right: auto;
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 576px) {
+    .heroRow {
+        min-height: 400px;
+    }
+    .heroTitle {
+        font-size: 28px;
+        word-break: break-word;
+        margin-bottom: 15px;
+        line-height: 1.25;
+    }
+    .heroSubtitle {
+        font-size: 14px;
+        line-height: 1.6;
+        margin-bottom: 24px;
+        padding: 0 5px;
+    }
+    .heroControls {
+        bottom: 20px;
+    }
+}
 /* Hero banner section ended here */
 
 /* Categories  Section Started */
