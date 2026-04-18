@@ -1,5 +1,5 @@
 "use client";
-
+export const dynamic = "force-dynamic";
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import SecurityRoundedIcon from "@mui/icons-material/SecurityRounded";
