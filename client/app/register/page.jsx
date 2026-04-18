@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import RegisterStyles from './register.module.css';
 import PersonAddAlt1RoundedIcon from '@mui/icons-material/PersonAddAlt1Rounded';
+import Image from 'next/image';
 
 const RegisterUser = () => {
     const router = useRouter()
@@ -131,7 +132,7 @@ const RegisterUser = () => {
 
                 <div className={RegisterStyles.socialBtns}>
                     <button onClick={handleGoogleLogin} className={`${RegisterStyles.socialBtn} ${RegisterStyles.googleBtn}`}>
-                        <Google />
+                        <Image src="/google.webp=s96-fcrop64=1,00000000ffffffff-rw" alt="" width={20} height={20} />
                         Google
                     </button>
 

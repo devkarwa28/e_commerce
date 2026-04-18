@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import LoginStyles from "./login.module.css";
 import LoginRoundedIcon from '@mui/icons-material/LoginRounded';
+import Image from "next/image";
 
 const UserLogin = () => {
     const { setUser } = useAuth();
@@ -100,7 +101,7 @@ const UserLogin = () => {
 
                 <div className={LoginStyles.socialBtns}>
                     <button onClick={handleGoogleLogin} className={`${LoginStyles.socialBtn} ${LoginStyles.googleBtn}`}>
-                        <Google />
+                        <Image src="/google.webp=s96-fcrop64=1,00000000ffffffff-rw" alt="" width={20} height={20} />
                         Google
                     </button>
 
