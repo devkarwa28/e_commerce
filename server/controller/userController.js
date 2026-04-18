@@ -25,7 +25,7 @@ exports.updateProfile = async (req, res) => {
 
 exports.addAddress = async (req, res) => {
   try {
-    const { fullName, phone, pincode, city, state, street, landmark, type } =
+    const { fullName, phone, pincode, city, state, street, landmark, type, isDefault } =
       req.body;
 
     const user = await User.findById(req.user._id);
