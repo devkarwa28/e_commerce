@@ -88,29 +88,7 @@ exports.placeOrder = async (req, res) => {
             isPaid: paymentStatus === "Paid",
             paitAt: paymentStatus === "Paid" ? new Date() : null,
         });
-        if (paymentStatus === "Paid" || paymentMethod === "COD") {
-            sendEmail({
-                to: req.user.email,
-                subject: "Order Confirmed 🎉",
-                html: `
-        <div style="font-family: Arial;">
-            <h2 style="color:#5c4033;">Nutrivia Order Confirmation</h2>
-            <p>Hello ${req.user.uname},</p>
-
-            <p>Your order has been placed successfully 🎉</p>
-
-            <h3>Order Details:</h3>
-            <p><strong>Order ID:</strong> ${order._id}</p>
-            <p><strong>Total:</strong> ₹${order.finalAmount}</p>
-
-            <p>We’ll deliver your order soon 🚚</p>
-
-            <hr/>
-            <p>Thank you for shopping with us ❤️</p>
-        </div>
-    `,
-            });
-        }
+        
         for (const item of cart.items) {
             const product = await Product.findById(item.product._id)
 
