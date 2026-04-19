@@ -76,7 +76,7 @@ const AddressForm = ({ addressData, setAddressData }) => {
     } else if (name === "fullName") {
       if (value.trim().length < 3)
         error = "Name must be at least 3 characters.";
-    } else if (name === "address") {
+    } else if (name === "street") {
       if (value.trim().length < 5)
         error = "Please provide a more detailed address.";
     }
@@ -541,8 +541,8 @@ const AddressForm = ({ addressData, setAddressData }) => {
                   }}
                 />
                 <textarea
-                  name="address"
-                  className={`${CheckoutStyles.customInput} ${errors.address ? CheckoutStyles.inputError : ""}`}
+                  name="street"
+                  className={`${CheckoutStyles.customInput} ${errors.street ? CheckoutStyles.inputError : ""}`}
                   style={{
                     paddingLeft: "42px",
                     fontWeight: "500",
@@ -551,20 +551,20 @@ const AddressForm = ({ addressData, setAddressData }) => {
                     resize: "none",
                   }}
                   placeholder="House no., building, street, landmark, area"
-                  value={addressData.address}
+                  value={addressData.street}
                   onChange={handleInputChange}
                   required
                 />
               </div>
               <AnimatePresence>
-                {errors.address && (
+                {errors.street && (
                   <motion.span
                     initial={{ opacity: 0, y: -5 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -5 }}
                     className={CheckoutStyles.errorText}
                   >
-                    {errors.address}
+                    {errors.street}
                   </motion.span>
                 )}
               </AnimatePresence>
