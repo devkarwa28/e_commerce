@@ -42,8 +42,8 @@ const OrderSummary = ({ shippingAddress, paymentMethod }) => {
   const finalTotal = cart ? cart.totalAmount - discount : 0;
 
   const placeOrder = async () => {
-    const { fullname, phone, address, city, state, pincode } = shippingAddress;
-    if (!fullname || !phone || !address || !city || !state || !pincode) {
+    const { fullName, phone, street, city, state, pincode } = shippingAddress;
+    if (!fullName || !phone || !street || !city || !state || !pincode) {
       alert("Please fill all shipping address fields.");
       return;
     }
@@ -54,7 +54,14 @@ const OrderSummary = ({ shippingAddress, paymentMethod }) => {
         const res = await axios.post(
           `${process.env.NEXT_PUBLIC_API_URL}/api/order`,
           {
-            shippingAddress,
+            shippingAddress: {
+              fullName,
+              phone,
+              street,
+              city,
+              state,
+              pincode,
+            },
             paymentMethod,
             couponCode: couponCode || null,
           },

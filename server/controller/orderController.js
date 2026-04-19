@@ -16,27 +16,51 @@ exports.placeOrder = async (req, res) => {
       paymentId,
     } = req.body;
 
-    if (!shippingAddress) {
-      return res.status(400).json({ message: "Shipping address required" });
+    // ✅ Validate shippingAddress fields explicitly
+    if (
+      !shippingAddress ||
+      !shippingAddress.fullName ||
+      !shippingAddress.phone ||
+      !shippingAddress.street ||
+      !shippingAddress.city ||
+      !shippingAddress.state ||
+      !shippingAddress.pincode
+    ) {
+      return res
+        .status(400)
+        .json({ message: "Complete shipping address is required" });
     }
 
     const cart = await Cart.findOne({ user: req.user._id }).populate(
-      "items.product",
+      "items.product"
     );
 
     if (!cart || cart.items.length === 0) {
       return res.status(400).json({ message: "No Items in Cart" });
     }
 
+    // ✅ Validate stock using already-populated product data (no extra DB call)
     for (const item of cart.items) {
-      const product = await Product.findById(item.product._id);
+      if (!item.product) {
+        return res.status(400).json({
+          message: "One or more products in your cart no longer exist",
+        });
+      }
 
-      const selectedOption = product.weightOptions.find(
-        (opt) => opt.label === item.weightLabel,
+      const selectedOption = item.product.weightOptions.find(
+        (opt) => opt.label === item.weightLabel
       );
 
-      if (!selectedOption || selectedOption.stock < item.quantity) {
-        return res.status(400).json({ message: "Stock is not available" });
+      if (!selectedOption) {
+        return res.status(400).json({
+          message: `Weight option "${item.weightLabel}" not found for ${item.product.pname}`,
+        });
+      }
+
+      if (selectedOption.stock < item.quantity) {
+        return res.status(400).json({
+          message: `"${item.product.pname}" (${item.weightLabel}) is out of stock`,
+        });
       }
     }
 
@@ -48,6 +72,7 @@ exports.placeOrder = async (req, res) => {
       price: item.price,
       quantity: item.quantity,
     }));
+
     let discount = 0;
     let finalAmount = cart.totalAmount;
 
@@ -61,16 +86,17 @@ exports.placeOrder = async (req, res) => {
         return res.status(400).json({ message: "Coupon Expired" });
       }
       if (coupon.usageLimit > 0 && coupon.usedCount >= coupon.usageLimit) {
-        return res.status(400).json({ message: "Coupon usage limit used" });
+        return res.status(400).json({ message: "Coupon usage limit reached" });
       }
       if (coupon.usedBy.includes(req.user._id)) {
-        return res.status(400).json({ message: "coupon in use" });
+        return res.status(400).json({ message: "Coupon already used" });
       }
       if (cart.totalAmount < coupon.minOrderAmount) {
-        return res
-          .status(400)
-          .json({ message: "minimum order amout required" });
+        return res.status(400).json({
+          message: `Minimum order amount of ₹${coupon.minOrderAmount} required`,
+        });
       }
+
       if (coupon.discountType === "percentage") {
         discount = (cart.totalAmount * coupon.discountValue) / 100;
         if (coupon.maxDiscount) {
@@ -79,59 +105,72 @@ exports.placeOrder = async (req, res) => {
       } else {
         discount = coupon.discountValue;
       }
+
       finalAmount = cart.totalAmount - discount;
       coupon.usedCount += 1;
       coupon.usedBy.push(req.user._id);
       await coupon.save();
     }
+
+    // ✅ Explicitly map shippingAddress fields to match your schema
     const order = await Order.create({
       user: req.user._id,
       items: orderItems,
-      shippingAddress,
-      paymentMethod,
+      shippingAddress: {
+        fullName: shippingAddress.fullName,
+        phone: shippingAddress.phone,
+        street: shippingAddress.street,
+        city: shippingAddress.city,
+        state: shippingAddress.state,
+        pincode: shippingAddress.pincode,
+        country: shippingAddress.country || "India",
+        landmark: shippingAddress.landmark || "",
+      },
+      paymentMethod: paymentMethod || "COD",
+      paymentStatus: paymentStatus || "Pending",
+      paymentId: paymentId || null,
       totalAmount: cart.totalAmount,
       discountAmount: discount,
       finalAmount,
       couponCode: couponCode || null,
-      paymentStatus: paymentStatus || "Pending",
       isPaid: paymentStatus === "Paid",
       paidAt: paymentStatus === "Paid" ? new Date() : null,
     });
 
+    // ✅ Atomic stock deduction — no product.save() in loop, no undefined crash
     for (const item of cart.items) {
-      const product = await Product.findById(item.product._id);
-
-      const option = product.weightOptions.find(
-        (opt) => opt.label === item.weightLabel,
+      await Product.findOneAndUpdate(
+        {
+          _id: item.product._id,
+          "weightOptions.label": item.weightLabel,
+        },
+        {
+          $inc: { "weightOptions.$.stock": -item.quantity },
+        }
       );
-
-      option.stock -= item.quantity;
-
-      await product.save();
     }
 
+    // ✅ Clear cart
     cart.items = [];
     cart.totalAmount = 0;
     await cart.save();
 
-    if (paymentMethod === "COD" || order.paymentStatus === "Paid") {
+    // ✅ Send confirmation email (non-blocking — order is safe even if email fails)
+    if (paymentMethod === "COD" || paymentStatus === "Paid") {
       try {
         const user = await User.findById(req.user._id);
-        const userEmail = user.email;
-        const userName = user.uname;
 
         const itemsHtml = order.items
           .map(
             (item) => `
-        <tr style="border-bottom: 1px solid #E5E0DA;">
-            <td style="padding: 12px 5px; color: #1A1A1A; word-break: break-word;">
-              <strong style="font-size: 14px;">${item.pname}</strong> <br>
-              <span style="font-size: 12px; color: #6C6C6C;">Weight: ${item.weightLabel}</span>
-            </td>
-            <td style="padding: 12px 5px; text-align: center; color: #1A1A1A; font-size: 14px;">${item.quantity}</td>
-            <td style="padding: 12px 5px; text-align: right; color: #1A1A1A; font-weight: 600; font-size: 14px; white-space: nowrap;">₹${item.price}</td>
-        </tr>
-    `,
+            <tr style="border-bottom: 1px solid #E5E0DA;">
+              <td style="padding: 12px 5px; color: #1A1A1A; word-break: break-word;">
+                <strong style="font-size: 14px;">${item.pname}</strong><br>
+                <span style="font-size: 12px; color: #6C6C6C;">Weight: ${item.weightLabel}</span>
+              </td>
+              <td style="padding: 12px 5px; text-align: center; color: #1A1A1A; font-size: 14px;">${item.quantity}</td>
+              <td style="padding: 12px 5px; text-align: right; color: #1A1A1A; font-weight: 600; font-size: 14px; white-space: nowrap;">₹${item.price}</td>
+            </tr>`
           )
           .join("");
 
@@ -153,69 +192,89 @@ exports.placeOrder = async (req, res) => {
             }
           </style>
         </head>
-        <body style="margin: 0; padding: 0; font-family: 'Poppins', Arial, sans-serif; background-color: #F8F5F1; -webkit-font-smoothing: antialiased;">
-          <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color: #F8F5F1;">
+        <body style="margin:0;padding:0;font-family:'Poppins',Arial,sans-serif;background-color:#F8F5F1;">
+          <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color:#F8F5F1;">
             <tr>
-              <td align="center" class="email-container" style="padding: 40px 20px; color: #1A1A1A;">
-                <table width="100%" border="0" cellspacing="0" cellpadding="0" style="max-width: 600px; background-color: #ffffff; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); overflow: hidden;">
+              <td align="center" class="email-container" style="padding:40px 20px;">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0"
+                  style="max-width:600px;background-color:#ffffff;border-radius:12px;box-shadow:0 4px 15px rgba(0,0,0,0.05);overflow:hidden;">
                   <tr>
-                    <td class="header-box" style="background-color: #5C4033; padding: 30px; text-align: center;">
-                      <h1 class="title-header" style="color: #ffffff; margin: 0; font-size: 24px; letter-spacing: 1px;">Order Confirmed 🎉</h1>
+                    <td class="header-box" style="background-color:#5C4033;padding:30px;text-align:center;">
+                      <h1 class="title-header" style="color:#ffffff;margin:0;font-size:24px;letter-spacing:1px;">
+                        Order Confirmed 🎉
+                      </h1>
                     </td>
                   </tr>
                   <tr>
-                    <td class="content-wrap" style="padding: 30px;">
-                      <p style="font-size: 16px; line-height: 1.6; color: #1A1A1A; margin-top: 0;">Hi ${userName},</p>
-                      <p style="font-size: 15px; line-height: 1.6; color: #6C6C6C;">Thank you for your order! We're excited to let you know that your order has been received and is being processed.</p>
+                    <td class="content-wrap" style="padding:30px;">
+                      <p style="font-size:16px;line-height:1.6;color:#1A1A1A;margin-top:0;">Hi ${user.uname},</p>
+                      <p style="font-size:15px;line-height:1.6;color:#6C6C6C;">
+                        Thank you for your order! We're excited to let you know that your order has been received and is being processed.
+                      </p>
 
-                      <h3 style="color: #5C4033; border-bottom: 2px solid #C89B3C; padding-bottom: 10px; margin-top: 30px; font-weight: 600; font-size: 18px;">Order Summary</h3>
-                      
-                      <div style="overflow-x: auto;">
-                        <table class="order-summary" style="width: 100%; border-collapse: collapse; margin-top: 15px; min-width: 250px;">
+                      <h3 style="color:#5C4033;border-bottom:2px solid #C89B3C;padding-bottom:10px;margin-top:30px;font-weight:600;font-size:18px;">
+                        Order Summary
+                      </h3>
+
+                      <div style="overflow-x:auto;">
+                        <table class="order-summary" style="width:100%;border-collapse:collapse;margin-top:15px;min-width:250px;">
                           <thead>
-                            <tr style="background-color: #F8F5F1;">
-                              <th style="padding: 12px 5px; text-align: left; color: #1A1A1A; font-weight: 600; font-size: 14px;">Item</th>
-                              <th style="padding: 12px 5px; text-align: center; color: #1A1A1A; font-weight: 600; font-size: 14px;">Qty</th>
-                              <th style="padding: 12px 5px; text-align: right; color: #1A1A1A; font-weight: 600; font-size: 14px;">Price</th>
+                            <tr style="background-color:#F8F5F1;">
+                              <th style="padding:12px 5px;text-align:left;color:#1A1A1A;font-weight:600;font-size:14px;">Item</th>
+                              <th style="padding:12px 5px;text-align:center;color:#1A1A1A;font-weight:600;font-size:14px;">Qty</th>
+                              <th style="padding:12px 5px;text-align:right;color:#1A1A1A;font-weight:600;font-size:14px;">Price</th>
                             </tr>
                           </thead>
-                          <tbody>
-                            ${itemsHtml}
-                          </tbody>
+                          <tbody>${itemsHtml}</tbody>
                         </table>
                       </div>
 
-                      <div class="summary-box" style="margin-top: 25px; background-color: #F8F5F1; padding: 20px; border-radius: 8px;">
-                        <table style="width: 100%; border-collapse: collapse;">
+                      <div class="summary-box" style="margin-top:25px;background-color:#F8F5F1;padding:20px;border-radius:8px;">
+                        <table style="width:100%;border-collapse:collapse;">
                           <tr>
-                            <td class="summary-text" style="padding: 5px 0; color: #6C6C6C; font-weight: bold; font-size: 15px;">Order ID:</td>
-                            <td class="summary-text" style="padding: 5px 0; color: #1A1A1A; text-align: right; font-size: 15px; word-break: break-all;">${order._id}</td>
-                          </tr>
-                          <tr>
-                            <td class="summary-text" style="padding: 5px 0; color: #6C6C6C; font-weight: bold; font-size: 15px;">Payment Status:</td>
-                            <td class="summary-text" style="padding: 5px 0; text-align: right; font-size: 15px; color: ${order.paymentStatus === "Paid" ? "#3E7C59" : "#C89B3C"}; font-weight: bold;">
-                              ${order.paymentStatus}
+                            <td class="summary-text" style="padding:5px 0;color:#6C6C6C;font-weight:bold;font-size:15px;">Order ID:</td>
+                            <td class="summary-text" style="padding:5px 0;color:#1A1A1A;text-align:right;font-size:15px;word-break:break-all;">
+                              ${order._id}
                             </td>
                           </tr>
                           <tr>
-                            <td colspan="2" style="border-top: 1px solid #E5E0DA; padding: 10px 0 0 0; margin-top: 10px;"></td>
+                            <td class="summary-text" style="padding:5px 0;color:#6C6C6C;font-weight:bold;font-size:15px;">Payment:</td>
+                            <td class="summary-text" style="padding:5px 0;text-align:right;font-size:15px;font-weight:bold;
+                              color:${order.paymentStatus === "Paid" ? "#3E7C59" : "#C89B3C"};">
+                              ${order.paymentStatus}
+                            </td>
+                          </tr>
+                          ${
+                            discount > 0
+                              ? `<tr>
+                                  <td style="padding:5px 0;color:#6C6C6C;font-size:14px;">Discount:</td>
+                                  <td style="padding:5px 0;text-align:right;font-size:14px;color:#3E7C59;">- ₹${discount}</td>
+                                </tr>`
+                              : ""
+                          }
+                          <tr>
+                            <td colspan="2" style="border-top:1px solid #E5E0DA;padding:10px 0 0;"></td>
                           </tr>
                           <tr>
-                            <td style="padding: 5px 0; color: #1A1A1A; font-weight: bold; font-size: 18px;">Total Amount:</td>
-                            <td style="padding: 5px 0; color: #5C4033; font-weight: bold; font-size: 18px; text-align: right;">₹${order.finalAmount}</td>
+                            <td style="padding:5px 0;color:#1A1A1A;font-weight:bold;font-size:18px;">Total Amount:</td>
+                            <td style="padding:5px 0;color:#5C4033;font-weight:bold;font-size:18px;text-align:right;">
+                              ₹${order.finalAmount}
+                            </td>
                           </tr>
                         </table>
                       </div>
 
-                      <div style="text-align: center; margin-top: 40px; padding-top: 30px; border-top: 1px dashed #E5E0DA;">
-                        <p style="font-size: 15px; color: #1A1A1A; margin-bottom: 5px;">Your order will be delivered soon! 🚚</p>
-                        <p style="font-size: 13px; color: #6C6C6C; margin-top: 0;">If you have any questions, simply reply to this email.</p>
+                      <div style="text-align:center;margin-top:40px;padding-top:30px;border-top:1px dashed #E5E0DA;">
+                        <p style="font-size:15px;color:#1A1A1A;margin-bottom:5px;">Your order will be delivered soon! 🚚</p>
+                        <p style="font-size:13px;color:#6C6C6C;margin-top:0;">If you have any questions, simply reply to this email.</p>
                       </div>
                     </td>
                   </tr>
                   <tr>
-                    <td style="background-color: #1E1B18; padding: 20px; text-align: center;">
-                      <p style="color: #B5B5B5; font-size: 12px; margin: 0;">&copy; ${new Date().getFullYear()} Our Store. All rights reserved.</p>
+                    <td style="background-color:#1E1B18;padding:20px;text-align:center;">
+                      <p style="color:#B5B5B5;font-size:12px;margin:0;">
+                        &copy; ${new Date().getFullYear()} Nutrivia. All rights reserved.
+                      </p>
                     </td>
                   </tr>
                 </table>
@@ -223,13 +282,11 @@ exports.placeOrder = async (req, res) => {
             </tr>
           </table>
         </body>
-        </html>
-    `;
+        </html>`;
 
         await sendEmail({
-          to: userEmail,
-          name: userName,
-          subject: "Order Confirmation",
+          to: user.email,
+          subject: "Order Confirmation — Nutrivia",
           html: emailHTML,
         });
       } catch (emailError) {
@@ -237,12 +294,14 @@ exports.placeOrder = async (req, res) => {
       }
     }
 
-    res
-      .status(201)
-      .json({ success: true, message: "Order placed Successfully", order });
+    res.status(201).json({
+      success: true,
+      message: "Order placed successfully",
+      order,
+    });
   } catch (err) {
-    console.log(err);
-    res.status(500).json({ message: "Server Error" });
+    console.error("placeOrder error:", err);
+    res.status(500).json({ message: "Server Error", error: err.message });
   }
 };
 

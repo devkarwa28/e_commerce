@@ -56,9 +56,9 @@ const AddressForm = ({ addressData, setAddressData }) => {
   const handleSelectAddress = (addr) => {
     setSelectedAddressId(addr._id);
     setAddressData({
-      fullname: addr.fullName,
+      fullName: addr.fullName,
       phone: addr.phone,
-      address: addr.street + (addr.landmark ? `, ${addr.landmark}` : ""),
+      street: addr.street + (addr.landmark ? `, ${addr.landmark}` : ""),
       city: addr.city,
       state: addr.state,
       pincode: addr.pincode,
@@ -73,7 +73,7 @@ const AddressForm = ({ addressData, setAddressData }) => {
         error = "Phone number must be exactly 10 digits.";
     } else if (name === "pincode") {
       if (!/^\d{6}$/.test(value)) error = "Pincode must be exactly 6 digits.";
-    } else if (name === "fullname") {
+    } else if (name === "fullName") {
       if (value.trim().length < 3)
         error = "Name must be at least 3 characters.";
     } else if (name === "address") {
@@ -354,24 +354,24 @@ const AddressForm = ({ addressData, setAddressData }) => {
                 />
                 <input
                   type="text"
-                  name="fullname"
-                  className={`${CheckoutStyles.customInput} ${errors.fullname ? CheckoutStyles.inputError : ""}`}
+                  name="fullName"
+                  className={`${CheckoutStyles.customInput} ${errors.fullName ? CheckoutStyles.inputError : ""}`}
                   style={{ paddingLeft: "42px", fontWeight: "500" }}
                   placeholder="Enter your full name"
-                  value={addressData.fullname}
+                  value={addressData.fullName}
                   onChange={handleInputChange}
                   required
                 />
               </div>
               <AnimatePresence>
-                {errors.fullname && (
+                {errors.fullName && (
                   <motion.span
                     initial={{ opacity: 0, y: -5 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -5 }}
                     className={CheckoutStyles.errorText}
                   >
-                    {errors.fullname}
+                    {errors.fullName}
                   </motion.span>
                 )}
               </AnimatePresence>
