@@ -1,13 +1,15 @@
 "use client";
 import { useState } from "react";
 import productStyles from './productDetail.module.css';
+import ProductReviews from "./ProductReviews";
 
 function ProductTabs({ product }) {
     const tabs = [
         "Description", 
         "Benefits", 
         "Specifications", 
-        "Nutrition Info"
+        "Nutrition Info",
+        "Reviews"
     ];
     
     const [activeTab, setActiveTab] = useState(0);
@@ -97,6 +99,10 @@ function ProductTabs({ product }) {
                             </tr>
                         </tbody>
                     </table>
+                )}
+
+                {activeTab === 4 && (
+                    <ProductReviews productId={product._id} />
                 )}
             </div>
         </div>

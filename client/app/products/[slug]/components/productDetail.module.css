@@ -552,6 +552,57 @@
     background: rgba(0, 0, 0, 0.02);
 }
 
+/* ─── Reviews System ─── */
+.reviewsWrapper {
+    padding: 10px 0;
+}
+.reviewSectionTitle {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--color-primary);
+    margin-bottom: 8px;
+}
+.reviewSubtitle {
+    color: var(--color-text-secondary);
+    font-size: 14px;
+    margin-bottom: 24px;
+}
+.reviewFormContainer, .reviewsListContainer {
+    background: #FFFFFF;
+    border: 1px solid rgba(0,0,0,0.06);
+    border-radius: 16px;
+    padding: 32px;
+    height: 100%;
+}
+.reviewsList {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 24px;
+}
+.reviewCard {
+    background: #FAFAFA;
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid rgba(0,0,0,0.04);
+}
+.reviewAvatar {
+    width: 36px;
+    height: 36px;
+    background: rgba(200, 155, 60, 0.15);
+    color: var(--color-gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+.reviewText {
+    margin: 12px 0 0 0;
+    font-size: 15px;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+}
+
 /* ─── Premium Mobile Responsiveness ─── */
 @media (max-width: 991px) {
     .mainImageWrap {
@@ -714,5 +765,9 @@
     .pincodeBtn {
         padding: 12px;
         width: 100%;
+    }
+    
+    .reviewFormContainer, .reviewsListContainer {
+        padding: 24px 16px;
     }
 }

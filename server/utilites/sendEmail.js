@@ -1,44 +1,35 @@
-const sendpulse = require("sendpulse-api");
+const SibApiV3Sdk = require("sib-api-v3-sdk");
 
-const API_USER_ID = process.env.PULSE_CLIENT_ID;
-const API_SECRET = process.env.PULSE_KEY;
+const client = SibApiV3Sdk.ApiClient.instance;
+const apiKey = client.authentications["api-key"];
+apiKey.apiKey = process.env.BREVO_API_KEY;
 
-const TOKEN_STORAGE = "/tmp/";
+const tranEmailApi = new SibApiV3Sdk.TransactionalEmailsApi();
 
-const sendEmail = ({ to, subject, html }) => {
-    return new Promise((resolve, reject) => {
-        sendpulse.init(API_USER_ID, API_SECRET, TOKEN_STORAGE, () => {
-
-            const email = {
-                html: html,
-                text: "Order confirmation",
-                subject: subject,
-                from: {
-                    name: "Nutrivia",
-                    email: "hardyadverts@gmail.com",
-                },
-                to: [
-                    {
-                        name: "User",
-                        email: to,
-                    },
-                ],
-            };
-
-            sendpulse.smtpSendMail((data) => {
-                console.log("📩 SendPulse response:", data);
-
-                if (data.error_code) {
-                    console.error("❌ Email failed:", data);
-                    return reject(data);
-                }
-
-                console.log("✅ Email sent successfully");
-                resolve(data);
-            }, email);
-
-        });
+const sendEmail = async ({ to, subject, html }) => {
+  try {
+    const response = await tranEmailApi.sendTransacEmail({
+      sender: {
+        name: "Nutrivia",
+        email: "hardyadverts@gmail.com", // temporary OK
+      },
+      to: [
+        {
+          email: to,
+          name: "User",
+        },
+      ],
+      subject: subject,
+      htmlContent: html,
     });
+
+    console.log("✅ Email sent:", response);
+    return response;
+
+  } catch (error) {
+    console.error("❌ Email failed:", error.response?.body || error);
+    throw error;
+  }
 };
 
 module.exports = sendEmail;

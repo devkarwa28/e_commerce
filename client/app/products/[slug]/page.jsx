@@ -14,7 +14,7 @@ export async function generateMetadata({ params }) {
         const product = res.json();
 
         return {
-            title: product.seoTitle || product.pname,
+            title: product.pname,
             description: product.seoDescription || product.description,
             openGraph: {
                 title: product.seoTitle,
