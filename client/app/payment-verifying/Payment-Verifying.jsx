@@ -23,12 +23,25 @@ const PaymentVerifying = () => {
         );
 
         if (res.data.message === "Payment Verified") {
+          const savedAddress = JSON.parse(
+            sessionStorage.getItem("shippingAddress"),
+          );
+          if (!savedAddress) {
+            router.push("/checkout");
+            return;
+          }
+          const formattedAddress = {
+            fullName: savedAddress.fullName,
+            phone: savedAddress.phone,
+            street: savedAddress.street,
+            city: savedAddress.city,
+            state: savedAddress.state,
+            pincode: savedAddress.pincode,
+          };
           const orderRes = await axios.post(
             `${process.env.NEXT_PUBLIC_API_URL}/api/order`,
             {
-              shippingAddress: JSON.parse(
-                sessionStorage.getItem("shippingAddress"),
-              ),
+              shippingAddress: formattedAddress,
               paymentMethod: "Online",
               paymentStatus: "Paid",
               paymentId: params.get("razorpay_payment_id"),

@@ -1,4 +1,5 @@
 const User = require('../models/UserModel');
+const Order = require('../models/orderModel');
 const bcrypt = require('bcryptjs');
 const tokenGen = require('../utilites/tokenGen');
 
@@ -70,3 +71,22 @@ exports.getCurrentUser = async (req, res) => {
     res.json({ user });
 };
 
+exports.getAllUsers = async (req, res) => {
+    try {
+        const users = await User.find().select("-password");
+        
+        const usersWithOrderCounts = await Promise.all(
+            users.map(async (user) => {
+                const orderCount = await Order.countDocuments({ user: user._id });
+                return {
+                    ...user.toObject(),
+                    orderCount
+                };
+            })
+        );
+        res.json({ users: usersWithOrderCounts });
+    } catch (err) {
+        console.error("GET ALL USERS ERROR:", err);
+        res.status(500).json({ message: "Server error" });
+    }
+};

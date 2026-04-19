@@ -8,7 +8,8 @@ import {
     ShoppingBagRounded,
     StorefrontRounded,
     LogoutRounded,
-    Image
+    Image,
+    PeopleAltRounded
 } from "@mui/icons-material";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
@@ -24,7 +25,8 @@ const Sidebar = () => {
         { label: "Categories", href: "/admin/category", icon: <CategoryRounded /> },
         { label: "Orders", href: "/admin/orders", icon: <ShoppingBagRounded /> },
         { label: "Coupons", href: "/admin/coupons", icon: <LocalOfferRounded /> },
-        {label: "Hero Banner", href: "/admin/hero-banner", icon: <Image />}
+        {label: "Hero Banner", href: "/admin/hero-banner", icon: <Image />},
+        {label: "Users", href: "/admin/users", icon: <PeopleAltRounded />}
 
     ];
 
