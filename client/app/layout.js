@@ -1,7 +1,8 @@
 import "../styles/globals.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import ClientLayout from "./ClientLayout";
-import { Analytics } from "@vercel/analytics/next"
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 /** @type {import('next').Metadata} */
 export const metadata = {
@@ -48,6 +49,7 @@ export default function RootLayout({ children }) {
         <ClientLayout>
           {children}
           <Analytics/>
+          <SpeedInsights/>
         </ClientLayout>
       </body>
     </html>
