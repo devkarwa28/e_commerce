@@ -114,43 +114,127 @@ exports.placeOrder = async (req, res) => {
     cart.totalAmount = 0;
     await cart.save();
 
-    try {
-      const user = await User.findById(req.user._id);
-const userEmail = user.email;
-const userName = user.uname;
+    if (paymentMethod === "COD" || order.paymentStatus === "Paid") {
+      try {
+        const user = await User.findById(req.user._id);
+        const userEmail = user.email;
+        const userName = user.uname;
 
-      const itemsHtml = order.items
-        .map(
-          (item) => `
-        <li>
-            ${item.pname} (${item.weightLabel}) x ${item.quantity} - ₹${item.price}
-        </li>
+        const itemsHtml = order.items
+          .map(
+            (item) => `
+        <tr style="border-bottom: 1px solid #E5E0DA;">
+            <td style="padding: 12px 5px; color: #1A1A1A; word-break: break-word;">
+              <strong style="font-size: 14px;">${item.pname}</strong> <br>
+              <span style="font-size: 12px; color: #6C6C6C;">Weight: ${item.weightLabel}</span>
+            </td>
+            <td style="padding: 12px 5px; text-align: center; color: #1A1A1A; font-size: 14px;">${item.quantity}</td>
+            <td style="padding: 12px 5px; text-align: right; color: #1A1A1A; font-weight: 600; font-size: 14px; white-space: nowrap;">₹${item.price}</td>
+        </tr>
     `,
-        )
-        .join("");
+          )
+          .join("");
 
-      const emailHTML = `
-        <h2>Order Confirmed 🎉</h2>
-        <p>Thank you for your order!</p>
+        const emailHTML = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <style>
+            @media only screen and (max-width: 600px) {
+              .email-container { padding: 20px 10px !important; }
+              .content-wrap { padding: 20px !important; }
+              .order-summary th { font-size: 13px !important; padding: 10px 5px !important; }
+              .title-header { font-size: 20px !important; }
+              .summary-box { padding: 15px 10px !important; }
+              .summary-text { font-size: 14px !important; }
+              .header-box { padding: 20px 15px !important; }
+            }
+          </style>
+        </head>
+        <body style="margin: 0; padding: 0; font-family: 'Poppins', Arial, sans-serif; background-color: #F8F5F1; -webkit-font-smoothing: antialiased;">
+          <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color: #F8F5F1;">
+            <tr>
+              <td align="center" class="email-container" style="padding: 40px 20px; color: #1A1A1A;">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" style="max-width: 600px; background-color: #ffffff; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); overflow: hidden;">
+                  <tr>
+                    <td class="header-box" style="background-color: #5C4033; padding: 30px; text-align: center;">
+                      <h1 class="title-header" style="color: #ffffff; margin: 0; font-size: 24px; letter-spacing: 1px;">Order Confirmed 🎉</h1>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="content-wrap" style="padding: 30px;">
+                      <p style="font-size: 16px; line-height: 1.6; color: #1A1A1A; margin-top: 0;">Hi ${userName},</p>
+                      <p style="font-size: 15px; line-height: 1.6; color: #6C6C6C;">Thank you for your order! We're excited to let you know that your order has been received and is being processed.</p>
 
-        <h3>Order Details:</h3>
-        <ul>${itemsHtml}</ul>
+                      <h3 style="color: #5C4033; border-bottom: 2px solid #C89B3C; padding-bottom: 10px; margin-top: 30px; font-weight: 600; font-size: 18px;">Order Summary</h3>
+                      
+                      <div style="overflow-x: auto;">
+                        <table class="order-summary" style="width: 100%; border-collapse: collapse; margin-top: 15px; min-width: 250px;">
+                          <thead>
+                            <tr style="background-color: #F8F5F1;">
+                              <th style="padding: 12px 5px; text-align: left; color: #1A1A1A; font-weight: 600; font-size: 14px;">Item</th>
+                              <th style="padding: 12px 5px; text-align: center; color: #1A1A1A; font-weight: 600; font-size: 14px;">Qty</th>
+                              <th style="padding: 12px 5px; text-align: right; color: #1A1A1A; font-weight: 600; font-size: 14px;">Price</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            ${itemsHtml}
+                          </tbody>
+                        </table>
+                      </div>
 
-        <p><strong>Order ID:</strong> ${order._id}</p>
-        <p><strong>Total Amount:</strong> ₹${order.finalAmount}</p>
-        <p><strong>Payment Status:</strong> ${order.paymentStatus}</p>
+                      <div class="summary-box" style="margin-top: 25px; background-color: #F8F5F1; padding: 20px; border-radius: 8px;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                          <tr>
+                            <td class="summary-text" style="padding: 5px 0; color: #6C6C6C; font-weight: bold; font-size: 15px;">Order ID:</td>
+                            <td class="summary-text" style="padding: 5px 0; color: #1A1A1A; text-align: right; font-size: 15px; word-break: break-all;">${order._id}</td>
+                          </tr>
+                          <tr>
+                            <td class="summary-text" style="padding: 5px 0; color: #6C6C6C; font-weight: bold; font-size: 15px;">Payment Status:</td>
+                            <td class="summary-text" style="padding: 5px 0; text-align: right; font-size: 15px; color: ${order.paymentStatus === "Paid" ? "#3E7C59" : "#C89B3C"}; font-weight: bold;">
+                              ${order.paymentStatus}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td colspan="2" style="border-top: 1px solid #E5E0DA; padding: 10px 0 0 0; margin-top: 10px;"></td>
+                          </tr>
+                          <tr>
+                            <td style="padding: 5px 0; color: #1A1A1A; font-weight: bold; font-size: 18px;">Total Amount:</td>
+                            <td style="padding: 5px 0; color: #5C4033; font-weight: bold; font-size: 18px; text-align: right;">₹${order.finalAmount}</td>
+                          </tr>
+                        </table>
+                      </div>
 
-        <p>Your order will be delivered soon 🚚</p>
+                      <div style="text-align: center; margin-top: 40px; padding-top: 30px; border-top: 1px dashed #E5E0DA;">
+                        <p style="font-size: 15px; color: #1A1A1A; margin-bottom: 5px;">Your order will be delivered soon! 🚚</p>
+                        <p style="font-size: 13px; color: #6C6C6C; margin-top: 0;">If you have any questions, simply reply to this email.</p>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="background-color: #1E1B18; padding: 20px; text-align: center;">
+                      <p style="color: #B5B5B5; font-size: 12px; margin: 0;">&copy; ${new Date().getFullYear()} Our Store. All rights reserved.</p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </body>
+        </html>
     `;
 
-      await sendEmail({
-        to: userEmail,
-        name: userName,
-        subject: "Order Confirmation",
-        html: emailHTML,
-      });
-    } catch (emailError) {
-      console.error("Email failed but order placed:", emailError.message);
+        await sendEmail({
+          to: userEmail,
+          name: userName,
+          subject: "Order Confirmation",
+          html: emailHTML,
+        });
+      } catch (emailError) {
+        console.error("Email failed but order placed:", emailError.message);
+      }
     }
 
     res
