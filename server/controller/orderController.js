@@ -112,7 +112,7 @@ exports.placeOrder = async (req, res) => {
       await coupon.save();
     }
 
-    // ✅ Explicitly map shippingAddress fields to match your schema
+
     const order = await Order.create({
       user: req.user._id,
       items: orderItems,
@@ -137,7 +137,6 @@ exports.placeOrder = async (req, res) => {
       paidAt: paymentStatus === "Paid" ? new Date() : null,
     });
 
-    // ✅ Atomic stock deduction — no product.save() in loop, no undefined crash
     for (const item of cart.items) {
       await Product.findOneAndUpdate(
         {
@@ -150,12 +149,10 @@ exports.placeOrder = async (req, res) => {
       );
     }
 
-    // ✅ Clear cart
     cart.items = [];
     cart.totalAmount = 0;
     await cart.save();
 
-    // ✅ Send confirmation email (non-blocking — order is safe even if email fails)
     if (paymentMethod === "COD" || paymentStatus === "Paid") {
       try {
         const user = await User.findById(req.user._id);

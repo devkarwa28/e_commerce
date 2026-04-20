@@ -11,7 +11,7 @@ const sendEmail = async ({ to, subject, html }) => {
     const response = await tranEmailApi.sendTransacEmail({
       sender: {
         name: "Nutrivia",
-        email: "hardyadverts@gmail.com", // temporary OK
+        email: "hardyadverts@gmail.com",
       },
       to: [
         {
@@ -23,11 +23,11 @@ const sendEmail = async ({ to, subject, html }) => {
       htmlContent: html,
     });
 
-    console.log("✅ Email sent:", response);
+    console.log("Email sent:", response);
     return response;
 
   } catch (error) {
-    console.error("❌ Email failed:", error.response?.body || error);
+    console.error("Email failed:", error.response?.body || error);
     throw error;
   }
 };
