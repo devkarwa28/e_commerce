@@ -1,5 +1,6 @@
 import BestSeller from "@/components/Home/BestSeller";
 import CategoriesShowcase from "@/components/Home/CategoriesShowcase";
+import TrustedPartners from "@/components/Home/TrustedPartners";
 import DryFruitSlider from "@/components/Home/DryFruitSlider";
 import HeroBanner from "@/components/Home/HeroBanner";
 import NewsLetter from "@/components/Home/NewsLetter";
@@ -14,12 +15,14 @@ export default function Home() {
     <HeroBanner/>
     <DryFruitSlider/>
     <CategoriesShowcase/>
+    
     <ShopByPurpose/>
     <BestSeller/>
     <ParallaxCollection/>
     <WhyChooseUs/>
     <Testimonials/>
     <NewsLetter/>
+    <TrustedPartners/>
     </div>
   );
 }

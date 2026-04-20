@@ -1,6 +1,11 @@
 "use client";
 import shopByStyles from "./home.module.css";
-import { CardGiftcard, FitnessCenter, Restaurant, Spa } from "@mui/icons-material";
+import {
+  CardGiftcard,
+  FitnessCenter,
+  Restaurant,
+  Spa,
+} from "@mui/icons-material";
 import TrackChangesOutlinedIcon from "@mui/icons-material/TrackChangesOutlined";
 import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
 import Link from "next/link";
@@ -45,14 +50,14 @@ const ShopByPurpose = () => {
             Shop By <span className={shopByStyles.sbpHighlight}>Purpose</span>
           </h2>
           <p className={shopByStyles.sbpSubtitle}>
-            Discover premium products thoughtfully curated around your lifestyle,
-            health goals, and daily needs.
+            Discover premium products thoughtfully curated around your
+            lifestyle, health goals, and daily needs.
           </p>
         </div>
 
         <div className="row g-4">
           {items.map((item, index) => (
-            <div key={index} className="col-lg-3 col-md-6">
+            <div key={index} className="col-6 col-lg-3 col-md-6">
               <div className={shopByStyles.sbpCard}>
                 <div className={shopByStyles.sbpCardTop}>
                   <div className={shopByStyles.sbpIconWrap}>{item.icon}</div>
@@ -60,13 +65,13 @@ const ShopByPurpose = () => {
                 </div>
                 <h4 className={shopByStyles.sbpCardTitle}>{item.title}</h4>
                 <p className={shopByStyles.sbpCardDesc}>{item.desc}</p>
-                
+
                 <div className={shopByStyles.sbpCardFooter}>
                   <span className={shopByStyles.sbpActionText}>Explore</span>
-                  <Link href='/products'>
-                  <div className={shopByStyles.sbpActionIcon}>
-                    <ArrowForwardRoundedIcon sx={{ fontSize: 18 }} />
-                  </div>
+                  <Link href="/products">
+                    <div className={shopByStyles.sbpActionIcon}>
+                      <ArrowForwardRoundedIcon sx={{ fontSize: 18 }} />
+                    </div>
                   </Link>
                 </div>
               </div>
