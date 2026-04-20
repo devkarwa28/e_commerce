@@ -185,7 +185,6 @@
     outline: none;
     font-family: inherit;
     font-weight: 500;
-    -webkit-appearance: none;
 }
 
 .customInput:focus {

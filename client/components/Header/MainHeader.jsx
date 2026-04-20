@@ -263,19 +263,25 @@ const MainHeader = () => {
         open={mobileMenuOpen}
         onClose={toggleMobileMenu(false)}
         PaperProps={{
-          sx: { width: "85%", maxWidth: 360, borderRadius: "0 24px 24px 0" }
+          sx: { 
+            width: "85%", 
+            maxWidth: 360, 
+            borderRadius: "0 24px 24px 0",
+            background: "#FFFFFF",
+            boxShadow: "10px 0 30px rgba(0,0,0,0.08)"
+          }
         }}
       >
         <div className={headerStyles.mobileDrawerHeader}>
           <h2 className={headerStyles.logo}>Nutrivia</h2>
-          <IconButton onClick={toggleMobileMenu(false)}>
+          <IconButton onClick={toggleMobileMenu(false)} sx={{ backgroundColor: "rgba(0,0,0,0.03)", transition: "all 300ms", "&:hover": { backgroundColor: "rgba(0,0,0,0.06)", transform: "rotate(90deg)" } }}>
             <CloseRounded />
           </IconButton>
         </div>
 
         <Box sx={{ py: 2 }}>
           {/* Mobile Search inside Drawer */}
-          <Box sx={{ px: 2, mb: 2 }}>
+          <Box sx={{ px: 3, mb: 2 }}>
             <div className={headerStyles.searchWrap} style={{ display: 'flex', width: '100%', marginBottom: '10px' }}>
               <SearchIcon className={headerStyles.searchIcon} />
               <input
@@ -286,32 +292,40 @@ const MainHeader = () => {
             </div>
           </Box>
 
-          <List>
-            {categories.map((cat) => (
+          <List sx={{ px: 2 }}>
+            {categories.map((cat, i) => (
               <ListItem key={cat} disablePadding>
-                <ListItemButton onClick={() => { setMobileMenuOpen(false); router.push("/products"); }}>
+                <ListItemButton 
+                  onClick={() => { setMobileMenuOpen(false); router.push("/products"); }}
+                  sx={{ 
+                    borderRadius: "12px", 
+                    mb: 0.5, 
+                    transition: "all 200ms",
+                    "&:hover": { backgroundColor: "rgba(200, 155, 60, 0.08)" }
+                  }}
+                >
                   <ListItemText
                     primary={cat}
-                    primaryTypographyProps={{ sx: { fontWeight: 600, color: "#4A4542" } }}
+                    primaryTypographyProps={{ sx: { fontWeight: 600, color: "#5d554d", fontSize: "15px" } }}
                   />
                 </ListItemButton>
               </ListItem>
             ))}
           </List>
 
-          <Divider sx={{ my: 1, mx: 2 }} />
+          <Divider sx={{ my: 2, mx: 3 }} />
 
-          <List>
+          <List sx={{ px: 2 }}>
             {user ? (
               <>
                 {/* Mobile User Info */}
-                <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, px: 3, py: 2, mb: 1 }}>
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, px: 2, py: 1, mb: 2, background: "rgba(92, 64, 51, 0.04)", borderRadius: "16px" }}>
                   <Avatar
                     src={user.avatar || ""}
                     alt={user.uname}
                     sx={{
-                      width: 44,
-                      height: 44,
+                      width: 48,
+                      height: 48,
                       fontSize: 16,
                       fontWeight: 700,
                       bgcolor: "var(--color-primary)",
@@ -322,46 +336,54 @@ const MainHeader = () => {
                     {!user.avatar && getInitials(user.uname)}
                   </Avatar>
                   <Box>
-                    <Box sx={{ fontWeight: 700, fontSize: 15, color: "#1E1B18", lineHeight: 1.3 }}>
+                    <Box sx={{ fontWeight: 800, fontSize: 16, color: "#1E1B18", lineHeight: 1.2 }}>
                       {user.uname}
                     </Box>
-                    <Box sx={{ fontSize: 12, color: "#999", lineHeight: 1.3 }}>
+                    <Box sx={{ fontSize: 12, color: "#999", lineHeight: 1.4 }}>
                       {user.email}
                     </Box>
                   </Box>
                 </Box>
-                <Divider sx={{ mx: 2, mb: 1 }} />
+                
                 <ListItem disablePadding>
-                  <ListItemButton onClick={() => { setMobileMenuOpen(false); router.push("/profile"); }}>
+                  <ListItemButton onClick={() => { setMobileMenuOpen(false); router.push("/profile"); }} sx={{ borderRadius: "12px", mb: 0.5 }}>
                     <Settings sx={{ mr: 2, color: "var(--color-primary)" }} />
-                    <ListItemText primary="Profile Settings" />
+                    <ListItemText primary="Profile Settings" primaryTypographyProps={{ fontWeight: 600, color: "#1E1B18" }} />
                   </ListItemButton>
                 </ListItem>
                 <ListItem disablePadding>
-                  <ListItemButton onClick={() => { setMobileMenuOpen(false); router.push("/wishlist"); }}>
+                  <ListItemButton onClick={() => { setMobileMenuOpen(false); router.push("/wishlist"); }} sx={{ borderRadius: "12px", mb: 0.5 }}>
                     <FavoriteBorderOutlined sx={{ mr: 2, color: "var(--color-primary)" }} />
-                    <ListItemText primary="My Wishlist" />
+                    <ListItemText primary="My Wishlist" primaryTypographyProps={{ fontWeight: 600, color: "#1E1B18" }} />
                     <Badge badgeContent={wishlist?.length || 0} sx={{"& .MuiBadge-badge": { backgroundColor: "var(--color-gold)", color: "#1E1B18" }}} />
                   </ListItemButton>
                 </ListItem>
                 <ListItem disablePadding>
-                  <ListItemButton onClick={() => { setMobileMenuOpen(false); router.push("/orders"); }}>
+                  <ListItemButton onClick={() => { setMobileMenuOpen(false); router.push("/orders"); }} sx={{ borderRadius: "12px", mb: 0.5 }}>
                     <ShoppingBag sx={{ mr: 2, color: "var(--color-primary)" }} />
-                    <ListItemText primary="My Orders" />
+                    <ListItemText primary="My Orders" primaryTypographyProps={{ fontWeight: 600, color: "#1E1B18" }} />
                   </ListItemButton>
                 </ListItem>
                 <ListItem disablePadding>
-                  <ListItemButton onClick={handleLogout}>
-                    <Logout sx={{ mr: 2, color: "var(--color-danger)" }} />
-                    <ListItemText primary="Logout" />
+                  <ListItemButton onClick={handleLogout} sx={{ borderRadius: "12px", mt: 1, backgroundColor: "rgba(229, 57, 53, 0.05)", "&:hover": { backgroundColor: "rgba(229, 57, 53, 0.1)" }}}>
+                    <Logout sx={{ mr: 2, color: "#E53935" }} />
+                    <ListItemText primary="Logout" primaryTypographyProps={{ fontWeight: 600, color: "#E53935" }} />
                   </ListItemButton>
                 </ListItem>
               </>
             ) : (
               <ListItem disablePadding>
-                <ListItemButton onClick={() => { setMobileMenuOpen(false); router.push("/login"); }}>
+                <ListItemButton 
+                  onClick={() => { setMobileMenuOpen(false); router.push("/login"); }}
+                  sx={{ 
+                    borderRadius: "12px", 
+                    background: "linear-gradient(135deg, var(--color-primary), #7a5c4e)",
+                    color: "#FFF",
+                    "&:hover": { background: "var(--color-primary)" }
+                  }}
+                >
                   <Person2Outlined sx={{ mr: 2 }} />
-                  <ListItemText primary="Login / Sign Up" />
+                  <ListItemText primary="Login / Sign Up" primaryTypographyProps={{ fontWeight: 600 }} />
                 </ListItemButton>
               </ListItem>
             )}
@@ -373,4 +395,3 @@ const MainHeader = () => {
 };
 
 export default MainHeader;
-;

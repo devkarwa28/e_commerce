@@ -7,6 +7,7 @@ import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import RemoveRoundedIcon from "@mui/icons-material/RemoveRounded";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 const CartItems = ({ item, refreshCart }) => {
     const updateQuantity = async (qty) => {
@@ -38,8 +39,21 @@ const CartItems = ({ item, refreshCart }) => {
         }
     }
 
+    const itemVariants = {
+        hidden: { opacity: 0, scale: 0.95, y: 10 },
+        show: { opacity: 1, scale: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } },
+        exit: { opacity: 0, scale: 0.95, y: -10, transition: { duration: 0.2 } }
+    };
+
     return (
-        <div className={CartStyles.cartItemCard}>
+        <motion.div 
+            className={CartStyles.cartItemCard}
+            variants={itemVariants}
+            initial="hidden"
+            animate="show"
+            exit="exit"
+            layout
+        >
             <div className={CartStyles.cartImageWrap}>
                 <Image src={item.product?.mainImage} className={CartStyles.cartImage} alt={item.product?.pname} width={100} height={100} />
             </div>
@@ -70,7 +84,7 @@ const CartItems = ({ item, refreshCart }) => {
                     </div>
                 </div>
             </div>
-        </div>
+        </motion.div>
     )
 }
 

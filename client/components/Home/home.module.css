@@ -283,9 +283,10 @@
 /* Category Cards */
 .catCard {
     position: relative;
-    border-radius: 20px;
+    border-radius: 24px;
     overflow: hidden;
     cursor: pointer;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
 }
 
 .catCardLarge {
@@ -294,19 +295,17 @@
 }
 
 .catCardSmall {
-    height: 200px;
+    height: 220px; /* slight bump for better touch targets */
 }
 
 .catCardImg {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 600ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    /* transition handled by motion.img */
 }
 
-.catCard:hover .catCardImg {
-    transform: scale(1.08);
-}
+/* Removing CSS hover scale as we are doing it via framer-motion */
 
 .catCardOverlay {
     position: absolute;
@@ -344,63 +343,58 @@
 
 .catCardSub {
     display: block;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 1px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
     text-transform: uppercase;
     color: var(--color-gold);
     margin-bottom: 6px;
-    opacity: 0;
-    transform: translateY(8px);
-    transition: all 350ms ease;
-}
-
-.catCard:hover .catCardSub {
-    opacity: 1;
-    transform: translateY(0);
+    /* Transitions handled by framer-motion */
 }
 
 .catCardTitle {
-    font-size: 20px;
-    font-weight: 700;
+    font-size: 22px;
+    font-weight: 800;
     color: #FFFFFF;
     margin: 0;
-    transition: transform 300ms ease;
+    text-shadow: 0 4px 10px rgba(0,0,0,0.5);
 }
 
 .catCardLarge .catCardTitle {
-    font-size: 26px;
-}
-
-.catCard:hover .catCardTitle {
-    transform: translateY(-2px);
+    font-size: 32px;
 }
 
 .catCardBtn {
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
     display: flex;
     align-items: center;
     justify-content: center;
     color: #FFFFFF;
-    opacity: 0;
-    transform: translateX(10px);
-    transition: all 350ms ease;
     flex-shrink: 0;
 }
 
-.catCard:hover .catCardBtn {
-    opacity: 1;
-    transform: translateX(0);
-}
-
-.catCardBtn:hover {
-    background: rgba(200, 155, 60, 0.3);
-    border-color: rgba(200, 155, 60, 0.4);
+/* Custom Mobile Breakpoints */
+@media (max-width: 768px) {
+    .catCardLarge {
+        min-height: 260px;
+    }
+    .catCardSmall {
+        height: 180px;
+    }
+    .catCardTitle {
+        font-size: 18px;
+    }
+    .catCardLarge .catCardTitle {
+        font-size: 24px;
+    }
+    .catCardBtn {
+        width: 36px;
+        height: 36px;
+    }
 }
 /* categories section ended  */
 
