@@ -1,73 +1,214 @@
-/* ─── Address Form Styles ─── */
+/* ═══════════════════════════════════════════════════════
+   PREMIUM CHECKOUT — Pixel-Perfect & Mobile-First
+   ═══════════════════════════════════════════════════════ */
+
+/* ─── Checkout Page Layout ─── */
+.checkoutPage {
+    min-height: 100vh;
+    background: linear-gradient(180deg, #F8F5F1 0%, #FFFFFF 40%, #F8F5F1 100%);
+    padding: 32px 0 80px;
+}
+
+.checkoutHeader {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 0 16px;
+}
+
+.checkoutBadge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(92, 64, 51, 0.06);
+    color: var(--color-primary);
+    padding: 5px 16px;
+    border-radius: 50px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 14px;
+}
+
+.checkoutTitle {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--color-primary);
+    margin: 0 0 8px 0;
+    letter-spacing: -0.8px;
+    line-height: 1.2;
+}
+
+.checkoutSubtitle {
+    font-size: 14px;
+    color: #8d7a70;
+    margin: 0;
+    font-weight: 500;
+}
+
+/* ─── Step Progress Bar ─── */
+.stepBar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin-bottom: 36px;
+    padding: 0 16px;
+}
+
+.stepItem {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+.stepCircle {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    border: 2px solid rgba(0, 0, 0, 0.08);
+    background: #FFFFFF;
+    color: #999;
+    transition: all 300ms ease;
+    flex-shrink: 0;
+}
+
+.stepCircleActive {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: #FFFFFF;
+    box-shadow: 0 4px 14px rgba(92, 64, 51, 0.2);
+}
+
+.stepCircleDone {
+    background: rgba(107, 142, 35, 0.1);
+    border-color: var(--color-olive);
+    color: var(--color-olive);
+}
+
+.stepLabel {
+    font-size: 13px;
+    font-weight: 600;
+    color: #999;
+    transition: color 300ms ease;
+}
+
+.stepLabelActive {
+    color: var(--color-primary);
+}
+
+.stepLine {
+    width: 48px;
+    height: 2px;
+    background: rgba(0, 0, 0, 0.06);
+    margin: 0 12px;
+    border-radius: 2px;
+    flex-shrink: 0;
+}
+
+.stepLineDone {
+    background: var(--color-olive);
+}
+
+/* ─── Address Form Card ─── */
 .formContainer {
     background: #FFFFFF;
-    border: 1px solid rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.04);
     border-radius: 20px;
     padding: 32px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+    box-shadow: 0 2px 20px rgba(92, 64, 51, 0.04);
+    position: relative;
+    overflow: hidden;
+}
+
+.formContainer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-gold), var(--color-primary));
+    opacity: 0.6;
 }
 
 .sectionTitle {
-    font-size: 22px;
-    font-weight: 700;
-    color: var(--color-text-primary);
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--color-primary);
     margin-bottom: 24px;
     display: flex;
     align-items: center;
     gap: 10px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
     padding-bottom: 16px;
+    letter-spacing: -0.3px;
 }
 
 .sectionTitle svg {
     color: var(--color-gold);
+    font-size: 24px !important;
 }
 
+/* ─── Input Group ─── */
 .inputGroup {
     display: flex;
     flex-direction: column;
     gap: 6px;
-    margin-bottom: 16px;
+    margin-bottom: 4px;
 }
 
 .inputLabel {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--color-text-secondary);
+    font-size: 12px;
+    font-weight: 700;
+    color: #8d7a70;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-left: 2px;
 }
 
 .customInput {
     width: 100%;
-    padding: 12px 16px;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
+    padding: 13px 16px;
+    border: 1.5px solid rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
     font-size: 15px;
     color: var(--color-text-primary);
-    background: #FAFAFA;
-    transition: all 300ms ease;
+    background: #FAFAF9;
+    transition: all 250ms ease;
     outline: none;
+    font-family: inherit;
+    font-weight: 500;
+    -webkit-appearance: none;
 }
 
 .customInput:focus {
     background: #FFFFFF;
     border-color: var(--color-gold);
-    box-shadow: 0 0 0 3px rgba(200, 155, 60, 0.1);
+    box-shadow: 0 0 0 4px rgba(200, 155, 60, 0.08);
 }
 
 .customInput::placeholder {
-    color: rgba(0, 0, 0, 0.3);
+    color: rgba(0, 0, 0, 0.22);
+    font-weight: 400;
 }
 
 .inputError {
-    border-color: #ff4d4f !important;
-    background-color: #fff1f0 !important;
+    border-color: #E53935 !important;
+    background-color: #FFF8F7 !important;
 }
 
 .errorText {
-    color: #ff4f4f;
+    color: #E53935;
     font-size: 11px;
     font-weight: 600;
-    margin-top: 4px;
+    margin-top: 2px;
     margin-left: 2px;
 }
 
@@ -82,7 +223,7 @@
     right: 12px;
     width: 16px;
     height: 16px;
-    border: 2px solid #5c4033;
+    border: 2px solid var(--color-primary);
     border-radius: 50%;
     border-top-color: transparent;
     animation: spin 0.8s linear infinite;
@@ -92,51 +233,77 @@
     to { transform: rotate(360deg); }
 }
 
-/* ─── Payment Method Styles ─── */
+/* ─── Payment Method Card ─── */
 .paymentContainer {
     background: #FFFFFF;
-    border: 1px solid rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.04);
     border-radius: 20px;
     padding: 32px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
-    margin-top: 24px;
+    box-shadow: 0 2px 20px rgba(92, 64, 51, 0.04);
+    margin-top: 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.paymentContainer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--color-gold), var(--color-primary), var(--color-gold));
+    opacity: 0.6;
 }
 
 .paymentOptions {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 14px;
 }
 
 .paymentOption {
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    border-radius: 12px;
-    padding: 16px 20px;
+    border: 1.5px solid rgba(0, 0, 0, 0.06);
+    border-radius: 14px;
+    padding: 18px 20px;
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 14px;
     cursor: pointer;
-    transition: all 300ms ease;
-    background: #FAFAFA;
+    transition: all 280ms ease;
+    background: #FAFAF9;
+    position: relative;
 }
 
 .paymentOption:hover {
     background: #FFFFFF;
-    border-color: rgba(200, 155, 60, 0.4);
-    box-shadow: 0 4px 15px rgba(200, 155, 60, 0.05);
+    border-color: rgba(200, 155, 60, 0.35);
+    box-shadow: 0 4px 16px rgba(200, 155, 60, 0.06);
+    transform: translateY(-1px);
 }
 
 .paymentOption.active {
-    background: #FFFFFF;
+    background: rgba(92, 64, 51, 0.02);
     border-color: var(--color-primary);
-    box-shadow: 0 4px 15px rgba(92, 64, 51, 0.08);
+    box-shadow: 0 4px 20px rgba(92, 64, 51, 0.08);
+}
+
+.paymentOption.active::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 4px;
+    background: var(--color-primary);
+    border-radius: 14px 0 0 14px;
 }
 
 .paymentRadio {
-    width: 20px;
-    height: 20px;
+    width: 22px;
+    height: 22px;
     border-radius: 50%;
-    border: 2px solid rgba(0, 0, 0, 0.2);
+    border: 2px solid rgba(0, 0, 0, 0.15);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -146,6 +313,7 @@
 
 .paymentOption.active .paymentRadio {
     border-color: var(--color-primary);
+    background: rgba(92, 64, 51, 0.04);
 }
 
 .paymentRadioDot {
@@ -164,52 +332,61 @@
 .paymentDetails {
     display: flex;
     flex-direction: column;
+    flex: 1;
+    min-width: 0;
 }
 
 .paymentTitle {
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 700;
     color: var(--color-text-primary);
-    margin: 0 0 4px 0;
+    margin: 0 0 2px 0;
 }
 
 .paymentDesc {
-    font-size: 13px;
-    color: var(--color-text-secondary);
+    font-size: 12px;
+    color: #8d7a70;
     margin: 0;
+    line-height: 1.4;
 }
 
 .disabledOption {
-    opacity: 0.6;
+    opacity: 0.5;
     cursor: not-allowed;
-}
-
-.disabledOption:hover {
-    background: #FAFAFA;
-    border-color: rgba(0, 0, 0, 0.08);
-    box-shadow: none;
+    pointer-events: none;
 }
 
 .paymentTag {
     background: rgba(200, 155, 60, 0.1);
     color: var(--color-gold);
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 700;
     padding: 2px 8px;
     border-radius: 4px;
     text-transform: uppercase;
-    margin-left: 8px;
+    letter-spacing: 0.3px;
 }
 
-/* ─── Order Summary Checkout Styles ─── */
+/* ─── Order Summary Card ─── */
 .summaryContainer {
     background: #FFFFFF;
-    border: 1px solid rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.04);
     border-radius: 20px;
-    padding: 32px 24px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+    padding: 28px 24px;
+    box-shadow: 0 2px 20px rgba(92, 64, 51, 0.04);
     position: sticky;
     top: 24px;
+}
+
+.summaryContainer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--color-gold), var(--color-primary));
+    border-radius: 20px 20px 0 0;
 }
 
 .summaryBody {
@@ -221,33 +398,34 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 16px;
-    font-size: 15px;
+    margin-bottom: 14px;
+    font-size: 14px;
 }
 
 .summaryLabel {
-    color: var(--color-text-secondary);
+    color: #8d7a70;
     font-weight: 500;
 }
 
 .summaryValue {
     color: var(--color-text-primary);
     font-weight: 600;
+    font-size: 15px;
 }
 
 .discountRow {
-    background: rgba(107, 142, 35, 0.05);
-    padding: 12px;
+    background: rgba(107, 142, 35, 0.04);
+    padding: 12px 14px;
     border-radius: 12px;
-    border: 1px dashed rgba(107, 142, 35, 0.3);
+    border: 1px dashed rgba(107, 142, 35, 0.25);
     margin-top: -4px;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
 }
 
 .discountRow .summaryLabel {
     color: var(--color-olive);
     font-weight: 600;
-    margin-bottom: 4px;
+    margin-bottom: 3px;
 }
 
 .discountValue {
@@ -258,39 +436,42 @@
 .couponTag {
     background: var(--color-olive);
     color: #FFFFFF;
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 700;
     padding: 2px 8px;
     border-radius: 4px;
     text-transform: uppercase;
     display: inline-block;
-    align-self: flex-start;
+    letter-spacing: 0.4px;
 }
 
 .summaryValueFree {
     color: var(--color-primary);
     font-weight: 700;
-    background: rgba(200, 155, 60, 0.1);
-    padding: 2px 10px;
+    background: rgba(200, 155, 60, 0.08);
+    padding: 3px 12px;
     border-radius: 20px;
-    font-size: 13px;
+    font-size: 12px;
     letter-spacing: 0.5px;
 }
 
 .summaryDivider {
-    margin: 16px 0 24px !important;
-    border-color: rgba(0, 0, 0, 0.06) !important;
+    margin: 12px 0 20px !important;
+    border-color: rgba(0, 0, 0, 0.05) !important;
 }
 
 .summaryRowTotal {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
+    padding: 16px;
+    background: rgba(92, 64, 51, 0.03);
+    border-radius: 14px;
 }
 
 .totalLabel {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 600;
     color: var(--color-text-primary);
 }
@@ -300,6 +481,7 @@
     font-weight: 800;
     color: var(--color-primary);
     line-height: 1;
+    letter-spacing: -0.5px;
 }
 
 .secureCheckoutMsg {
@@ -307,13 +489,13 @@
     align-items: center;
     justify-content: center;
     gap: 6px;
-    color: var(--color-text-secondary);
+    color: #8d7a70;
     font-size: 11px;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    margin-bottom: 16px;
-    opacity: 0.8;
+    margin-bottom: 14px;
+    opacity: 0.75;
 }
 
 .placeOrderBtn {
@@ -322,21 +504,196 @@
     align-items: center;
     justify-content: center;
     gap: 10px;
-    background: var(--color-primary);
+    background: linear-gradient(135deg, var(--color-primary), #7a5c4e);
     color: #FFFFFF;
     border: none;
     padding: 16px 24px;
-    border-radius: 12px;
+    border-radius: 14px;
     font-size: 16px;
     font-weight: 700;
     cursor: pointer;
-    box-shadow: 0 8px 20px rgba(92, 64, 51, 0.2);
-    transition: all 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow: 0 8px 24px rgba(92, 64, 51, 0.2);
+    transition: all 350ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    font-family: inherit;
+    letter-spacing: 0.3px;
+    min-height: 54px;
 }
 
 .placeOrderBtn:hover {
-    background: var(--color-gold);
+    background: linear-gradient(135deg, var(--color-gold), #D4A843);
+    color: #1E1B18;
     transform: translateY(-3px);
-    box-shadow: 0 12px 25px rgba(200, 155, 60, 0.25);
+    box-shadow: 0 12px 30px rgba(200, 155, 60, 0.25);
     gap: 14px;
+}
+
+.placeOrderBtn:active {
+    transform: translateY(-1px);
+}
+
+.placeOrderBtn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: 0 4px 12px rgba(92, 64, 51, 0.1);
+}
+
+/* ═══════════════════════════════════════════════════════
+   RESPONSIVE — Mobile-First Enhancements
+   ═══════════════════════════════════════════════════════ */
+
+/* Tablet */
+@media (max-width: 991px) {
+    .checkoutPage {
+        padding: 24px 0 64px;
+    }
+
+    .summaryContainer {
+        position: static;
+        margin-top: 24px;
+    }
+
+    .checkoutTitle {
+        font-size: 28px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+    .checkoutPage {
+        padding: 16px 0 40px;
+        background: linear-gradient(180deg, #F8F5F1 0%, #FFFFFF 100%);
+    }
+
+    .checkoutHeader {
+        margin-bottom: 24px;
+    }
+
+    .checkoutTitle {
+        font-size: 24px;
+        letter-spacing: -0.5px;
+    }
+
+    .checkoutSubtitle {
+        font-size: 13px;
+    }
+
+    /* Step bar compact */
+    .stepBar {
+        margin-bottom: 20px;
+    }
+
+    .stepLabel {
+        display: none;
+    }
+
+    .stepLine {
+        width: 32px;
+        margin: 0 8px;
+    }
+
+    .stepCircle {
+        width: 28px;
+        height: 28px;
+        font-size: 12px;
+    }
+
+    /* Cards */
+    .formContainer,
+    .paymentContainer,
+    .summaryContainer {
+        border-radius: 16px;
+        padding: 20px 16px;
+        margin-left: -4px;
+        margin-right: -4px;
+        box-shadow: 0 1px 12px rgba(0, 0, 0, 0.03);
+    }
+
+    .sectionTitle {
+        font-size: 17px;
+        margin-bottom: 20px;
+        padding-bottom: 14px;
+        gap: 8px;
+    }
+
+    .sectionTitle svg {
+        font-size: 20px !important;
+    }
+
+    /* Inputs */
+    .customInput {
+        padding: 14px 16px;
+        font-size: 16px; /* Prevents iOS auto-zoom */
+        border-radius: 12px;
+    }
+
+    .inputLabel {
+        font-size: 11px;
+    }
+
+    /* Payment options */
+    .paymentOption {
+        padding: 16px;
+        gap: 12px;
+        border-radius: 12px;
+    }
+
+    .paymentTitle {
+        font-size: 14px;
+    }
+
+    .paymentDesc {
+        font-size: 11px;
+    }
+
+    /* Summary */
+    .summaryContainer {
+        margin-top: 16px;
+    }
+
+    .summaryRowTotal {
+        padding: 14px;
+        border-radius: 12px;
+    }
+
+    .totalValue {
+        font-size: 24px;
+    }
+
+    .totalLabel {
+        font-size: 15px;
+    }
+
+    .placeOrderBtn {
+        padding: 16px;
+        border-radius: 12px;
+        font-size: 15px;
+        min-height: 52px;
+    }
+}
+
+/* Extra small */
+@media (max-width: 480px) {
+    .formContainer,
+    .paymentContainer,
+    .summaryContainer {
+        padding: 16px 14px;
+        border-radius: 14px;
+    }
+
+    .customInput {
+        padding: 13px 14px;
+    }
+
+    .paymentOption {
+        padding: 14px 12px;
+    }
+
+    .summaryRowTotal {
+        padding: 12px;
+    }
+
+    .totalValue {
+        font-size: 22px;
+    }
 }
