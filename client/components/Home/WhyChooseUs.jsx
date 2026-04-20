@@ -58,9 +58,9 @@ const WhyChooseUs = () => {
           </p>
         </div>
 
-        <div className="row g-4">
+        <div className="row g-3 g-lg-4">
           {features.map((feature, index) => (
-            <div key={index} className="col-lg-3 col-md-6">
+            <div key={index} className="col-lg-3 col-md-6 col-6">
               <div className={whyStyles.whyCard}>
                 <div className={whyStyles.whyCardTop}>
                   <div className={whyStyles.whyIconWrap}>
