@@ -65,13 +65,13 @@ function Testimonials() {
         <div className={testiStyles.testiHeader}>
           <div className={testiStyles.testiBadge}>
             <FormatQuoteRoundedIcon sx={{ fontSize: 16 }} />
-            <span>Testimonials</span>
+            <span>Customer Stories</span>
           </div>
           <h2 className={testiStyles.testiTitle}>
-            What Our <span className={testiStyles.testiHighlight}>Customers</span> Say
+            Voices of <span className={testiStyles.testiHighlight}>Trust</span>
           </h2>
           <p className={testiStyles.testiSubtitle}>
-            Real stories from real customers who trust Nutrivia for quality and freshness.
+            Real stories from real customers who trust Nutrivia for quality and freshness across the nation.
           </p>
         </div>
 
@@ -80,7 +80,7 @@ function Testimonials() {
             onSwiper={setSwiper}
             onSlideChange={(s) => setActiveSlide(s.realIndex)}
             modules={[Autoplay, Pagination, Navigation]}
-            spaceBetween={40}
+            spaceBetween={20}
             slidesPerView={1}
             loop={true}
             autoplay={{
@@ -89,17 +89,17 @@ function Testimonials() {
               pauseOnHover: true,
             }}
             breakpoints={{
+              576: {
+                slidesPerView: 1.2,
+                spaceBetween: 20,
+              },
               768: {
-                slidesPerView: 1,
-                spaceBetween: 40,
-              },
-              992: {
                 slidesPerView: 2,
-                spaceBetween: 40,
+                spaceBetween: 30,
               },
-              1200: {
+              1024: {
                 slidesPerView: 3,
-                spaceBetween: 40,
+                spaceBetween: 30,
               },
             }}
             className={testiStyles.testiSwiper}
@@ -115,16 +115,17 @@ function Testimonials() {
                     <FormatQuoteRoundedIcon />
                   </div>
 
-                  <Rating
-                    value={item.rating}
-                    precision={0.5}
-                    readOnly
-                    sx={{
-                      color: "#C89B3C",
-                      fontSize: 20,
-                      marginBottom: "16px",
-                    }}
-                  />
+                  <div className={testiStyles.testiRatingWrap}>
+                    <Rating
+                        value={item.rating}
+                        precision={0.5}
+                        readOnly
+                        sx={{
+                        color: "var(--color-gold)",
+                        fontSize: 18,
+                        }}
+                    />
+                  </div>
 
                   <p className={testiStyles.testiText}>&ldquo;{item.text}&rdquo;</p>
 
@@ -132,7 +133,7 @@ function Testimonials() {
 
                   <div className={testiStyles.testiCustomer}>
                     <div className={testiStyles.testiAvatar}>{item.initials}</div>
-                    <div>
+                    <div className={testiStyles.testiInfo}>
                       <h6 className={testiStyles.testiName}>{item.name}</h6>
                       <span className={testiStyles.testiLocation}>{item.location}</span>
                     </div>
