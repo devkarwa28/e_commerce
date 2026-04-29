@@ -25,6 +25,7 @@ jobs:
 
       - name: npm install, build, and test
         run: |
+          cd server
           npm install
           npm run build --if-present
           npm run test --if-present
@@ -51,5 +52,5 @@ jobs:
         with:
           app-name: 'devkarwa-backend'
           slot-name: 'Production'
-          package: .
+          package: ./server
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_6895396F08C44B8AB979A4AA2832211A }}
